@@ -1,0 +1,114 @@
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const helmet = require('helmet');
+const { apiLimiter, authLimiter, orderLimiter, couponLimiter } = require('./middleware/rateLimit');
+const { initializeDB } = require('./config/db');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
+const logger = require('./utils/logger');
+require('dotenv').config();
+
+// Initialize App
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+// Security Headers
+app.use(helmet());
+
+// Database Initialization
+initializeDB();
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// Request logging middleware
+app.use((req, res, next) => {
+  logger.http(`${req.method} ${req.path}`, {
+    ip: req.ip,
+    userAgent: req.get('user-agent')
+  });
+  next();
+});
+
+// Serve static uploaded food images from uploads folder
+app.use('/images', express.static(path.join(__dirname, 'uploads')));
+
+// Routes Mounting
+const userRouter = require('./routes/userRoutes');
+const foodRouter = require('./routes/foodRoutes');
+const cartRouter = require('./routes/cartRoutes');
+const orderRouter = require('./routes/orderRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
+const couponRouter = require('./routes/couponRoutes');
+const deliveryRouter = require('./routes/deliveryRoutes');
+const deliveryTimeRouter = require('./routes/deliveryTimeRoutes');
+const taxRouter = require('./routes/taxRoutes');
+const refundRouter = require('./routes/refundRoutes');
+const exportRouter = require('./routes/exportRoutes');
+
+app.use('/api/user', authLimiter, userRouter);
+app.use('/api/food', apiLimiter, foodRouter);
+app.use('/api/cart', apiLimiter, cartRouter);
+app.use('/api/order', orderLimiter, orderRouter);
+app.use('/api/review', apiLimiter, reviewRouter);
+app.use('/api/coupon', couponLimiter, couponRouter);
+app.use('/api/delivery', apiLimiter, deliveryRouter);
+app.use('/api/delivery-time', apiLimiter, deliveryTimeRouter);
+app.use('/api/tax', apiLimiter, taxRouter);
+app.use('/api/refund', apiLimiter, refundRouter);
+app.use('/api/export', apiLimiter, exportRouter);
+
+// API Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  logger.error(err.message, {
+    stack: err.stack,
+    url: req.url,
+    method: req.method,
+    ip: req.ip
+  });
+
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal server error'
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  logger.warn(`Route not found: ${req.method} ${req.path}`);
+  res.status(404).json({
+    success: false,
+    message: 'Route not found'
+  });
+});
+
+// Health Check / Fallback API
+app.get('/api/health', (req, res) => {
+  res.json({ success: true, message: "Joel. Gastronomy API is live and healthy." });
+});
+
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send("Joel. Artisan Gastronomy API is running.");
+  });
+}
+
+// Server Start
+app.listen(PORT, () => {
+  logger.info(`Joel. Artisan Gastronomy API is running on port ${PORT}`, {
+    port: PORT,
+    environment: process.env.NODE_ENV || 'development'
+  });
+  logger.info(`API Documentation available at http://localhost:${PORT}/api-docs`);
+});

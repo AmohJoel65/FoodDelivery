@@ -1,0 +1,482 @@
+{
+  "users": [
+    {
+      "_id": "admin_user_01",
+      "name": "AMOH JOEL",
+      "email": "joelamoh65@gmail.com",
+      "password": "$2a$10$tiY2X0XwVT4ANsQF4axUAuEFAQrczXKmNEfUQymnmHPDlcYzyL7c.",
+      "cartData": {
+        "food_roll_1": 2
+      },
+      "isAdmin": true
+    },
+    {
+      "_id": "admin_user_02",
+      "name": "Admin User",
+      "email": "admin@joel.com",
+      "password": "$2a$10$tiY2X0XwVT4ANsQF4axUAuEFAQrczXKmNEfUQymnmHPDlcYzyL7c.",
+      "cartData": {},
+      "isAdmin": true
+    },
+    {
+      "_id": "17798917879213fy4",
+      "name": "Amoh Joel",
+      "email": "joelamoh44@gmail.com",
+      "password": "$2a$10$rpZfC2.Yw34Zj9ICzg9ty.LGNIxrANBSf0FRGvc3kcVM.iwUYU0Aa",
+      "cartData": {
+        "food_salad_2": 1,
+        "food_african_3": 1
+      },
+      "isAdmin": false
+    }
+  ],
+  "deliveryZones": [
+    {
+      "_id": "zone_1",
+      "name": "Bamenda Central",
+      "areas": [
+        "Bamenda Central",
+        "Nkwen",
+        "Mankon"
+      ],
+      "baseFee": 1500,
+      "distanceKm": 0,
+      "description": "Central Bamenda and immediate surroundings"
+    },
+    {
+      "_id": "zone_2",
+      "name": "Bamenda North",
+      "areas": [
+        "Bamenda North",
+        "Bambili",
+        "Nkamber"
+      ],
+      "baseFee": 2500,
+      "distanceKm": 5,
+      "description": "Northern areas of Bamenda"
+    },
+    {
+      "_id": "zone_3",
+      "name": "Bamenda South",
+      "areas": [
+        "Bamenda South",
+        "Bafut",
+        "Santa"
+      ],
+      "baseFee": 2500,
+      "distanceKm": 5,
+      "description": "Southern areas of Bamenda"
+    },
+    {
+      "_id": "zone_4",
+      "name": "Bamenda East",
+      "areas": [
+        "Bamenda East",
+        "Ndop",
+        "Kumbo"
+      ],
+      "baseFee": 3500,
+      "distanceKm": 10,
+      "description": "Eastern areas of Bamenda"
+    },
+    {
+      "_id": "zone_5",
+      "name": "Bamenda West",
+      "areas": [
+        "Bamenda West",
+        "Mbengwi",
+        "Batibo"
+      ],
+      "baseFee": 3500,
+      "distanceKm": 10,
+      "description": "Western areas of Bamenda"
+    },
+    {
+      "_id": "zone_6",
+      "name": "Extended Zone",
+      "areas": [
+        "Other",
+        "Outside Bamenda"
+      ],
+      "baseFee": 5000,
+      "distanceKm": 20,
+      "description": "Extended delivery areas outside Bamenda"
+    }
+  ],
+  "deliveryTimeSlots": [
+    {
+      "_id": "slot_1",
+      "name": "Lunch Rush",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "isActive": true,
+      "description": "Peak lunch delivery hours"
+    },
+    {
+      "_id": "slot_2",
+      "name": "Afternoon",
+      "startTime": "13:00",
+      "endTime": "16:00",
+      "isActive": true,
+      "description": "Afternoon delivery window"
+    },
+    {
+      "_id": "slot_3",
+      "name": "Dinner Rush",
+      "startTime": "17:00",
+      "endTime": "20:00",
+      "isActive": true,
+      "description": "Peak dinner delivery hours"
+    },
+    {
+      "_id": "slot_4",
+      "name": "Evening",
+      "startTime": "20:00",
+      "endTime": "22:00",
+      "isActive": true,
+      "description": "Late evening delivery"
+    }
+  ],
+  "taxConfig": {
+    "_id": "tax_config_1",
+    "taxRate": 0.19,
+    "taxName": "VAT",
+    "description": "Value Added Tax for Cameroon",
+    "isActive": true,
+    "appliesToFood": true,
+    "appliesToDelivery": false
+  },
+  "foods": [
+    {
+      "_id": "food_bowl_1",
+      "name": "Ahi Poke Curation Bowl",
+      "description": "Wild-caught yellowfin tuna, sliced avocado, pickled heirloom radishes, and organic black rice tossed in a light sesame-ginger glaze.",
+      "price": 11100,
+      "category": "Signature Bowls",
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Yellowfin Tuna, Avocado, Radish, Black Rice, Sesame-Ginger Glaze",
+      "sourcing": "Pacific Fjord Harvest, Seattle, WA",
+      "prepTime": "12 mins",
+      "stock": 52,
+      "lowStockThreshold": 10,
+      "nutrients": {
+        "calories": "320 kcal",
+        "protein": "24g",
+        "carbs": "38g",
+        "fats": "10g",
+        "sodium": "290mg"
+      }
+    },
+    {
+      "_id": "food_bowl_2",
+      "name": "Truffle Wild Mushroom Bowl",
+      "description": "Pan-seared forest mushrooms, charred organic asparagus, roasted truffled quinoa, and creamy cashew-garlic cheese.",
+      "price": 12600,
+      "category": "Signature Bowls",
+      "stock": 45,
+      "lowStockThreshold": 10,
+      "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Forest Mushrooms, Asparagus, Quinoa, Cashew Cheese, Truffle Oil",
+      "sourcing": "Beverly Terraces Microgreens, Los Angeles, CA",
+      "prepTime": "15 mins",
+      "nutrients": {
+        "calories": "410 kcal",
+        "protein": "14g",
+        "carbs": "48g",
+        "fats": "16g",
+        "sodium": "320mg"
+      }
+    },
+    {
+      "_id": "food_roll_1",
+      "name": "Prosciutto & Fig Fire-Roll",
+      "description": "Crisp wood-fired artisanal dough, 24-month aged Parma prosciutto, sweet organic mission figs, and fresh buffalo mozzarella.",
+      "price": 9600,
+      "category": "Wood-Fired Rolls",
+      "stock": 60,
+      "lowStockThreshold": 15,
+      "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Artisan Dough, Parma Prosciutto, Mission Figs, Buffalo Mozzarella, Balsamic Glaze",
+      "sourcing": "Modena Vineyards, Emilia-Romagna, Italy",
+      "prepTime": "10 mins",
+      "nutrients": {
+        "calories": "480 kcal",
+        "protein": "21g",
+        "carbs": "52g",
+        "fats": "18g",
+        "sodium": "410mg"
+      }
+    },
+    {
+      "_id": "food_roll_2",
+      "name": "Smoked Salmon Brioche Roll",
+      "description": "Hickory-cold smoked Atlantic salmon, whipped dill cream cheese, baby capers, and organic microgreens inside toasted brioche.",
+      "price": 10500,
+      "category": "Wood-Fired Rolls",
+      "stock": 55,
+      "lowStockThreshold": 12,
+      "image": "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Atlantic Salmon, Toasted Brioche, Dill Cream Cheese, Capers, Microgreens",
+      "sourcing": "Pacific Fjord Harvest, Seattle, WA",
+      "prepTime": "14 mins",
+      "nutrients": {
+        "calories": "390 kcal",
+        "protein": "26g",
+        "carbs": "35g",
+        "fats": "15g",
+        "sodium": "380mg"
+      }
+    },
+    {
+      "_id": "food_dessert_1",
+      "name": "Saffron Cardamom Panna Cotta",
+      "description": "Silky premium cream infused with natural Kashmiri saffron and organic green cardamom, crowned with caramelized pistachios.",
+      "price": 9.5,
+      "category": "Artisan Desserts",
+      "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Fresh Cream, Kashmiri Saffron, Green Cardamom, Caramelized Pistachios",
+      "sourcing": "Ojai Saffron Meadows, Ojai, CA",
+      "prepTime": "8 mins",
+      "nutrients": {
+        "calories": "290 kcal",
+        "protein": "5g",
+        "carbs": "32g",
+        "fats": "14g",
+        "sodium": "95mg"
+      }
+    },
+    {
+      "_id": "food_dessert_2",
+      "name": "Valrhona Ganache Cake",
+      "description": "72% Valrhona single-origin dark chocolate cake layered with Madagascar vanilla mousse and flaked French sea salt.",
+      "price": 7200,
+      "category": "Artisan Desserts",
+      "stock": 75,
+      "lowStockThreshold": 18,
+      "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "72% Valrhona Chocolate, Organic Flour, Madagascar Vanilla, Fleur de Sel",
+      "sourcing": "Valrhona Studio, Tain-l'Hermitage, France",
+      "prepTime": "6 mins",
+      "nutrients": {
+        "calories": "450 kcal",
+        "protein": "7g",
+        "carbs": "48g",
+        "fats": "26g",
+        "sodium": "120mg"
+      }
+    },
+    {
+      "_id": "food_sandwich_1",
+      "name": "Aged Gruyere & Truffle Melt",
+      "description": "Slow-baked artisanal sourdough, caves-aged imported Swiss Gruyere, sweet caramelized onions, and stone-pressed white truffle butter.",
+      "price": 8700,
+      "category": "Gourmet Sandwiches",
+      "stock": 70,
+      "lowStockThreshold": 15,
+      "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Artisanal Sourdough, Swiss Gruyere, Caramelized Onions, White Truffle Butter",
+      "sourcing": "Sourdough Craft Guild, NY",
+      "prepTime": "11 mins",
+      "nutrients": {
+        "calories": "510 kcal",
+        "protein": "19g",
+        "carbs": "45g",
+        "fats": "22g",
+        "sodium": "460mg"
+      }
+    },
+    {
+      "_id": "food_sandwich_2",
+      "name": "Slow-Roasted Pork Belly Banh Mi",
+      "description": "24-hour slow-braised pork belly, pickled daikon radish, matchstick cucumber, fresh cilantro, and organic garlic-lime aioli.",
+      "price": 9000,
+      "category": "Gourmet Sandwiches",
+      "stock": 65,
+      "lowStockThreshold": 15,
+      "image": "https://images.unsplash.com/photo-1540713434306-53f2485e493b?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Braised Pork Belly, Crusty Baguette, Pickled Daikon, Cucumber, Garlic Aioli",
+      "sourcing": "Redwood Pasture Farms, Sonoma, CA",
+      "prepTime": "15 mins",
+      "nutrients": {
+        "calories": "580 kcal",
+        "protein": "24g",
+        "carbs": "50g",
+        "fats": "28g",
+        "sodium": "530mg"
+      }
+    },
+    {
+      "_id": "food_salad_1",
+      "name": "Burrata & Heirloom Tomato Salad",
+      "description": "Handmade local burrata cheese, vibrant organic heirloom tomatoes, cold-pressed basil pesto glaze, and aged Modena balsamic reduction.",
+      "price": 8400,
+      "category": "Curated Salads",
+      "stock": 85,
+      "lowStockThreshold": 20,
+      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Burrata Cheese, Heirloom Tomatoes, Basil Pesto, Aged Balsamic Reduction",
+      "sourcing": "Heirloom Greens & Artisanal Dairy, CA",
+      "prepTime": "9 mins",
+      "nutrients": {
+        "calories": "340 kcal",
+        "protein": "12g",
+        "carbs": "14g",
+        "fats": "24g",
+        "sodium": "280mg"
+      }
+    },
+    {
+      "_id": "food_salad_2",
+      "name": "Warm Goat Cheese & Pear Salad",
+      "description": "Crisp organic baby arugula, warm pecan-crusted French goat cheese rounds, sliced red pears, and local maple-mustard vinaigrette.",
+      "price": 9300,
+      "category": "Curated Salads",
+      "stock": 80,
+      "lowStockThreshold": 20,
+      "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Baby Arugula, French Goat Cheese, Red Pears, Pecan Crust, Maple-Mustard Vinaigrette",
+      "sourcing": "Ojai Saffron Meadows, Ojai, CA",
+      "prepTime": "10 mins",
+      "nutrients": {
+        "calories": "380 kcal",
+        "protein": "10g",
+        "carbs": "26g",
+        "fats": "22g",
+        "sodium": "310mg"
+      }
+    },
+    {
+      "_id": "food_pasta_1",
+      "name": "Lobster Saffron Ravioli",
+      "description": "Hand-rolled egg pasta sheets stuffed with sweet Maine lobster claw meat in a velvet saffron-chardonnay cream reduction.",
+      "price": 15600,
+      "category": "Special Pasta",
+      "stock": 40,
+      "lowStockThreshold": 8,
+      "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Egg Pasta, Maine Lobster, Saffron, Chardonnay, Heavy Cream",
+      "sourcing": "Maine Shellfish Dock & Ojai Saffron Meadows, USA",
+      "prepTime": "18 mins",
+      "nutrients": {
+        "calories": "620 kcal",
+        "protein": "34g",
+        "carbs": "55g",
+        "fats": "28g",
+        "sodium": "590mg"
+      }
+    },
+    {
+      "_id": "food_pasta_2",
+      "name": "Wild Boar Ragu Pappardelle",
+      "description": "Thick-cut fresh pappardelle tossed in a 12-hour slow-simmered wild boar shoulder ragu, topped with aged Pecorino Romano.",
+      "price": 14100,
+      "category": "Special Pasta",
+      "stock": 35,
+      "lowStockThreshold": 8,
+      "image": "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Fresh Pappardelle, Wild Boar Shoulder, Tomatoes, Pecorino Romano Cheese",
+      "sourcing": "Wild Game Provisions, Montana, USA",
+      "prepTime": "20 mins",
+      "nutrients": {
+        "calories": "680 kcal",
+        "protein": "38g",
+        "carbs": "62g",
+        "fats": "25g",
+        "sodium": "610mg"
+      }
+    },
+    {
+      "_id": "food_african_1",
+      "name": "Moroccan Saffron Tagine",
+      "description": "Slow-braised organic grass-fed lamb, soft honeyed apricots, roasted almonds, and authentic Moroccan saffron couscous.",
+      "price": 14700,
+      "category": "African Curations",
+      "stock": 30,
+      "lowStockThreshold": 8,
+      "image": "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Grass-Fed Lamb, Honeyed Apricots, Saffron Couscous, Roasted Almonds, Spices",
+      "sourcing": "Atlas Valley Cooperatives, Morocco",
+      "prepTime": "25 mins",
+      "nutrients": {
+        "calories": "580 kcal",
+        "protein": "32g",
+        "carbs": "64g",
+        "fats": "22g",
+        "sodium": "480mg"
+      }
+    },
+    {
+      "_id": "food_african_2",
+      "name": "Senegalese Jollof Rice",
+      "description": "Perfectly-steeped jasmine rice cooked in a rich, spiced reduction of organic red peppers, vine tomatoes, seared tiger prawns, and charred plantains.",
+      "price": 13200,
+      "category": "African Curations",
+      "stock": 38,
+      "lowStockThreshold": 10,
+      "image": "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Spiced Jasmine Rice, Tiger Prawns, Red Peppers, Tomatoes, Charred Plantains",
+      "sourcing": "Dakar Coastal Co-op, Senegal",
+      "prepTime": "22 mins",
+      "nutrients": {
+        "calories": "490 kcal",
+        "protein": "28g",
+        "carbs": "58g",
+        "fats": "14g",
+        "sodium": "420mg"
+      }
+    },
+    {
+      "_id": "food_african_3",
+      "name": "Ethiopian Spiced Doro Wat",
+      "description": "Tender chicken slow-braised in a complex berbere spice blend, organic clarified butter (niter kibbeh), served with soft fermented teff injera.",
+      "price": 13800,
+      "category": "African Curations",
+      "stock": 32,
+      "lowStockThreshold": 8,
+      "image": "https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&q=80&w=800",
+      "ingredients": "Braised Chicken, Berbere Spice, Clarified Butter, Fermented Teff Injera",
+      "sourcing": "Addis Highlands Organic Farms, Ethiopia",
+      "prepTime": "24 mins",
+      "nutrients": {
+        "calories": "520 kcal",
+        "protein": "35g",
+        "carbs": "45g",
+        "fats": "19g",
+        "sodium": "490mg"
+      }
+    }
+  ],
+  "orders": [
+    {
+      "_id": "order_1779125098585p6jj",
+      "userId": "17791249333588zj3",
+      "items": [
+        {
+          "_id": "food_dessert_1",
+          "name": "Saffron Cardamom Panna Cotta",
+          "description": "Silky premium cream infused with natural Kashmiri saffron and organic green cardamom, crowned with caramelized pistachios.",
+          "price": 5700,
+          "category": "Artisan Desserts",
+          "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&q=80&w=800",
+          "ingredients": "Fresh Cream, Kashmiri Saffron, Green Cardamom, Caramelized Pistachios",
+          "quantity": 1
+        }
+      ],
+      "amount": 8700,
+      "address": {
+        "firstName": "Amoh",
+        "lastName": "Joel",
+        "email": "joelamoh65@gmail.com",
+        "street": "bamenda",
+        "city": "BAMENDA",
+        "state": "NORTH WEST",
+        "zipCode": "1001",
+        "country": "Cameroon",
+        "phone": "673182399"
+      },
+      "status": "Food Processing",
+      "date": "2026-05-18T17:24:58.585Z",
+      "payment": true
+    }
+  ]
+}
