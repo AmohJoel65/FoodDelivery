@@ -63,6 +63,11 @@ app.use('/api/export', apiLimiter, exportRouter);
 // API Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// Health Check / Fallback API
+app.get('/api/health', (req, res) => {
+  res.json({ success: true, message: "Joel. Gastronomy API is live and healthy." });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   logger.error(err.message, {
@@ -85,11 +90,6 @@ app.use((req, res) => {
     success: false,
     message: 'Route not found'
   });
-});
-
-// Health Check / Fallback API
-app.get('/api/health', (req, res) => {
-  res.json({ success: true, message: "Joel. Gastronomy API is live and healthy." });
 });
 
 // Serve frontend in production
