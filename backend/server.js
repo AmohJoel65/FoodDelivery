@@ -19,8 +19,21 @@ app.use(helmet());
 // Database Initialization
 initializeDB();
 
-// Middlewares
-app.use(cors());
+// CORS — allow Vercel frontend + localhost in dev
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  process.env.FRONTEND_URL,          // e.g. https://yourapp.vercel.app
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // allow requests with no origin (curl, Postman, server-to-server)
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS blocked: ${origin}`));
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 // Request logging middleware
@@ -47,18 +60,22 @@ const deliveryTimeRouter = require('./routes/deliveryTimeRoutes');
 const taxRouter = require('./routes/taxRoutes');
 const refundRouter = require('./routes/refundRoutes');
 const exportRouter = require('./routes/exportRoutes');
+const testimonialRouter = require('./routes/testimonialRoutes');
+const cateringRouter   = require('./routes/cateringRoutes');
 
-app.use('/api/user', authLimiter, userRouter);
+app.use('/api/user', apiLimiter, userRouter);
 app.use('/api/food', apiLimiter, foodRouter);
 app.use('/api/cart', apiLimiter, cartRouter);
-app.use('/api/order', orderLimiter, orderRouter);
+app.use('/api/order', apiLimiter, orderRouter);
 app.use('/api/review', apiLimiter, reviewRouter);
-app.use('/api/coupon', couponLimiter, couponRouter);
+app.use('/api/coupon', apiLimiter, couponRouter);
 app.use('/api/delivery', apiLimiter, deliveryRouter);
 app.use('/api/delivery-time', apiLimiter, deliveryTimeRouter);
 app.use('/api/tax', apiLimiter, taxRouter);
 app.use('/api/refund', apiLimiter, refundRouter);
 app.use('/api/export', apiLimiter, exportRouter);
+app.use('/api/testimonial', apiLimiter, testimonialRouter);
+app.use('/api/catering',   apiLimiter, cateringRouter);
 
 // API Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

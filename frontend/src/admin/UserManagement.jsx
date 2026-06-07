@@ -98,8 +98,8 @@ const UserManagement = () => {
   if (loading) {
     return (
       <div className="py-20 flex flex-col justify-center items-center text-left">
-        <div className="w-10 h-10 border-3 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/50 uppercase mt-4">Loading User Database...</p>
+        <div className="w-10 h-10 border-3 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-[10px] font-bold tracking-widest text-brand-charcoal/50 uppercase mt-4">Loading User Database...</p>
       </div>
     );
   }
@@ -129,15 +129,15 @@ const UserManagement = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#ebdcae]/10 pb-6">
         <div>
-          <h1 className="text-3xl font-bold font-serif text-[#1a1a1a]">User Management</h1>
-          <p className="text-xs text-[#1a1a1a]/55 font-light tracking-wide mt-1">
+          <h1 className="text-3xl font-bold font-serif text-brand-charcoal">User Management</h1>
+          <p className="text-xs text-brand-charcoal/55 font-light tracking-wide mt-1">
             View, manage, and moderate registered customer accounts.
           </p>
         </div>
         <button 
           onClick={() => fetchUsers(true)}
           disabled={refreshing}
-          className="self-start px-4.5 py-2.5 bg-[#1a1a1a] hover:bg-[#d4af37] text-white hover:text-[#1a1a1a] rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-md active:scale-98 disabled:opacity-50"
+          className="self-start px-4.5 py-2.5 bg-brand-charcoal hover:bg-brand-gold text-white hover:text-brand-charcoal rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-md active:scale-98 disabled:opacity-50"
         >
           <RefreshCw size={11} className={`${refreshing ? "animate-spin" : ""}`} />
           <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
@@ -146,13 +146,13 @@ const UserManagement = () => {
 
       {/* SEARCH BAR */}
       <div className="relative max-w-md">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#1a1a1a]/30" size={18} />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-charcoal/30" size={18} />
         <input
           type="text"
           placeholder="Search users by name or email..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all shadow-sm"
+          className="w-full pl-12 pr-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all shadow-sm"
         />
       </div>
 
@@ -160,47 +160,47 @@ const UserManagement = () => {
       <div className="bg-white border border-[#ebdcae]/15 rounded-3xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-[#1a1a1a]/5 border-b border-[#ebdcae]/10">
+            <thead className="bg-brand-charcoal/5 border-b border-[#ebdcae]/10">
               <tr>
-                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">User</th>
-                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Email</th>
-                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Role</th>
-                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Status</th>
-                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Actions</th>
+                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">User</th>
+                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Email</th>
+                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Role</th>
+                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Status</th>
+                <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="px-6 py-12 text-center text-sm text-[#1a1a1a]/40 font-light italic">
+                  <td colSpan="5" className="px-6 py-12 text-center text-sm text-brand-charcoal/40 font-light italic">
                     No users found matching your search.
                   </td>
                 </tr>
               ) : (
                 filteredUsers.map((user) => (
-                  <tr key={user._id} className="border-b border-[#ebdcae]/5 hover:bg-[#fdfbf7]/50 transition-colors">
+                  <tr key={user._id} className="border-b border-[#ebdcae]/5 hover:bg-brand-cream/50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-[#d4af37]/10 flex items-center justify-center text-[#d4af37] font-bold text-sm">
+                        <div className="w-10 h-10 rounded-full bg-brand-gold/10 flex items-center justify-center text-brand-gold font-bold text-sm">
                           {user.name.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-[#1a1a1a]">{user.name}</p>
-                          <p className="text-[10px] text-[#1a1a1a]/40">ID: {user._id.slice(0, 8)}...</p>
+                          <p className="text-sm font-semibold text-brand-charcoal">{user.name}</p>
+                          <p className="text-[10px] text-brand-charcoal/40">ID: {user._id.slice(0, 8)}...</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-sm text-[#1a1a1a]/70">{user.email}</p>
+                      <p className="text-sm text-brand-charcoal/70">{user.email}</p>
                     </td>
                     <td className="px-6 py-4">
                       {user.isAdmin ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#d4af37]/10 text-[#d4af37] text-[10px] font-bold uppercase tracking-wider rounded-full border border-[#d4af37]/20">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-brand-gold/10 text-brand-gold text-[10px] font-bold uppercase tracking-wider rounded-full border border-brand-gold/20">
                           <Shield size={10} />
                           Admin
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#1a1a1a]/5 text-[#1a1a1a]/60 text-[10px] font-bold uppercase tracking-wider rounded-full">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-brand-charcoal/5 text-brand-charcoal/60 text-[10px] font-bold uppercase tracking-wider rounded-full">
                           <Users size={10} />
                           Customer
                         </span>
@@ -243,7 +243,7 @@ const UserManagement = () => {
                           </>
                         )}
                         {user.isAdmin && (
-                          <span className="text-[10px] text-[#1a1a1a]/30 italic">Protected</span>
+                          <span className="text-[10px] text-brand-charcoal/30 italic">Protected</span>
                         )}
                       </div>
                     </td>
@@ -256,7 +256,7 @@ const UserManagement = () => {
       </div>
 
       {/* STATS FOOTER */}
-      <div className="flex items-center justify-between text-xs text-[#1a1a1a]/50 font-light">
+      <div className="flex items-center justify-between text-xs text-brand-charcoal/50 font-light">
         <p>Total Users: {users.length}</p>
         <p>Active: {users.filter(u => !u.isBanned).length} | Banned: {users.filter(u => u.isBanned).length}</p>
       </div>

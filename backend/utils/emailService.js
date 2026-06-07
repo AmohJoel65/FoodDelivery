@@ -168,8 +168,79 @@ const sendPasswordResetEmail = async (email, resetToken) => {
   }
 };
 
+// Send catering inquiry notification to restaurant owner
+const sendCateringInquiry = async (inquiry) => {
+  try {
+    const transporter = createTransporter();
+    const ownerEmail = process.env.OWNER_EMAIL || 'joelamoh65@gmail.com';
+
+    const mailOptions = {
+      from: process.env.SMTP_FROM || '"Joel\'s Kitchen" <joelamoh65@gmail.com>',
+      to: ownerEmail,
+      replyTo: inquiry.email,
+      subject: `🍽️ New Catering Inquiry — ${inquiry.eventType} on ${inquiry.date}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; padding: 20px; background: #f9f9f9;">
+          <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+            <h1 style="color: #d4af37; margin: 0; font-size: 26px;">Joel's Kitchen</h1>
+            <p style="color: #fdfbf7; margin: 8px 0 0 0; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">New Catering Inquiry</p>
+          </div>
+          <div style="background: #ffffff; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #e0e0e0;">
+            
+            <h2 style="color: #1a1a1a; margin-top: 0; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">📋 Client Details</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+              <tr><td style="padding: 8px 0; color: #555; font-weight: bold; width: 40%;">Client Name</td><td style="padding: 8px 0; color: #1a1a1a;">${inquiry.name}</td></tr>
+              <tr style="background:#f9f9f9"><td style="padding: 8px 4px; color: #555; font-weight: bold;">Email Address</td><td style="padding: 8px 4px; color: #1a1a1a;"><a href="mailto:${inquiry.email}" style="color: #d4af37;">${inquiry.email}</a></td></tr>
+              <tr><td style="padding: 8px 0; color: #555; font-weight: bold;">Phone / WhatsApp</td><td style="padding: 8px 0; color: #1a1a1a;">${inquiry.phone}</td></tr>
+            </table>
+
+            <h2 style="color: #1a1a1a; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">🗓️ Event Details</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+              <tr><td style="padding: 8px 0; color: #555; font-weight: bold; width: 40%;">Event Date</td><td style="padding: 8px 0; color: #1a1a1a; font-weight: bold;">${inquiry.date}</td></tr>
+              <tr style="background:#f9f9f9"><td style="padding: 8px 4px; color: #555; font-weight: bold;">Event Category</td><td style="padding: 8px 4px; color: #1a1a1a;">${inquiry.eventType}</td></tr>
+              <tr><td style="padding: 8px 0; color: #555; font-weight: bold;">Guest Count</td><td style="padding: 8px 0; color: #1a1a1a; font-weight: bold;">${inquiry.guestCount} guests</td></tr>
+              <tr style="background:#f9f9f9"><td style="padding: 8px 4px; color: #555; font-weight: bold;">Gastronomy Theme</td><td style="padding: 8px 4px; color: #1a1a1a;">${inquiry.theme}</td></tr>
+              <tr><td style="padding: 8px 0; color: #555; font-weight: bold;">Dietary Requirements</td><td style="padding: 8px 0; color: #1a1a1a;">${inquiry.dietaryTheme}</td></tr>
+            </table>
+
+            ${inquiry.customRequests ? `
+            <h2 style="color: #1a1a1a; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">💬 Special Requests</h2>
+            <div style="background: #fffbf0; border-left: 4px solid #d4af37; padding: 16px; border-radius: 4px; margin-bottom: 24px;">
+              <p style="margin: 0; color: #333; line-height: 1.6; white-space: pre-wrap;">${inquiry.customRequests}</p>
+            </div>` : ''}
+
+            <div style="background: #1a1a1a; padding: 16px; border-radius: 8px; text-align: center;">
+              <p style="color: #fdfbf7; margin: 0 0 10px 0; font-size: 13px;">Reply directly to this inquiry:</p>
+              <a href="mailto:${inquiry.email}?subject=Re: Your Catering Inquiry for ${encodeURIComponent(inquiry.eventType)}"
+                 style="display: inline-block; padding: 10px 24px; background: #d4af37; color: #1a1a1a; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px; margin-right: 8px;">
+                ✉️ Reply via Email
+              </a>
+              <a href="https://wa.me/${inquiry.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello ' + inquiry.name + ', this is Joel\'s Kitchen regarding your catering inquiry for ' + inquiry.eventType + ' on ' + inquiry.date + '.')}"
+                 style="display: inline-block; padding: 10px 24px; background: #25D366; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 13px;">
+                💬 WhatsApp Client
+              </a>
+            </div>
+
+            <p style="color: #888; font-size: 11px; margin-top: 20px; text-align: center;">
+              Inquiry ID: ${inquiry._id} • Received: ${new Date(inquiry.submittedAt).toLocaleString()}
+            </p>
+          </div>
+        </div>
+      `
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Catering inquiry email sent:', info.messageId);
+    return { success: true, messageId: info.messageId };
+  } catch (error) {
+    console.error('Error sending catering inquiry email:', error);
+    return { success: false, error: error.message };
+  }
+};
+
 module.exports = {
   sendOrderConfirmation,
   sendOrderStatusUpdate,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  sendCateringInquiry
 };

@@ -1,17 +1,33 @@
 import React, { useContext, useEffect } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { StoreContext } from "../context/StoreContext";
-import { PlusCircle, ListCollapse, ShoppingBag, ShieldAlert, ArrowLeft, LayoutDashboard, Users, Ticket, MapPin, Clock, Percent, DollarSign, RefreshCw, FileText } from "lucide-react";
+import {
+  PlusCircle,
+  ListCollapse,
+  ShoppingBag,
+  ShieldAlert,
+  ArrowLeft,
+  LayoutDashboard,
+  Users,
+  Ticket,
+} from "lucide-react";
+
+const navItems = [
+  { to: "/admin", end: true, icon: LayoutDashboard, label: "Dashboard" },
+  { to: "/admin/orders", icon: ShoppingBag, label: "Orders" },
+  { to: "/admin/list", icon: ListCollapse, label: "Menu Items" },
+  { to: "/admin/add", icon: PlusCircle, label: "Add Item" },
+  { to: "/admin/users", icon: Users, label: "Users" },
+  { to: "/admin/coupons", icon: Ticket, label: "Coupons" },
+];
 
 const AdminLayout = () => {
   const { user, token, loading } = useContext(StoreContext);
   const navigate = useNavigate();
 
-  // Route guarding: only allow Admin users to view dashboard
   useEffect(() => {
     if (!loading) {
       if (!token || !user || !user.isAdmin) {
-        // Not authorized, redirect after small delay
         const timer = setTimeout(() => navigate("/"), 3000);
         return () => clearTimeout(timer);
       }
@@ -20,213 +36,81 @@ const AdminLayout = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-[#fdfbf7]">
-        <div className="w-12 h-12 border-4 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-xs font-semibold tracking-widest text-[#1a1a1a]/50 uppercase mt-4">Verifying Admin Credentials...</p>
+      <div className="min-h-screen flex flex-col justify-center items-center bg-brand-cream px-4">
+        <div className="w-10 h-10 border-4 border-brand-gold border-t-transparent rounded-full animate-spin" />
+        <p className="text-xs font-semibold text-brand-charcoal/50 mt-4">Verifying access...</p>
       </div>
     );
   }
 
   if (!token || !user || !user.isAdmin) {
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-[#fdfbf7] p-6 text-center select-none">
-        <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center text-red-650 border border-red-100 shadow-md animate-bounce mb-6">
-          <ShieldAlert size={32} />
-        </div>
-        <h2 className="text-3xl font-bold font-serif text-[#1a1a1a]">Access Restricted</h2>
-        <p className="text-sm text-[#1a1a1a]/60 mt-3 max-w-sm font-light leading-relaxed">
-          Administrative permissions required. Normal user credentials detected. Redirecting to Joel's home landing in 3 seconds...
-        </p>
-        <Link 
-          to="/" 
-          className="mt-8 px-6 py-3 bg-[#1a1a1a] hover:bg-[#d4af37] hover:text-[#1a1a1a] text-[#fdfbf7] font-semibold text-xs rounded-full flex items-center gap-2 transition-all shadow-md"
+      <div className="min-h-screen flex flex-col justify-center items-center bg-brand-cream p-6 text-center">
+        <ShieldAlert size={32} className="text-red-500 mb-4" />
+        <h2 className="text-2xl font-bold font-serif text-brand-charcoal">Access restricted</h2>
+        <p className="text-sm text-brand-charcoal/60 mt-2 max-w-sm">Admin permissions required. Redirecting...</p>
+        <Link
+          to="/"
+          className="mt-6 px-6 py-3 bg-brand-charcoal text-brand-cream font-semibold text-sm rounded-full flex items-center gap-2 min-h-[44px]"
         >
           <ArrowLeft size={14} />
-          Return Home Immediately
+          Back to shop
         </Link>
       </div>
     );
   }
 
+  const linkClass = ({ isActive }) =>
+    `flex items-center gap-2 px-3 py-2.5 md:px-4 md:py-3.5 rounded-xl text-[11px] md:text-xs font-semibold uppercase tracking-wider transition-all shrink-0 whitespace-nowrap min-h-[44px] ${
+      isActive
+        ? "bg-brand-gold text-brand-charcoal shadow-card"
+        : "text-brand-cream/75 hover:bg-white/5 hover:text-white"
+    }`;
+
   return (
-    <div className="min-h-screen bg-[#fdfbf7] flex flex-col md:flex-row text-left">
-      
-      {/* PERSISTENT SIDEBAR */}
-      <aside className="w-full md:w-64 bg-[#1a1a1a] text-[#fdfbf7] shrink-0 flex flex-col border-r border-[#ebdcae]/10">
-        
-        {/* Title branding */}
-        <div className="p-6 border-b border-white/5 flex items-center justify-between">
+    <div className="min-h-screen bg-brand-cream flex flex-col md:flex-row text-left">
+      <aside className="w-full md:w-64 bg-brand-charcoal text-brand-cream shrink-0 flex flex-col border-b md:border-b-0 md:border-r border-brand-gold/10">
+        <div className="p-4 md:p-6 border-b border-white/5 flex items-center justify-between">
           <div>
-            <Link to="/" className="text-2xl font-bold font-serif tracking-tight flex items-center gap-0.5">
-              <span>Joel</span>
-              <span className="text-[#d4af37]">.</span>
+            <Link to="/" className="text-xl md:text-2xl font-bold font-serif tracking-tight">
+              Joel<span className="text-brand-gold">.</span>
             </Link>
-            <p className="text-[9px] uppercase font-bold tracking-widest text-[#d4af37] mt-0.5">Admin Desk</p>
+            <p className="text-[9px] uppercase font-bold tracking-widest text-brand-gold mt-0.5">Admin</p>
           </div>
-          <span className="bg-[#d4af37]/20 border border-[#d4af37]/30 text-[#ebdcae] text-[8px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
-            Sysop
-          </span>
-        </div>
-
-        {/* Navigation links */}
-        <nav className="flex-grow p-4 flex flex-col gap-2">
-          
-          <NavLink 
-            to="/admin"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <LayoutDashboard size={16} />
-            <span>Dashboard</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/users"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <Users size={16} />
-            <span>Users</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/coupons"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <Ticket size={16} />
-            <span>Coupons</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/zones"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <MapPin size={16} />
-            <span>Zones</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/time-slots"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <Clock size={16} />
-            <span>Time Slots</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/tax"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <Percent size={16} />
-            <span>Tax</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/refunds"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <DollarSign size={16} />
-            <span>Refunds</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/export"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <FileText size={16} />
-            <span>Export</span>
-          </NavLink>
-
-          <div className="border-t border-white/10 my-2"></div>
-
-          <NavLink 
-            to="/admin/add"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <PlusCircle size={16} />
-            <span>Add Item</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/list"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <ListCollapse size={16} />
-            <span>List Items</span>
-          </NavLink>
-
-          <NavLink 
-            to="/admin/orders"
-            className={({ isActive }) => `flex items-center gap-3 px-4 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all ${
-              isActive 
-                ? "bg-[#d4af37] text-[#1a1a1a] shadow-lg shadow-gold-500/10 scale-102 font-bold" 
-                : "text-[#fdfbf7]/75 hover:bg-white/5 hover:text-white"
-            }`}
-          >
-            <ShoppingBag size={16} />
-            <span>Manage Orders</span>
-          </NavLink>
-
-        </nav>
-
-        {/* Back link at bottom */}
-        <div className="p-4 border-t border-white/5">
-          <Link 
+          <Link
             to="/"
-            className="flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold text-[#fdfbf7]/70 hover:text-white transition-all"
+            className="md:hidden flex items-center gap-1 text-[10px] font-semibold text-brand-cream/60 hover:text-brand-gold px-2 py-1"
           >
-            <ArrowLeft size={13} />
-            Back to Client Shop
+            <ArrowLeft size={12} />
+            Shop
           </Link>
         </div>
 
+        <nav className="flex md:flex-col overflow-x-auto md:overflow-visible gap-1 p-2 md:p-4 md:flex-grow no-scrollbar snap-x-mandatory">
+          {navItems.map(({ to, end, icon: Icon, label }) => (
+            <NavLink key={to} to={to} end={end} className={linkClass}>
+              <Icon size={16} />
+              <span>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="hidden md:block p-4 border-t border-white/5">
+          <Link
+            to="/"
+            className="flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold text-brand-cream/70 hover:text-white transition-all min-h-[44px]"
+          >
+            <ArrowLeft size={13} />
+            Back to shop
+          </Link>
+        </div>
       </aside>
 
-      {/* ADMIN SUBPAGE CONTAINER */}
-      <main className="flex-grow p-8 md:p-12 overflow-y-auto">
-        <div className="max-w-5xl mx-auto">
+      <main className="flex-grow p-4 sm:p-6 md:p-10 lg:p-12 overflow-y-auto overflow-x-hidden">
+        <div className="max-w-5xl mx-auto w-full">
           <Outlet />
         </div>
       </main>
-
     </div>
   );
 };

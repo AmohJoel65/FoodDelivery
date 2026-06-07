@@ -36,17 +36,17 @@ const Careers = () => {
 
   const culturePillars = [
     {
-      icon: <ChefHat className="w-6 h-6 text-[#d4af37]" />,
+      icon: <ChefHat className="w-6 h-6 text-brand-gold" />,
       title: "Uncompromising Precision",
       description: "We focus on the minute details, from raw ingredient temperatures to organic microgreens plating coordinates."
     },
     {
-      icon: <Heart className="w-6 h-6 text-[#d4af37]" />,
+      icon: <Heart className="w-6 h-6 text-brand-gold" />,
       title: "Zero Waste Integrity",
       description: "Our kitchen honors every harvest. We coordinate active compost loops and zero-waste broth reductions daily."
     },
     {
-      icon: <Award className="w-6 h-6 text-[#d4af37]" />,
+      icon: <Award className="w-6 h-6 text-brand-gold" />,
       title: "Active Mentorship",
       description: "Every station is a learning lab. We fund external certifications, pastry seminars, and organic farm tours."
     }
@@ -189,20 +189,20 @@ const Careers = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#fdfbf7] text-[#1a1a1a] pb-24" aria-label="Joel Careers and Opportunities Page">
+    <main className="min-h-screen bg-brand-cream text-brand-charcoal pb-24" aria-label="Joel Careers and Opportunities Page">
       {/* 1. Luxurious Banner Header */}
-      <section className="relative bg-[#1a1a1a] text-[#fdfbf7] py-28 md:py-36 px-6 overflow-hidden">
+      <section className="relative bg-brand-charcoal text-brand-cream py-28 md:py-36 px-6 overflow-hidden">
         <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full border border-[#d4af37] blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full border border-brand-gold blur-3xl"></div>
         </div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          <span className="text-[#d4af37] font-medium tracking-[0.2em] text-xs uppercase block mb-3 animate-fade-in">
+          <span className="text-brand-gold font-medium tracking-[0.2em] text-xs uppercase block mb-3 animate-fade-in">
             Join Our Culinary Family
           </span>
-          <h1 className="text-4xl md:text-6xl font-serif tracking-tight mb-6 text-[#fdfbf7]">
+          <h1 className="text-4xl md:text-6xl font-serif tracking-tight mb-6 text-brand-cream">
             Culinary Artistry Careers
           </h1>
-          <p className="max-w-2xl mx-auto text-[#fdfbf7]/80 text-base md:text-lg font-light leading-relaxed">
+          <p className="max-w-2xl mx-auto text-brand-cream/80 text-base md:text-lg font-light leading-relaxed">
             We are looking for dedicated culinary technicians, hospitality leaders, and logistics professionals. 
             Grow your skills inside a modern, clean-cooking, and uncompromised artisanal food ecosystem.
           </p>
@@ -213,9 +213,9 @@ const Careers = () => {
       <section className="max-w-7xl mx-auto px-6 py-20" aria-label="Kitchen Culture and Pillars">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5 space-y-6">
-            <span className="text-[#d4af37] text-xs tracking-widest uppercase font-semibold block">Kitchen Culture</span>
+            <span className="text-brand-gold text-xs tracking-widest uppercase font-semibold block">Kitchen Culture</span>
             <h2 className="text-3xl md:text-4xl font-serif leading-tight">Where Fine Craftsmanship Meets Pure Community</h2>
-            <div className="w-12 h-[2px] bg-[#d4af37]"></div>
+            <div className="w-12 h-[2px] bg-brand-gold"></div>
             <p className="text-sm text-gray-600 font-light leading-relaxed">
               At **Joel.**, we believe a kitchen should operate with absolute respect, focus, and collaboration. 
               We banish classical high-stress shouting in favor of structured prep, deep culinary theory, 
@@ -230,7 +230,7 @@ const Careers = () => {
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-6">
             {culturePillars.map((pillar, idx) => (
               <div key={idx} className="bg-white p-6 rounded-2xl border border-[#e4e1db]/60 shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="w-12 h-12 rounded-xl bg-[#fdfbf7] flex items-center justify-center border border-[#e4e1db]/60 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-brand-cream flex items-center justify-center border border-[#e4e1db]/60 mb-5">
                   {pillar.icon}
                 </div>
                 <h3 className="text-base font-serif mb-2 font-semibold">{pillar.title}</h3>
@@ -244,9 +244,9 @@ const Careers = () => {
       {/* 3. Accordion Jobs List */}
       <section className="max-w-4xl mx-auto px-6 py-12" aria-label="Active Openings List">
         <div className="text-center mb-16">
-          <span className="text-[#d4af37] text-xs tracking-widest uppercase font-semibold block mb-2">Our Openings</span>
+          <span className="text-brand-gold text-xs tracking-widest uppercase font-semibold block mb-2">Our Openings</span>
           <h2 className="text-3xl md:text-4xl font-serif">Current Opportunities</h2>
-          <div className="w-12 h-[2px] bg-[#d4af37] mx-auto mt-4"></div>
+          <div className="w-12 h-[2px] bg-brand-gold mx-auto mt-4"></div>
         </div>
 
         <div className="space-y-6">
@@ -256,7 +256,7 @@ const Careers = () => {
               <div 
                 key={job.id} 
                 className={`bg-white rounded-2xl border border-[#e4e1db]/80 overflow-hidden shadow-sm transition-all duration-300 ${
-                  isExpanded ? "ring-2 ring-[#d4af37]/30 border-transparent" : "hover:border-gray-400"
+                  isExpanded ? "ring-2 ring-brand-gold/30 border-transparent" : "hover:border-gray-400"
                 }`}
               >
                 {/* Accordion header */}
@@ -267,16 +267,16 @@ const Careers = () => {
                   aria-controls={`job-details-${job.id}`}
                 >
                   <div className="space-y-1">
-                    <span className="text-[10px] tracking-widest uppercase font-bold text-[#d4af37]">{job.type}</span>
+                    <span className="text-[10px] tracking-widest uppercase font-bold text-brand-gold">{job.type}</span>
                     <h3 className="text-xl font-serif font-bold text-gray-900">{job.title}</h3>
                     <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500 font-light">
                       <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {job.location}</span>
                       <span className="flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" /> {job.compensation}</span>
                     </div>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-[#fdfbf7] border border-[#e4e1db] flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-brand-cream border border-[#e4e1db] flex items-center justify-center shrink-0">
                     {isExpanded ? (
-                      <Minus className="w-5 h-5 text-[#1a1a1a]" />
+                      <Minus className="w-5 h-5 text-brand-charcoal" />
                     ) : (
                       <Plus className="w-5 h-5 text-gray-500" />
                     )}
@@ -287,7 +287,7 @@ const Careers = () => {
                 {isExpanded && (
                   <div 
                     id={`job-details-${job.id}`}
-                    className="p-6 pt-0 border-t border-gray-100 bg-[#fdfbf7]/50 space-y-6 animate-fade-in"
+                    className="p-6 pt-0 border-t border-gray-100 bg-brand-cream/50 space-y-6 animate-fade-in"
                   >
                     <p className="text-sm text-gray-600 font-light leading-relaxed mt-4">
                       {job.description}
@@ -296,12 +296,12 @@ const Careers = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-3">
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-700 flex items-center gap-1.5">
-                          <Award className="w-4 h-4 text-[#d4af37]" /> Key Requirements:
+                          <Award className="w-4 h-4 text-brand-gold" /> Key Requirements:
                         </h4>
                         <ul className="space-y-2">
                           {job.requirements.map((req, i) => (
                             <li key={i} className="text-xs text-gray-500 font-light flex items-start gap-2 leading-relaxed">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37] mt-1.5 shrink-0"></span>
+                              <span className="w-1.5 h-1.5 rounded-full bg-brand-gold mt-1.5 shrink-0"></span>
                               <span>{req}</span>
                             </li>
                           ))}
@@ -310,12 +310,12 @@ const Careers = () => {
 
                       <div className="space-y-3">
                         <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-700 flex items-center gap-1.5">
-                          <Compass className="w-4 h-4 text-[#d4af37]" /> Core Responsibilities:
+                          <Compass className="w-4 h-4 text-brand-gold" /> Core Responsibilities:
                         </h4>
                         <ul className="space-y-2">
                           {job.responsibilities.map((resp, i) => (
                             <li key={i} className="text-xs text-gray-500 font-light flex items-start gap-2 leading-relaxed">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37] mt-1.5 shrink-0"></span>
+                              <span className="w-1.5 h-1.5 rounded-full bg-brand-gold mt-1.5 shrink-0"></span>
                               <span>{resp}</span>
                             </li>
                           ))}
@@ -326,7 +326,7 @@ const Careers = () => {
                     <div className="pt-4 flex justify-end">
                       <button 
                         onClick={() => openApplyDrawer(job)}
-                        className="py-3 px-6 bg-[#1a1a1a] text-white hover:bg-[#1a1a1a]/95 text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center gap-2 active:scale-95 transition-all shadow-md"
+                        className="py-3 px-6 bg-brand-charcoal text-white hover:bg-brand-charcoal/95 text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center gap-2 active:scale-95 transition-all shadow-md"
                         aria-label={`Apply Now for ${job.title}`}
                       >
                         Apply Now <ArrowRight className="w-4 h-4" />
@@ -346,7 +346,7 @@ const Careers = () => {
           {/* Backdrop blur clickoff */}
           <div 
             onClick={closeApplyDrawer}
-            className="absolute inset-0 bg-[#1a1a1a]/40 backdrop-blur-sm transition-opacity"
+            className="absolute inset-0 bg-brand-charcoal/40 backdrop-blur-sm transition-opacity"
           ></div>
           
           <div className="absolute inset-y-0 right-0 max-w-full flex">
@@ -356,7 +356,7 @@ const Careers = () => {
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-gray-100 pb-5 mb-6">
                   <div>
-                    <span className="text-[10px] tracking-widest uppercase font-bold text-[#d4af37]">Culinary Application</span>
+                    <span className="text-[10px] tracking-widest uppercase font-bold text-brand-gold">Culinary Application</span>
                     <h3 className="text-xl font-serif font-bold text-gray-900 leading-tight">Apply for Role</h3>
                     <p className="text-xs text-gray-500 font-light mt-0.5">{selectedJob?.title}</p>
                   </div>
@@ -383,7 +383,7 @@ const Careers = () => {
                         onChange={handleInputChange}
                         name="name"
                         placeholder="e.g. Alexis Harrington"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm"
                       />
                     </div>
                   </div>
@@ -400,7 +400,7 @@ const Careers = () => {
                         onChange={handleInputChange}
                         name="email"
                         placeholder="e.g. alexis@example.com"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm"
                       />
                     </div>
                   </div>
@@ -417,7 +417,7 @@ const Careers = () => {
                         onChange={handleInputChange}
                         name="phone"
                         placeholder="e.g. 310-555-0199"
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm"
                       />
                     </div>
                   </div>
@@ -428,7 +428,7 @@ const Careers = () => {
                     <div className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all ${
                       fileUploaded 
                         ? "border-emerald-500 bg-emerald-50/20" 
-                        : "border-[#e4e1db] bg-[#fdfbf7] hover:border-gray-400"
+                        : "border-[#e4e1db] bg-brand-cream hover:border-gray-400"
                     }`}>
                       <input 
                         type="file" 
@@ -467,13 +467,13 @@ const Careers = () => {
                       onChange={handleInputChange}
                       name="message"
                       placeholder="Detail your kitchen passion in a few brief sentences..."
-                      className="w-full px-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm resize-none"
+                      className="w-full px-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm resize-none"
                     ></textarea>
                   </div>
 
                   <button 
                     type="submit"
-                    className="w-full py-3.5 bg-[#d4af37] text-[#1a1a1a] hover:bg-[#d4af37]/90 text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all font-bold shadow-md"
+                    className="w-full py-3.5 bg-brand-gold text-brand-charcoal hover:bg-brand-gold/90 text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all font-bold shadow-md"
                   >
                     Submit Application
                   </button>

@@ -12,6 +12,9 @@ out/
 .env
 .env.local
 .env.production
+.env.*.local
+backend/.env
+frontend/.env.local
 
 # IDE
 .vscode/
@@ -33,5 +36,9 @@ yarn-error.log*
 # Uploads
 backend/uploads/
 
-# Database (if you want to exclude db.json from git)
-# backend/data/db.json
+# Database (live data - don't commit to git)
+backend/data/db.json
+
+# Coverage
+coverage/
+

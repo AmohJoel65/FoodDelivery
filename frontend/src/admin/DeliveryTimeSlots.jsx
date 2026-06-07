@@ -150,8 +150,8 @@ const DeliveryTimeSlots = () => {
   if (loading) {
     return (
       <div className="py-20 flex flex-col justify-center items-center text-left">
-        <div className="w-10 h-10 border-3 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/50 uppercase mt-4">Loading Time Slots...</p>
+        <div className="w-10 h-10 border-3 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-[10px] font-bold tracking-widest text-brand-charcoal/50 uppercase mt-4">Loading Time Slots...</p>
       </div>
     );
   }
@@ -181,8 +181,8 @@ const DeliveryTimeSlots = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#ebdcae]/10 pb-6">
         <div>
-          <h1 className="text-3xl font-bold font-serif text-[#1a1a1a]">Delivery Time Slots</h1>
-          <p className="text-xs text-[#1a1a1a]/55 font-light tracking-wide mt-1">
+          <h1 className="text-3xl font-bold font-serif text-brand-charcoal">Delivery Time Slots</h1>
+          <p className="text-xs text-brand-charcoal/55 font-light tracking-wide mt-1">
             Manage available delivery time windows for customers.
           </p>
         </div>
@@ -190,7 +190,7 @@ const DeliveryTimeSlots = () => {
           <button 
             onClick={() => fetchSlots(true)}
             disabled={refreshing}
-            className="px-4.5 py-2.5 bg-white border border-[#ebdcae]/20 text-[#1a1a1a] rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-sm active:scale-98 disabled:opacity-50"
+            className="px-4.5 py-2.5 bg-white border border-[#ebdcae]/20 text-brand-charcoal rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-sm active:scale-98 disabled:opacity-50"
           >
             <RefreshCw size={11} className={`${refreshing ? "animate-spin" : ""}`} />
             <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
@@ -206,7 +206,7 @@ const DeliveryTimeSlots = () => {
               });
               setShowModal(true);
             }}
-            className="px-4.5 py-2.5 bg-[#d4af37] hover:bg-[#b88934] text-[#1a1a1a] rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-md active:scale-98"
+            className="px-4.5 py-2.5 bg-brand-gold hover:bg-brand-gold-dark text-brand-charcoal rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-md active:scale-98"
           >
             <Plus size={11} />
             <span>New Slot</span>
@@ -218,16 +218,16 @@ const DeliveryTimeSlots = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {slots.length === 0 ? (
           <div className="col-span-full bg-white border border-[#ebdcae]/15 rounded-3xl p-12 text-center">
-            <Clock size={48} className="mx-auto text-[#1a1a1a]/20 mb-4" />
-            <p className="text-sm text-[#1a1a1a]/40 font-light italic">No delivery time slots configured yet.</p>
+            <Clock size={48} className="mx-auto text-brand-charcoal/20 mb-4" />
+            <p className="text-sm text-brand-charcoal/40 font-light italic">No delivery time slots configured yet.</p>
           </div>
         ) : (
           slots.map((slot) => (
             <div key={slot._id} className="bg-white border border-[#ebdcae]/15 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-[#d4af37]/5 rounded-bl-full transition-all group-hover:scale-105" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-brand-gold/5 rounded-bl-full transition-all group-hover:scale-105" />
               
               <div className="flex items-start justify-between mb-4">
-                <div className={`p-3 rounded-xl ${slot.isActive ? "bg-[#d4af37]/10 text-[#d4af37]" : "bg-gray-100 text-gray-400"}`}>
+                <div className={`p-3 rounded-xl ${slot.isActive ? "bg-brand-gold/10 text-brand-gold" : "bg-gray-100 text-gray-400"}`}>
                   <Clock size={20} />
                 </div>
                 <div className="flex items-center gap-2">
@@ -240,7 +240,7 @@ const DeliveryTimeSlots = () => {
                   </button>
                   <button
                     onClick={() => handleEdit(slot)}
-                    className="p-2 bg-[#1a1a1a]/5 text-[#1a1a1a]/60 rounded-lg hover:bg-[#1a1a1a]/10 transition-all"
+                    className="p-2 bg-brand-charcoal/5 text-brand-charcoal/60 rounded-lg hover:bg-brand-charcoal/10 transition-all"
                     title="Edit slot"
                   >
                     <Edit2 size={14} />
@@ -255,11 +255,11 @@ const DeliveryTimeSlots = () => {
                 </div>
               </div>
 
-              <h3 className="text-lg font-bold text-[#1a1a1a] mb-2">{slot.name}</h3>
+              <h3 className="text-lg font-bold text-brand-charcoal mb-2">{slot.name}</h3>
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-2xl font-bold text-[#d4af37]">{slot.startTime}</span>
-                <span className="text-[#1a1a1a]/30">-</span>
-                <span className="text-2xl font-bold text-[#d4af37]">{slot.endTime}</span>
+                <span className="text-2xl font-bold text-brand-gold">{slot.startTime}</span>
+                <span className="text-brand-charcoal/30">-</span>
+                <span className="text-2xl font-bold text-brand-gold">{slot.endTime}</span>
               </div>
 
               <div className="mt-4 pt-4 border-t border-[#ebdcae]/10">
@@ -273,7 +273,7 @@ const DeliveryTimeSlots = () => {
               </div>
 
               {slot.description && (
-                <p className="text-xs text-[#1a1a1a]/50 mt-3 line-clamp-2">{slot.description}</p>
+                <p className="text-xs text-brand-charcoal/50 mt-3 line-clamp-2">{slot.description}</p>
               )}
             </div>
           ))
@@ -282,20 +282,20 @@ const DeliveryTimeSlots = () => {
 
       {/* SLOT MODAL */}
       {showModal && (
-        <div className="fixed inset-0 bg-[#1a1a1a]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-200">
-            <h2 className="text-2xl font-bold font-serif text-[#1a1a1a] mb-6">
+        <div className="fixed inset-0 bg-brand-charcoal/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-scale-in">
+            <h2 className="text-2xl font-bold font-serif text-brand-charcoal mb-6">
               {editingSlot ? "Edit Time Slot" : "Create New Time Slot"}
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Slot Name</label>
+                <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Slot Name</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                   placeholder="Lunch Rush"
                   required
                 />
@@ -303,33 +303,33 @@ const DeliveryTimeSlots = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Start Time</label>
+                  <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Start Time</label>
                   <input
                     type="time"
                     value={formData.startTime}
                     onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">End Time</label>
+                  <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">End Time</label>
                   <input
                     type="time"
                     value={formData.endTime}
                     onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Description</label>
+                <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Description</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all resize-none"
                   rows="3"
                   placeholder="Peak lunch hours"
                 />
@@ -342,13 +342,13 @@ const DeliveryTimeSlots = () => {
                     setShowModal(false);
                     setEditingSlot(null);
                   }}
-                  className="flex-1 px-4 py-3 bg-[#1a1a1a]/5 text-[#1a1a1a] rounded-xl font-semibold text-sm transition-all hover:bg-[#1a1a1a]/10"
+                  className="flex-1 px-4 py-3 bg-brand-charcoal/5 text-brand-charcoal rounded-xl font-semibold text-sm transition-all hover:bg-brand-charcoal/10"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-3 bg-[#d4af37] text-[#1a1a1a] rounded-xl font-semibold text-sm transition-all hover:bg-[#b88934]"
+                  className="flex-1 px-4 py-3 bg-brand-gold text-brand-charcoal rounded-xl font-semibold text-sm transition-all hover:bg-brand-gold-dark"
                 >
                   {editingSlot ? "Update" : "Create"}
                 </button>

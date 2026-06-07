@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { parseApiError } from "../utils/apiErrors";
 
 export const StoreContext = createContext(null);
 
@@ -39,8 +40,8 @@ const StoreProvider = (props) => {
     }
   });
 
-  // Core API URL (Proxy makes relative calls direct to Vite, which proxies to Node)
-  const url = import.meta.env.VITE_API_URL || "https://fooddelivery-82je.onrender.com"; 
+  // Empty string = relative /api calls via Vite proxy → localhost:4000 in dev
+  const url = import.meta.env.VITE_API_URL ?? "";
 
   // Luxury Toast Helper
   const showToast = (message, type = "success") => {
@@ -57,10 +58,11 @@ const StoreProvider = (props) => {
 
   // Custom Alert Helper
   const showAlert = (message, type = "info", title = "") => {
+    const friendlyMessage = type === "error" ? parseApiError(message) : message;
     setCustomModal({
       isOpen: true,
-      title: title || (type === "error" ? "Error" : type === "success" ? "Success" : type === "warning" ? "Warning" : "Information"),
-      message,
+      title: title || (type === "error" ? "Something went wrong" : type === "success" ? "Done" : type === "warning" ? "Heads up" : "Notice"),
+      message: friendlyMessage,
       type,
       onConfirm: null,
       confirmText: "OK",

@@ -130,8 +130,8 @@ const CouponManagement = () => {
   if (loading) {
     return (
       <div className="py-20 flex flex-col justify-center items-center text-left">
-        <div className="w-10 h-10 border-3 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/50 uppercase mt-4">Loading Coupons...</p>
+        <div className="w-10 h-10 border-3 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-[10px] font-bold tracking-widest text-brand-charcoal/50 uppercase mt-4">Loading Coupons...</p>
       </div>
     );
   }
@@ -161,8 +161,8 @@ const CouponManagement = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#ebdcae]/10 pb-6">
         <div>
-          <h1 className="text-3xl font-bold font-serif text-[#1a1a1a]">Coupon Management</h1>
-          <p className="text-xs text-[#1a1a1a]/55 font-light tracking-wide mt-1">
+          <h1 className="text-3xl font-bold font-serif text-brand-charcoal">Coupon Management</h1>
+          <p className="text-xs text-brand-charcoal/55 font-light tracking-wide mt-1">
             Create and manage discount codes for promotions.
           </p>
         </div>
@@ -170,7 +170,7 @@ const CouponManagement = () => {
           <button 
             onClick={() => fetchCoupons(true)}
             disabled={refreshing}
-            className="px-4.5 py-2.5 bg-white border border-[#ebdcae]/20 text-[#1a1a1a] rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-sm active:scale-98 disabled:opacity-50"
+            className="px-4.5 py-2.5 bg-white border border-[#ebdcae]/20 text-brand-charcoal rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-sm active:scale-98 disabled:opacity-50"
           >
             <RefreshCw size={11} className={`${refreshing ? "animate-spin" : ""}`} />
             <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
@@ -188,7 +188,7 @@ const CouponManagement = () => {
               });
               setShowModal(true);
             }}
-            className="px-4.5 py-2.5 bg-[#d4af37] hover:bg-[#b88934] text-[#1a1a1a] rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-md active:scale-98"
+            className="px-4.5 py-2.5 bg-brand-gold hover:bg-brand-gold-dark text-brand-charcoal rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-md active:scale-98"
           >
             <Plus size={11} />
             <span>New Coupon</span>
@@ -200,22 +200,22 @@ const CouponManagement = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {coupons.length === 0 ? (
           <div className="col-span-full bg-white border border-[#ebdcae]/15 rounded-3xl p-12 text-center">
-            <Ticket size={48} className="mx-auto text-[#1a1a1a]/20 mb-4" />
-            <p className="text-sm text-[#1a1a1a]/40 font-light italic">No coupons created yet.</p>
+            <Ticket size={48} className="mx-auto text-brand-charcoal/20 mb-4" />
+            <p className="text-sm text-brand-charcoal/40 font-light italic">No coupons created yet.</p>
           </div>
         ) : (
           coupons.map((coupon) => (
             <div key={coupon._id} className="bg-white border border-[#ebdcae]/15 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-[#d4af37]/5 rounded-bl-full transition-all group-hover:scale-105" />
+              <div className="absolute top-0 right-0 w-20 h-20 bg-brand-gold/5 rounded-bl-full transition-all group-hover:scale-105" />
               
               <div className="flex items-start justify-between mb-4">
-                <div className="p-3 bg-[#d4af37]/10 rounded-xl text-[#d4af37]">
+                <div className="p-3 bg-brand-gold/10 rounded-xl text-brand-gold">
                   {coupon.discountType === "percentage" ? <Percent size={20} /> : <DollarSign size={20} />}
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleEdit(coupon)}
-                    className="p-2 bg-[#1a1a1a]/5 text-[#1a1a1a]/60 rounded-lg hover:bg-[#1a1a1a]/10 transition-all"
+                    className="p-2 bg-brand-charcoal/5 text-brand-charcoal/60 rounded-lg hover:bg-brand-charcoal/10 transition-all"
                     title="Edit coupon"
                   >
                     <Edit2 size={14} />
@@ -230,19 +230,19 @@ const CouponManagement = () => {
                 </div>
               </div>
 
-              <h3 className="text-lg font-bold text-[#1a1a1a] mb-1">{coupon.code}</h3>
-              <p className="text-2xl font-bold text-[#d4af37] mb-3">
+              <h3 className="text-lg font-bold text-brand-charcoal mb-1">{coupon.code}</h3>
+              <p className="text-2xl font-bold text-brand-gold mb-3">
                 {coupon.discountType === "percentage" ? `${coupon.discountValue}%` : `${coupon.discountValue} FCFA`}
               </p>
 
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-[#1a1a1a]/50">Min Order:</span>
-                  <span className="font-semibold text-[#1a1a1a]">{coupon.minOrderAmount} FCFA</span>
+                  <span className="text-brand-charcoal/50">Min Order:</span>
+                  <span className="font-semibold text-brand-charcoal">{coupon.minOrderAmount} FCFA</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#1a1a1a]/50">Usage:</span>
-                  <span className="font-semibold text-[#1a1a1a]">{coupon.usageCount}/{coupon.usageLimit}</span>
+                  <span className="text-brand-charcoal/50">Usage:</span>
+                  <span className="font-semibold text-brand-charcoal">{coupon.usageCount}/{coupon.usageLimit}</span>
                 </div>
               </div>
 
@@ -262,31 +262,31 @@ const CouponManagement = () => {
 
       {/* COUPON MODAL */}
       {showModal && (
-        <div className="fixed inset-0 bg-[#1a1a1a]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-200">
-            <h2 className="text-2xl font-bold font-serif text-[#1a1a1a] mb-6">
+        <div className="fixed inset-0 bg-brand-charcoal/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-scale-in">
+            <h2 className="text-2xl font-bold font-serif text-brand-charcoal mb-6">
               {editingCoupon ? "Edit Coupon" : "Create New Coupon"}
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Coupon Code</label>
+                <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Coupon Code</label>
                 <input
                   type="text"
                   value={formData.code}
                   onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                   placeholder="SUMMER2024"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Discount Type</label>
+                <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Discount Type</label>
                 <select
                   value={formData.discountType}
                   onChange={(e) => setFormData({ ...formData, discountType: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                 >
                   <option value="percentage">Percentage (%)</option>
                   <option value="fixed">Fixed Amount (FCFA)</option>
@@ -294,36 +294,36 @@ const CouponManagement = () => {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Discount Value</label>
+                <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Discount Value</label>
                 <input
                   type="number"
                   value={formData.discountValue}
                   onChange={(e) => setFormData({ ...formData, discountValue: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                   placeholder={formData.discountType === "percentage" ? "10" : "5000"}
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Minimum Order Amount (FCFA)</label>
+                <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Minimum Order Amount (FCFA)</label>
                 <input
                   type="number"
                   value={formData.minOrderAmount}
                   onChange={(e) => setFormData({ ...formData, minOrderAmount: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                   placeholder="10000"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Usage Limit</label>
+                <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Usage Limit</label>
                 <input
                   type="number"
                   value={formData.usageLimit}
                   onChange={(e) => setFormData({ ...formData, usageLimit: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                   placeholder="100"
                   required
                 />
@@ -335,9 +335,9 @@ const CouponManagement = () => {
                   id="isActive"
                   checked={formData.isActive}
                   onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                  className="w-4 h-4 rounded border-[#1a1a1a]/20 text-[#d4af37] focus:ring-[#d4af37]"
+                  className="w-4 h-4 rounded border-brand-charcoal/20 text-brand-gold focus:ring-brand-gold"
                 />
-                <label htmlFor="isActive" className="text-sm text-[#1a1a1a]">Active</label>
+                <label htmlFor="isActive" className="text-sm text-brand-charcoal">Active</label>
               </div>
 
               <div className="flex gap-3 pt-4">
@@ -347,13 +347,13 @@ const CouponManagement = () => {
                     setShowModal(false);
                     setEditingCoupon(null);
                   }}
-                  className="flex-1 px-4 py-3 bg-[#1a1a1a]/5 text-[#1a1a1a] rounded-xl font-semibold text-sm transition-all hover:bg-[#1a1a1a]/10"
+                  className="flex-1 px-4 py-3 bg-brand-charcoal/5 text-brand-charcoal rounded-xl font-semibold text-sm transition-all hover:bg-brand-charcoal/10"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-3 bg-[#d4af37] text-[#1a1a1a] rounded-xl font-semibold text-sm transition-all hover:bg-[#b88934]"
+                  className="flex-1 px-4 py-3 bg-brand-gold text-brand-charcoal rounded-xl font-semibold text-sm transition-all hover:bg-brand-gold-dark"
                 >
                   {editingCoupon ? "Update" : "Create"}
                 </button>

@@ -100,8 +100,8 @@ const TaxConfiguration = () => {
   if (loading) {
     return (
       <div className="py-20 flex flex-col justify-center items-center text-left">
-        <div className="w-10 h-10 border-3 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/50 uppercase mt-4">Loading Tax Configuration...</p>
+        <div className="w-10 h-10 border-3 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-[10px] font-bold tracking-widest text-brand-charcoal/50 uppercase mt-4">Loading Tax Configuration...</p>
       </div>
     );
   }
@@ -131,14 +131,14 @@ const TaxConfiguration = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#ebdcae]/10 pb-6">
         <div>
-          <h1 className="text-3xl font-bold font-serif text-[#1a1a1a]">Tax Configuration</h1>
-          <p className="text-xs text-[#1a1a1a]/55 font-light tracking-wide mt-1">
+          <h1 className="text-3xl font-bold font-serif text-brand-charcoal">Tax Configuration</h1>
+          <p className="text-xs text-brand-charcoal/55 font-light tracking-wide mt-1">
             Configure tax rates and application rules for orders.
           </p>
         </div>
         <button 
           onClick={() => fetchTaxConfig()}
-          className="self-start px-4.5 py-2.5 bg-white border border-[#ebdcae]/20 text-[#1a1a1a] rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-sm active:scale-98"
+          className="self-start px-4.5 py-2.5 bg-white border border-[#ebdcae]/20 text-brand-charcoal rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-sm active:scale-98"
         >
           <RefreshCw size={11} />
           <span>Refresh</span>
@@ -149,37 +149,37 @@ const TaxConfiguration = () => {
       <div className="bg-white border border-[#ebdcae]/15 rounded-3xl p-8 shadow-sm max-w-2xl">
         <form onSubmit={handleSubmit} className="space-y-6">
           
-          <div className="flex items-start gap-4 p-6 bg-[#d4af37]/5 rounded-2xl border border-[#d4af37]/10">
-            <div className="p-3 bg-[#d4af37]/10 rounded-xl text-[#d4af37] shrink-0">
+          <div className="flex items-start gap-4 p-6 bg-brand-gold/5 rounded-2xl border border-brand-gold/10">
+            <div className="p-3 bg-brand-gold/10 rounded-xl text-brand-gold shrink-0">
               <Percent size={24} />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[#1a1a1a] mb-1">Tax Rate</h3>
-              <p className="text-xs text-[#1a1a1a]/60">Set the percentage tax rate applied to orders.</p>
+              <h3 className="text-sm font-bold text-brand-charcoal mb-1">Tax Rate</h3>
+              <p className="text-xs text-brand-charcoal/60">Set the percentage tax rate applied to orders.</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Tax Rate (%)</label>
+              <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Tax Rate (%)</label>
               <input
                 type="number"
                 step="0.01"
                 value={formData.taxRate}
                 onChange={(e) => setFormData({ ...formData, taxRate: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                 placeholder="19"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60 mb-2">Tax Name</label>
+              <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60 mb-2">Tax Name</label>
               <input
                 type="text"
                 value={formData.taxName}
                 onChange={(e) => setFormData({ ...formData, taxName: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-2 focus:ring-brand-gold/20 outline-none text-sm transition-all"
                 placeholder="VAT"
                 required
               />
@@ -187,43 +187,43 @@ const TaxConfiguration = () => {
           </div>
 
           <div className="space-y-4">
-            <label className="block text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Tax Application</label>
+            <label className="block text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Tax Application</label>
             
-            <div className="flex items-center gap-3 p-4 bg-[#1a1a1a]/5 rounded-xl border border-[#1a1a1a]/10">
+            <div className="flex items-center gap-3 p-4 bg-brand-charcoal/5 rounded-xl border border-brand-charcoal/10">
               <input
                 type="checkbox"
                 id="appliesToFood"
                 checked={formData.appliesToFood}
                 onChange={(e) => setFormData({ ...formData, appliesToFood: e.target.checked })}
-                className="w-5 h-5 rounded border-[#1a1a1a]/20 text-[#d4af37] focus:ring-[#d4af37]"
+                className="w-5 h-5 rounded border-brand-charcoal/20 text-brand-gold focus:ring-brand-gold"
               />
-              <label htmlFor="appliesToFood" className="text-sm text-[#1a1a1a] cursor-pointer">
+              <label htmlFor="appliesToFood" className="text-sm text-brand-charcoal cursor-pointer">
                 Apply tax to food items
               </label>
             </div>
 
-            <div className="flex items-center gap-3 p-4 bg-[#1a1a1a]/5 rounded-xl border border-[#1a1a1a]/10">
+            <div className="flex items-center gap-3 p-4 bg-brand-charcoal/5 rounded-xl border border-brand-charcoal/10">
               <input
                 type="checkbox"
                 id="appliesToDelivery"
                 checked={formData.appliesToDelivery}
                 onChange={(e) => setFormData({ ...formData, appliesToDelivery: e.target.checked })}
-                className="w-5 h-5 rounded border-[#1a1a1a]/20 text-[#d4af37] focus:ring-[#d4af37]"
+                className="w-5 h-5 rounded border-brand-charcoal/20 text-brand-gold focus:ring-brand-gold"
               />
-              <label htmlFor="appliesToDelivery" className="text-sm text-[#1a1a1a] cursor-pointer">
+              <label htmlFor="appliesToDelivery" className="text-sm text-brand-charcoal cursor-pointer">
                 Apply tax to delivery fees
               </label>
             </div>
 
-            <div className="flex items-center gap-3 p-4 bg-[#1a1a1a]/5 rounded-xl border border-[#1a1a1a]/10">
+            <div className="flex items-center gap-3 p-4 bg-brand-charcoal/5 rounded-xl border border-brand-charcoal/10">
               <input
                 type="checkbox"
                 id="isActive"
                 checked={formData.isActive}
                 onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                className="w-5 h-5 rounded border-[#1a1a1a]/20 text-[#d4af37] focus:ring-[#d4af37]"
+                className="w-5 h-5 rounded border-brand-charcoal/20 text-brand-gold focus:ring-brand-gold"
               />
-              <label htmlFor="isActive" className="text-sm text-[#1a1a1a] cursor-pointer">
+              <label htmlFor="isActive" className="text-sm text-brand-charcoal cursor-pointer">
                 Enable tax calculation
               </label>
             </div>
@@ -233,7 +233,7 @@ const TaxConfiguration = () => {
             <button
               type="submit"
               disabled={saving}
-              className="w-full px-6 py-3 bg-[#d4af37] hover:bg-[#b88934] text-[#1a1a1a] rounded-xl font-bold text-sm uppercase tracking-wider transition-all shadow-md active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full px-6 py-3 bg-brand-gold hover:bg-brand-gold-dark text-brand-charcoal rounded-xl font-bold text-sm uppercase tracking-wider transition-all shadow-md active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2"
             >
               <Save size={16} />
               <span>{saving ? "Saving..." : "Save Configuration"}</span>
@@ -245,31 +245,31 @@ const TaxConfiguration = () => {
 
       {/* PREVIEW SECTION */}
       <div className="bg-white border border-[#ebdcae]/15 rounded-3xl p-8 shadow-sm max-w-2xl">
-        <h3 className="text-lg font-bold font-serif text-[#1a1a1a] mb-4">Tax Calculation Preview</h3>
+        <h3 className="text-lg font-bold font-serif text-brand-charcoal mb-4">Tax Calculation Preview</h3>
         <div className="space-y-3 text-sm">
           <div className="flex justify-between py-2 border-b border-[#ebdcae]/10">
-            <span className="text-[#1a1a1a]/60">Food Subtotal:</span>
-            <span className="font-semibold text-[#1a1a1a]">10,000 FCFA</span>
+            <span className="text-brand-charcoal/60">Food Subtotal:</span>
+            <span className="font-semibold text-brand-charcoal">10,000 FCFA</span>
           </div>
           {formData.appliesToFood && (
             <div className="flex justify-between py-2 border-b border-[#ebdcae]/10">
-              <span className="text-[#1a1a1a]/60">Tax ({formData.taxName}):</span>
-              <span className="font-semibold text-[#d4af37]">{(10000 * (formData.taxRate / 100)).toFixed(0)} FCFA</span>
+              <span className="text-brand-charcoal/60">Tax ({formData.taxName}):</span>
+              <span className="font-semibold text-brand-gold">{(10000 * (formData.taxRate / 100)).toFixed(0)} FCFA</span>
             </div>
           )}
           <div className="flex justify-between py-2 border-b border-[#ebdcae]/10">
-            <span className="text-[#1a1a1a]/60">Delivery Fee:</span>
-            <span className="font-semibold text-[#1a1a1a]">3,000 FCFA</span>
+            <span className="text-brand-charcoal/60">Delivery Fee:</span>
+            <span className="font-semibold text-brand-charcoal">3,000 FCFA</span>
           </div>
           {formData.appliesToDelivery && (
             <div className="flex justify-between py-2 border-b border-[#ebdcae]/10">
-              <span className="text-[#1a1a1a]/60">Tax on Delivery:</span>
-              <span className="font-semibold text-[#d4af37]">{(3000 * (formData.taxRate / 100)).toFixed(0)} FCFA</span>
+              <span className="text-brand-charcoal/60">Tax on Delivery:</span>
+              <span className="font-semibold text-brand-gold">{(3000 * (formData.taxRate / 100)).toFixed(0)} FCFA</span>
             </div>
           )}
-          <div className="flex justify-between py-3 bg-[#1a1a1a]/5 rounded-xl px-4">
-            <span className="font-bold text-[#1a1a1a]">Total:</span>
-            <span className="font-bold text-[#d4af37]">
+          <div className="flex justify-between py-3 bg-brand-charcoal/5 rounded-xl px-4">
+            <span className="font-bold text-brand-charcoal">Total:</span>
+            <span className="font-bold text-brand-gold">
               {(
                 10000 + 
                 3000 + 

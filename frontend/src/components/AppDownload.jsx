@@ -1,56 +1,36 @@
 import React from "react";
+import { Smartphone } from "lucide-react";
 
 const AppDownload = () => {
   return (
-    <div id="app-download" className="max-w-7xl mx-auto px-6 py-16 scroll-mt-20">
-      <div className="relative rounded-3xl bg-[#1a1a1a] text-[#fdfbf7] p-8 md:p-16 flex flex-col md:flex-row items-center justify-between overflow-hidden shadow-2xl">
-        
-        {/* Background Decorative Rings */}
-        <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full border border-white/5 pointer-events-none"></div>
-        <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full border border-white/5 pointer-events-none"></div>
-
-        {/* Content */}
-        <div className="max-w-xl text-left flex flex-col gap-4 z-10">
-          <span className="text-[#d4af37] text-xs font-bold uppercase tracking-widest">Joel. Anywhere</span>
-          <h2 className="text-3xl sm:text-4xl font-bold font-serif leading-tight">
-            Elevate Your Culinary Experience. <br/> Download the Mobile App.
+    <div id="app-download" className="page-container section-padding scroll-mt-20">
+      <div className="brand-card-accent rounded-2xl bg-brand-charcoal text-brand-cream p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="max-w-lg text-left flex flex-col gap-3">
+          <span className="brand-label text-brand-gold">Coming soon</span>
+          <h2 className="text-2xl sm:text-3xl font-bold font-serif leading-tight">
+            Order faster with the Joel. mobile app
           </h2>
-          <p className="text-xs sm:text-sm text-[#fdfbf7]/75 font-light leading-relaxed max-w-md">
-            Unlock priority slots, customized curation filters, and direct-from-kitchen GPS food delivery tracking. Joel's gastronomics are now available on the go.
+          <p className="text-sm text-brand-cream/70 leading-relaxed">
+            Track your delivery, save favorites, and reorder in one tap. Available on iOS and Android soon.
           </p>
         </div>
 
-        {/* Badges */}
-        <div className="flex flex-wrap items-center gap-4 mt-8 md:mt-0 z-10 shrink-0">
-          
-          {/* Apple App Store */}
-          <a 
-            href="#appstore" 
-            className="flex items-center gap-3 bg-[#fdfbf7]/10 hover:bg-[#fdfbf7]/20 border border-white/10 px-5 py-3 rounded-2xl transition-all duration-300 transform active:scale-98 select-none"
-            onClick={(e) => e.preventDefault()}
-          >
-            <span className="text-2xl">🍏</span>
+        <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <div className="flex items-center gap-3 bg-brand-cream/10 border border-white/10 px-5 py-3 rounded-xl opacity-70 cursor-not-allowed">
+            <Smartphone size={20} className="text-brand-gold" />
             <div className="text-left">
-              <p className="text-[10px] uppercase font-bold text-[#fdfbf7]/60 tracking-wider">Download on the</p>
-              <p className="text-xs font-bold text-[#fdfbf7]">Apple App Store</p>
+              <p className="text-[10px] uppercase font-semibold text-brand-cream/50 tracking-wider">App Store</p>
+              <p className="text-xs font-semibold">Coming soon</p>
             </div>
-          </a>
-
-          {/* Google Play Store */}
-          <a 
-            href="#googleplay" 
-            className="flex items-center gap-3 bg-[#fdfbf7]/10 hover:bg-[#fdfbf7]/20 border border-white/10 px-5 py-3 rounded-2xl transition-all duration-300 transform active:scale-98 select-none"
-            onClick={(e) => e.preventDefault()}
-          >
-            <span className="text-2xl">🤖</span>
+          </div>
+          <div className="flex items-center gap-3 bg-brand-cream/10 border border-white/10 px-5 py-3 rounded-xl opacity-70 cursor-not-allowed">
+            <Smartphone size={20} className="text-brand-gold" />
             <div className="text-left">
-              <p className="text-[10px] uppercase font-bold text-[#fdfbf7]/60 tracking-wider">Get it on</p>
-              <p className="text-xs font-bold text-[#fdfbf7]">Google Play Store</p>
+              <p className="text-[10px] uppercase font-semibold text-brand-cream/50 tracking-wider">Google Play</p>
+              <p className="text-xs font-semibold">Coming soon</p>
             </div>
-          </a>
-
+          </div>
         </div>
-
       </div>
     </div>
   );

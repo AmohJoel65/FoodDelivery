@@ -1,52 +1,116 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Hero from "../components/Hero";
-import ExploreMenu from "../components/ExploreMenu";
-import FoodDisplay from "../components/FoodDisplay";
 import AppDownload from "../components/AppDownload";
-import { Search } from "lucide-react";
+import Testimonials from "../components/Testimonials";
 import useScrollAnimation from "../hooks/useScrollAnimation";
+import { StoreContext } from "../context/StoreContext";
+import FoodItemCard from "../components/FoodItemCard";
+import { Button } from "../components/ui";
+import { ArrowRight, Clock, MapPin, CheckCircle } from "lucide-react";
+import FoodDetailsModal from "../components/FoodDetailsModal";
 
 const Home = () => {
-  const [category, setCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
+  const { food_list, cartItems, addToCart, removeFromCart, favorites, toggleFavorite } = useContext(StoreContext);
+  const [selectedItem, React_setSelectedItem] = React.useState(null);
+  const navigate = useNavigate();
 
-  const [menuRef, menuVisible] = useScrollAnimation(0.1);
-  const [foodRef, foodVisible] = useScrollAnimation(0.1);
+  const [featuredRef, featuredVisible] = useScrollAnimation(0.1);
+  const [howRef, howVisible] = useScrollAnimation(0.1);
   const [appRef, appVisible] = useScrollAnimation(0.1);
 
+  // Take the first 4 items as featured (or sort by a popularity score if existed)
+  const featuredFoods = food_list.slice(0, 4);
+
   return (
-    <div className="animate-in fade-in duration-500">
-      {/* Artisanal Hero Showcase */}
+    <div className="animate-fade-in">
       <Hero />
 
-      {/* Search Bar */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="relative max-w-xl mx-auto">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#1a1a1a]/30" size={20} />
-          <input
-            type="text"
-            placeholder="Search for dishes, ingredients..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 outline-none text-sm transition-all shadow-sm"
-          />
+      {/* Featured Items Section */}
+      <div className="bg-brand-cream py-16 sm:py-24">
+        <div ref={featuredRef} className={`page-container transition-all duration-700 ${featuredVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-brand-charcoal">Featured Delights</h2>
+              <p className="text-brand-charcoal/60 mt-2">Chef's special selections for today.</p>
+            </div>
+            <Button variant="outline" onClick={() => navigate('/menu')} className="rounded-full">
+              View All Menu <ArrowRight size={16} className="ml-2" />
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredFoods.map((item, index) => (
+              <FoodItemCard
+                key={item._id}
+                item={item}
+                index={index}
+                cartItems={cartItems}
+                favorites={favorites}
+                addToCart={addToCart}
+                removeFromCart={removeFromCart}
+                toggleFavorite={toggleFavorite}
+                setSelectedItem={React_setSelectedItem}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Category selector filters */}
-      <div ref={menuRef} className={`transition-all duration-700 ${menuVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <ExploreMenu category={category} setCategory={setCategory} />
+      {/* How it Works Section */}
+      <div className="py-16 sm:py-24">
+        <div ref={howRef} className={`page-container transition-all duration-700 ${howVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-brand-charcoal">How It Works</h2>
+            <p className="text-brand-charcoal/60 mt-4 text-lg">Your favorite meals delivered in three simple steps.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            {/* Connecting Line (Hidden on Mobile) */}
+            <div className="hidden md:block absolute top-1/2 left-[15%] right-[15%] h-0.5 bg-brand-charcoal/10 -z-10"></div>
+
+            <div className="bg-brand-cream p-8 rounded-3xl shadow-card text-center relative">
+              <div className="w-16 h-16 mx-auto bg-brand-charcoal text-brand-cream rounded-full flex items-center justify-center mb-6 shadow-soft">
+                <MapPin size={28} />
+              </div>
+              <h3 className="text-xl font-bold font-serif mb-3">1. Select Location</h3>
+              <p className="text-brand-charcoal/60">Choose your exact location in Bamenda for fast, accurate delivery.</p>
+            </div>
+
+            <div className="bg-brand-cream p-8 rounded-3xl shadow-card text-center relative border-b-4 border-brand-gold transform md:-translate-y-4">
+              <div className="w-16 h-16 mx-auto bg-brand-gold text-white rounded-full flex items-center justify-center mb-6 shadow-soft">
+                <CheckCircle size={28} />
+              </div>
+              <h3 className="text-xl font-bold font-serif mb-3">2. Choose Your Meal</h3>
+              <p className="text-brand-charcoal/60">Browse our artisanal menu and customize your order to your taste.</p>
+            </div>
+
+            <div className="bg-brand-cream p-8 rounded-3xl shadow-card text-center relative">
+              <div className="w-16 h-16 mx-auto bg-brand-charcoal text-brand-cream rounded-full flex items-center justify-center mb-6 shadow-soft">
+                <Clock size={28} />
+              </div>
+              <h3 className="text-xl font-bold font-serif mb-3">3. Fast Delivery</h3>
+              <p className="text-brand-charcoal/60">Your food is prepared fresh and delivered piping hot within 45 minutes.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Responsively-arranged Food Grid cards */}
-      <div ref={foodRef} className={`transition-all duration-700 ${foodVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <FoodDisplay category={category} searchQuery={searchQuery} />
-      </div>
+      {/* Testimonials Section */}
+      <Testimonials />
 
       {/* App store promotion */}
-      <div ref={appRef} className={`transition-all duration-700 ${appVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div ref={appRef} className={`bg-brand-cream py-12 transition-all duration-700 ${appVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <AppDownload />
       </div>
+
+      {/* Modal for featured items */}
+      {selectedItem && (
+        <FoodDetailsModal 
+          item={selectedItem}
+          onClose={() => React_setSelectedItem(null)}
+        />
+      )}
     </div>
   );
 };

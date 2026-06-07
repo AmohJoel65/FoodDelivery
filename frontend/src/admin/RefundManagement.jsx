@@ -66,8 +66,8 @@ const RefundManagement = () => {
   if (loading) {
     return (
       <div className="py-20 flex flex-col justify-center items-center text-left">
-        <div className="w-10 h-10 border-3 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/50 uppercase mt-4">Loading Refunds...</p>
+        <div className="w-10 h-10 border-3 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-[10px] font-bold tracking-widest text-brand-charcoal/50 uppercase mt-4">Loading Refunds...</p>
       </div>
     );
   }
@@ -100,15 +100,15 @@ const RefundManagement = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#ebdcae]/10 pb-6">
         <div>
-          <h1 className="text-3xl font-bold font-serif text-[#1a1a1a]">Refund Management</h1>
-          <p className="text-xs text-[#1a1a1a]/55 font-light tracking-wide mt-1">
+          <h1 className="text-3xl font-bold font-serif text-brand-charcoal">Refund Management</h1>
+          <p className="text-xs text-brand-charcoal/55 font-light tracking-wide mt-1">
             Process and manage customer refund requests.
           </p>
         </div>
         <button 
           onClick={() => fetchRefunds(true)}
           disabled={refreshing}
-          className="self-start px-4.5 py-2.5 bg-white border border-[#ebdcae]/20 text-[#1a1a1a] rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-sm active:scale-98 disabled:opacity-50"
+          className="self-start px-4.5 py-2.5 bg-white border border-[#ebdcae]/20 text-brand-charcoal rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-sm active:scale-98 disabled:opacity-50"
         >
           <RefreshCw size={11} className={`${refreshing ? "animate-spin" : ""}`} />
           <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
@@ -122,64 +122,64 @@ const RefundManagement = () => {
             <div className="p-2 bg-amber-50 text-amber-600 rounded-xl">
               <DollarSign size={16} />
             </div>
-            <span className="text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/40">Pending</span>
+            <span className="text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/40">Pending</span>
           </div>
-          <p className="text-3xl font-bold text-[#1a1a1a]">{pendingRefunds.length}</p>
+          <p className="text-3xl font-bold text-brand-charcoal">{pendingRefunds.length}</p>
         </div>
         <div className="bg-white border border-[#ebdcae]/15 rounded-3xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
               <CheckCircle size={16} />
             </div>
-            <span className="text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/40">Approved</span>
+            <span className="text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/40">Approved</span>
           </div>
-          <p className="text-3xl font-bold text-[#1a1a1a]">{refunds.filter(r => r.status === "approved").length}</p>
+          <p className="text-3xl font-bold text-brand-charcoal">{refunds.filter(r => r.status === "approved").length}</p>
         </div>
         <div className="bg-white border border-[#ebdcae]/15 rounded-3xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-2">
             <div className="p-2 bg-rose-50 text-rose-600 rounded-xl">
               <XCircle size={16} />
             </div>
-            <span className="text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/40">Rejected</span>
+            <span className="text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/40">Rejected</span>
           </div>
-          <p className="text-3xl font-bold text-[#1a1a1a]">{refunds.filter(r => r.status === "rejected").length}</p>
+          <p className="text-3xl font-bold text-brand-charcoal">{refunds.filter(r => r.status === "rejected").length}</p>
         </div>
       </div>
 
       {/* PENDING REFUNDS */}
       {pendingRefunds.length > 0 && (
         <div>
-          <h2 className="text-lg font-bold text-[#1a1a1a] mb-4">Pending Refund Requests</h2>
+          <h2 className="text-lg font-bold text-brand-charcoal mb-4">Pending Refund Requests</h2>
           <div className="bg-white border border-[#ebdcae]/15 rounded-3xl shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#1a1a1a]/5 border-b border-[#ebdcae]/10">
+                <thead className="bg-brand-charcoal/5 border-b border-[#ebdcae]/10">
                   <tr>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Order ID</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">User</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Amount</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Reason</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Date</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Actions</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Order ID</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">User</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Amount</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Reason</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Date</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {pendingRefunds.map((refund) => (
-                    <tr key={refund._id} className="border-b border-[#ebdcae]/5 hover:bg-[#fdfbf7]/50 transition-colors">
+                    <tr key={refund._id} className="border-b border-[#ebdcae]/5 hover:bg-brand-cream/50 transition-colors">
                       <td className="px-6 py-4">
-                        <p className="text-sm font-semibold text-[#1a1a1a]">{refund.orderId}</p>
+                        <p className="text-sm font-semibold text-brand-charcoal">{refund.orderId}</p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-sm text-[#1a1a1a]/70">{refund.userName || "Unknown"}</p>
+                        <p className="text-sm text-brand-charcoal/70">{refund.userName || "Unknown"}</p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-sm font-bold text-[#d4af37]">{refund.amount} FCFA</p>
+                        <p className="text-sm font-bold text-brand-gold">{refund.amount} FCFA</p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-sm text-[#1a1a1a]/70 line-clamp-2">{refund.reason}</p>
+                        <p className="text-sm text-brand-charcoal/70 line-clamp-2">{refund.reason}</p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-xs text-[#1a1a1a]/50">{new Date(refund.createdAt).toLocaleDateString()}</p>
+                        <p className="text-xs text-brand-charcoal/50">{new Date(refund.createdAt).toLocaleDateString()}</p>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
@@ -209,30 +209,30 @@ const RefundManagement = () => {
       {/* PROCESSED REFUNDS */}
       {processedRefunds.length > 0 && (
         <div>
-          <h2 className="text-lg font-bold text-[#1a1a1a] mb-4">Processed Refunds</h2>
+          <h2 className="text-lg font-bold text-brand-charcoal mb-4">Processed Refunds</h2>
           <div className="bg-white border border-[#ebdcae]/15 rounded-3xl shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-[#1a1a1a]/5 border-b border-[#ebdcae]/10">
+                <thead className="bg-brand-charcoal/5 border-b border-[#ebdcae]/10">
                   <tr>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Order ID</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">User</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Amount</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Status</th>
-                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-[#1a1a1a]/60">Date</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Order ID</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">User</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Amount</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Status</th>
+                    <th className="text-left px-6 py-4 text-[10px] font-bold tracking-widest uppercase text-brand-charcoal/60">Date</th>
                   </tr>
                 </thead>
                 <tbody>
                   {processedRefunds.map((refund) => (
-                    <tr key={refund._id} className="border-b border-[#ebdcae]/5 hover:bg-[#fdfbf7]/50 transition-colors">
+                    <tr key={refund._id} className="border-b border-[#ebdcae]/5 hover:bg-brand-cream/50 transition-colors">
                       <td className="px-6 py-4">
-                        <p className="text-sm font-semibold text-[#1a1a1a]">{refund.orderId}</p>
+                        <p className="text-sm font-semibold text-brand-charcoal">{refund.orderId}</p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-sm text-[#1a1a1a]/70">{refund.userName || "Unknown"}</p>
+                        <p className="text-sm text-brand-charcoal/70">{refund.userName || "Unknown"}</p>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-sm font-bold text-[#d4af37]">{refund.amount} FCFA</p>
+                        <p className="text-sm font-bold text-brand-gold">{refund.amount} FCFA</p>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full ${
@@ -244,7 +244,7 @@ const RefundManagement = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-xs text-[#1a1a1a]/50">{new Date(refund.createdAt).toLocaleDateString()}</p>
+                        <p className="text-xs text-brand-charcoal/50">{new Date(refund.createdAt).toLocaleDateString()}</p>
                       </td>
                     </tr>
                   ))}
@@ -257,8 +257,8 @@ const RefundManagement = () => {
 
       {refunds.length === 0 && (
         <div className="bg-white border border-[#ebdcae]/15 rounded-3xl p-12 text-center">
-          <DollarSign size={48} className="mx-auto text-[#1a1a1a]/20 mb-4" />
-          <p className="text-sm text-[#1a1a1a]/40 font-light italic">No refund requests found.</p>
+          <DollarSign size={48} className="mx-auto text-brand-charcoal/20 mb-4" />
+          <p className="text-sm text-brand-charcoal/40 font-light italic">No refund requests found.</p>
         </div>
       )}
 

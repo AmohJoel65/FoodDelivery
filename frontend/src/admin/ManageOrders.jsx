@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { formatDeliveryAddress } from "../utils/apiErrors";
 import { StoreContext } from "../context/StoreContext";
 import { Package, RefreshCw, AlertCircle, ShoppingBag, Truck, CheckCircle2, Clock } from "lucide-react";
 
@@ -97,29 +98,28 @@ const ManageOrders = () => {
   };
 
   return (
-    <div className="animate-in fade-in duration-500 text-left">
+    <div className="animate-fade-in">
       
       {/* Header controls */}
-      <div className="flex justify-between items-center mb-8 border-b border-[#1a1a1a]/5 pb-4">
+      <div className="flex justify-between items-center mb-8 border-b border-brand-charcoal/5 pb-4">
         <div className="text-left">
-          <h2 className="text-3xl font-bold text-[#1a1a1a]">Fulfillment Dashboard</h2>
-          <p className="text-xs text-[#1a1a1a]/50 mt-1 font-light">Monitor placed order records, dispatch details, and adjust active preparation/delivery flags.</p>
+          <h2 className="text-3xl font-bold text-brand-charcoal">Fulfillment Dashboard</h2>
+          <p className="text-xs text-brand-charcoal/50 mt-1 font-light">Monitor placed order records, dispatch details, and adjust active preparation/delivery flags.</p>
         </div>
         
         <button 
           onClick={fetchAllOrders}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#1a1a1a]/10 hover:border-[#d4af37] text-xs font-semibold text-[#1a1a1a] transition-all bg-[#fdfbf7]"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-brand-charcoal/10 hover:border-brand-gold text-xs font-semibold text-brand-charcoal transition-all bg-brand-cream"
         >
-          <RefreshCw size={13} className={loading ? "animate-spin text-[#d4af37]" : "text-[#1a1a1a]/60"} />
+          <RefreshCw size={13} className={loading ? "animate-spin text-brand-gold" : "text-brand-charcoal/60"} />
           <span>Refresh</span>
         </button>
       </div>
 
       {/* Feedback Alert box */}
       {feedback.text && (
-        <div className={`mb-6 p-4 rounded-xl text-xs font-semibold border flex items-center gap-2 animate-in slide-in-from-top-4 duration-300 ${
-          feedback.type === "success" 
+        <div className={`mb-6 p-4 rounded-xl text-xs font-semibold border flex items-center gap-2 animate-fade-in"success" 
             ? "bg-green-50 text-green-800 border-green-200" 
             : "bg-red-50 text-red-800 border-red-200"
         }`}>
@@ -129,16 +129,16 @@ const ManageOrders = () => {
       )}
 
       {loading && orders.length === 0 ? (
-        <div className="text-center py-20 bg-white/40 border border-[#1a1a1a]/5 rounded-3xl">
-          <div className="w-10 h-10 border-4 border-[#d4af37] border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-xs font-bold text-[#1a1a1a]/45 uppercase mt-4">Syncing full orders deck...</p>
+        <div className="text-center py-20 bg-white/40 border border-brand-charcoal/5 rounded-3xl">
+          <div className="w-10 h-10 border-4 border-brand-gold border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-xs font-bold text-brand-charcoal/45 uppercase mt-4">Syncing full orders deck...</p>
         </div>
       ) : orders.length === 0 ? (
-        <div className="text-center py-20 bg-[#1a1a1a]/5 rounded-3xl border border-dashed border-[#1a1a1a]/10 max-w-2xl mx-auto flex flex-col items-center gap-4">
-          <ShoppingBag size={40} className="text-[#1a1a1a]/20" />
+        <div className="text-center py-20 bg-brand-charcoal/5 rounded-3xl border border-dashed border-brand-charcoal/10 max-w-2xl mx-auto flex flex-col items-center gap-4">
+          <ShoppingBag size={40} className="text-brand-charcoal/20" />
           <div>
-            <h3 className="text-lg font-bold font-serif text-[#1a1a1a]">No Active Tickets</h3>
-            <p className="text-xs text-[#1a1a1a]/50 mt-1 max-w-xs font-light">Client order history is empty. Rest assured, placed orders show up here instantly.</p>
+            <h3 className="text-lg font-bold font-serif text-brand-charcoal">No Active Tickets</h3>
+            <p className="text-xs text-brand-charcoal/50 mt-1 max-w-xs font-light">Client order history is empty. Rest assured, placed orders show up here instantly.</p>
           </div>
         </div>
       ) : (
@@ -155,52 +155,58 @@ const ManageOrders = () => {
                 
                 {/* Left Side: Package Icon and Dish mapping */}
                 <div className="flex items-start gap-4 flex-grow max-w-lg">
-                  <div className="w-12 h-12 rounded-2xl bg-[#1a1a1a]/5 flex items-center justify-center shrink-0 text-[#ebdcae] border border-[#1a1a1a]/5 shadow-inner">
-                    <Package size={22} className="text-[#d4af37]" />
+                  <div className="w-12 h-12 rounded-2xl bg-brand-charcoal/5 flex items-center justify-center shrink-0 text-[#ebdcae] border border-brand-charcoal/5 shadow-inner">
+                    <Package size={22} className="text-brand-gold" />
                   </div>
                   
                   <div className="flex flex-col gap-2.5 text-left">
                     {/* Items text breakdown */}
                     <div>
-                      <p className="text-xs font-bold text-[#1a1a1a] leading-relaxed">
+                      <p className="text-xs font-bold text-brand-charcoal leading-relaxed">
                         {order.items.map((item, idx) => (
                           <span key={idx}>
-                            {item.name} <b className="text-[#d4af37]">({item.quantity})</b>
+                            {item.name} <b className="text-brand-gold">({item.quantity})</b>
                             {idx < order.items.length - 1 ? ", " : ""}
                           </span>
                         ))}
                       </p>
                     </div>
 
-                    {/* Client billing coordinates details */}
-                    <div className="text-[11px] text-[#1a1a1a]/65 leading-relaxed font-light">
-                      <p className="font-bold text-[#1a1a1a] text-xs">
-                        {order.address.firstName} {order.address.lastName}
-                      </p>
-                      <p>{order.address.street}, {order.address.city}, {order.address.state} {order.address.zipCode}, {order.address.country}</p>
-                      <p className="mt-1 font-semibold text-[10px] text-[#1a1a1a]/50">Tel: {order.address.phone} | Email: {order.address.email}</p>
+                    {/* Client delivery details */}
+                    <div className="text-[11px] text-brand-charcoal/65 leading-relaxed font-light">
+                      {(() => {
+                        const { name, lines } = formatDeliveryAddress(order.address);
+                        return (
+                          <>
+                            <p className="font-bold text-brand-charcoal text-xs">{name}</p>
+                            {lines.map((line) => (
+                              <p key={line}>{line}</p>
+                            ))}
+                          </>
+                        );
+                      })()}
                     </div>
                   </div>
                 </div>
 
                 {/* Center Side: Finances and quantities */}
-                <div className="flex flex-row lg:flex-col lg:items-end justify-between lg:justify-center gap-6 shrink-0 lg:text-right border-t lg:border-t-0 border-[#1a1a1a]/5 pt-4 lg:pt-0">
+                <div className="flex flex-row lg:flex-col lg:items-end justify-between lg:justify-center gap-6 shrink-0 lg:text-right border-t lg:border-t-0 border-brand-charcoal/5 pt-4 lg:pt-0">
                   <div className="flex flex-col gap-0.5">
-                    <p className="text-[9px] font-bold uppercase tracking-wider text-[#1a1a1a]/45">Grand Total</p>
-                    <p className="text-lg font-bold font-serif text-[#1a1a1a]">FCFA {order.amount.toFixed(2)}</p>
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-brand-charcoal/45">Grand Total</p>
+                    <p className="text-lg font-bold font-serif text-brand-charcoal">FCFA {order.amount.toFixed(2)}</p>
                   </div>
                   <div className="flex flex-col gap-0.5">
-                    <p className="text-[9px] font-bold uppercase tracking-wider text-[#1a1a1a]/45">Reference ID</p>
-                    <p className="text-[11px] font-semibold text-[#1a1a1a]/60 font-mono">{order._id}</p>
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-brand-charcoal/45">Reference ID</p>
+                    <p className="text-[11px] font-semibold text-brand-charcoal/60 font-mono">{order._id}</p>
                   </div>
                 </div>
 
                 {/* Right Side: fulfillment update dropmenu selector */}
-                <div className="flex sm:items-center justify-between lg:justify-center gap-6 shrink-0 border-t lg:border-t-0 border-[#1a1a1a]/5 pt-4 lg:pt-0">
+                <div className="flex sm:items-center justify-between lg:justify-center gap-6 shrink-0 border-t lg:border-t-0 border-brand-charcoal/5 pt-4 lg:pt-0">
                   
                   {/* Dropdown status update */}
                   <div className="flex flex-col gap-1.5 text-left">
-                    <label className="text-[9px] font-bold uppercase tracking-wider text-[#1a1a1a]/45">Fulfillment Dispatch</label>
+                    <label className="text-[9px] font-bold uppercase tracking-wider text-brand-charcoal/45">Fulfillment Dispatch</label>
                     <div className="relative">
                       <select 
                         value={order.status}
@@ -214,7 +220,7 @@ const ManageOrders = () => {
                       </select>
                       
                       {isUpdating && (
-                        <div className="absolute right-3.5 top-3 w-4 h-4 border-2 border-[#1a1a1a] border-t-transparent rounded-full animate-spin"></div>
+                        <div className="absolute right-3.5 top-3 w-4 h-4 border-2 border-brand-charcoal border-t-transparent rounded-full animate-spin"></div>
                       )}
                     </div>
                   </div>

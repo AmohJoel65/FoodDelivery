@@ -48,8 +48,8 @@ const DashboardOverview = () => {
   if (loading) {
     return (
       <div className="py-20 flex flex-col justify-center items-center text-left">
-        <div className="w-10 h-10 border-3 border-[#d4af37] border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/50 uppercase mt-4">Assembling Operational Telemetry...</p>
+        <div className="w-10 h-10 border-3 border-brand-gold border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-[10px] font-bold tracking-widest text-brand-charcoal/50 uppercase mt-4">Assembling Operational Telemetry...</p>
       </div>
     );
   }
@@ -105,15 +105,15 @@ const DashboardOverview = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#ebdcae]/10 pb-6">
         <div>
-          <h1 className="text-3xl font-bold font-serif text-[#1a1a1a]">Operational Telemetry</h1>
-          <p className="text-xs text-[#1a1a1a]/55 font-light tracking-wide mt-1">
+          <h1 className="text-3xl font-bold font-serif text-brand-charcoal">Operational Telemetry</h1>
+          <p className="text-xs text-brand-charcoal/55 font-light tracking-wide mt-1">
             Real-time analytics, transactional audit metrics, and database catalog stats.
           </p>
         </div>
         <button 
           onClick={() => fetchDashboardStats(true)}
           disabled={refreshing}
-          className="self-start px-4.5 py-2.5 bg-[#1a1a1a] hover:bg-[#d4af37] text-white hover:text-[#1a1a1a] rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-md active:scale-98 disabled:opacity-50"
+          className="self-start px-4.5 py-2.5 bg-brand-charcoal hover:bg-brand-gold text-white hover:text-brand-charcoal rounded-full text-[10px] font-bold tracking-widest uppercase flex items-center gap-2 transition-all shadow-md active:scale-98 disabled:opacity-50"
         >
           <RefreshCw size={11} className={`${refreshing ? "animate-spin" : ""}`} />
           <span>{refreshing ? "Syncing..." : "Sync Database"}</span>
@@ -128,8 +128,8 @@ const DashboardOverview = () => {
           <div className="absolute top-0 right-0 w-24 h-24 bg-[#ebdcae]/5 rounded-bl-full transition-all group-hover:scale-105" />
           <div className="flex items-start justify-between">
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/40 uppercase">Gross Revenue</span>
-              <h3 className="text-2xl font-bold font-serif text-[#1a1a1a] mt-1">FCFA {kpi.totalRevenue.toFixed(2)}</h3>
+              <span className="text-[10px] font-bold tracking-widest text-brand-charcoal/40 uppercase">Gross Revenue</span>
+              <h3 className="text-2xl font-bold font-serif text-brand-charcoal mt-1">FCFA {kpi.totalRevenue.toFixed(2)}</h3>
             </div>
             <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl border border-emerald-100/50 shadow-inner">
               <DollarSign size={20} />
@@ -146,15 +146,15 @@ const DashboardOverview = () => {
           <div className="absolute top-0 right-0 w-24 h-24 bg-[#ebdcae]/5 rounded-bl-full transition-all group-hover:scale-105" />
           <div className="flex items-start justify-between">
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/40 uppercase">Fulfillment</span>
-              <h3 className="text-2xl font-bold font-serif text-[#1a1a1a] mt-1">{kpi.activeOrdersCount} Tickets</h3>
+              <span className="text-[10px] font-bold tracking-widest text-brand-charcoal/40 uppercase">Fulfillment</span>
+              <h3 className="text-2xl font-bold font-serif text-brand-charcoal mt-1">{kpi.activeOrdersCount} Tickets</h3>
             </div>
             <div className="p-3 bg-amber-50 text-amber-600 rounded-2xl border border-amber-100/50 shadow-inner">
               <ShoppingBag size={20} />
             </div>
           </div>
           <div className={`flex items-center gap-2 mt-4 text-[9px] font-bold tracking-wider uppercase ${
-            kpi.activeOrdersCount > 0 ? "text-amber-600" : "text-[#1a1a1a]/40"
+            kpi.activeOrdersCount > 0 ? "text-amber-600" : "text-brand-charcoal/40"
           }`}>
             <span className={`w-1.5 h-1.5 rounded-full ${kpi.activeOrdersCount > 0 ? "bg-amber-500 animate-ping" : "bg-gray-300"}`} />
             <span>{kpi.activeOrdersCount > 0 ? "Orders in Kitchen" : "All orders delivered"}</span>
@@ -166,14 +166,14 @@ const DashboardOverview = () => {
           <div className="absolute top-0 right-0 w-24 h-24 bg-[#ebdcae]/5 rounded-bl-full transition-all group-hover:scale-105" />
           <div className="flex items-start justify-between">
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/40 uppercase">Dish Catalog</span>
-              <h3 className="text-2xl font-bold font-serif text-[#1a1a1a] mt-1">{kpi.catalogCount} Selections</h3>
+              <span className="text-[10px] font-bold tracking-widest text-brand-charcoal/40 uppercase">Dish Catalog</span>
+              <h3 className="text-2xl font-bold font-serif text-brand-charcoal mt-1">{kpi.catalogCount} Selections</h3>
             </div>
-            <div className="p-3 bg-[#d4af37]/5 text-[#d4af37] rounded-2xl border border-[#d4af37]/15 shadow-inner">
+            <div className="p-3 bg-brand-gold/5 text-brand-gold rounded-2xl border border-brand-gold/15 shadow-inner">
               <ChefHat size={20} />
             </div>
           </div>
-          <div className="flex items-center gap-1.5 mt-4 text-[10px] font-bold tracking-wider text-[#d4af37] uppercase">
+          <div className="flex items-center gap-1.5 mt-4 text-[10px] font-bold tracking-wider text-brand-gold uppercase">
             <PlusCircle size={12} />
             <span>Active Menu Options</span>
           </div>
@@ -184,8 +184,8 @@ const DashboardOverview = () => {
           <div className="absolute top-0 right-0 w-24 h-24 bg-[#ebdcae]/5 rounded-bl-full transition-all group-hover:scale-105" />
           <div className="flex items-start justify-between">
             <div className="flex flex-col gap-1">
-              <span className="text-[10px] font-bold tracking-widest text-[#1a1a1a]/40 uppercase">Registered Customers</span>
-              <h3 className="text-2xl font-bold font-serif text-[#1a1a1a] mt-1">{kpi.usersCount} Foodies</h3>
+              <span className="text-[10px] font-bold tracking-widest text-brand-charcoal/40 uppercase">Registered Customers</span>
+              <h3 className="text-2xl font-bold font-serif text-brand-charcoal mt-1">{kpi.usersCount} Foodies</h3>
             </div>
             <div className="p-3 bg-purple-50 text-purple-600 rounded-2xl border border-purple-100/50 shadow-inner">
               <Users size={20} />
@@ -207,12 +207,12 @@ const DashboardOverview = () => {
           
           <div className="flex items-center justify-between border-b border-[#ebdcae]/10 pb-4">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-[#d4af37]/10 rounded-xl text-[#d4af37]">
+              <div className="p-2 bg-brand-gold/10 rounded-xl text-brand-gold">
                 <TrendingUp size={16} />
               </div>
               <div>
-                <h3 className="text-sm font-bold tracking-wider uppercase text-[#1a1a1a]">7-Day Revenue Velocity</h3>
-                <p className="text-[9px] uppercase tracking-widest text-[#1a1a1a]/40 font-semibold mt-0.5">Real Sales Trendlines</p>
+                <h3 className="text-sm font-bold tracking-wider uppercase text-brand-charcoal">7-Day Revenue Velocity</h3>
+                <p className="text-[9px] uppercase tracking-widest text-brand-charcoal/40 font-semibold mt-0.5">Real Sales Trendlines</p>
               </div>
             </div>
           </div>
@@ -295,11 +295,11 @@ const DashboardOverview = () => {
           </div>
 
           {/* Dates Labels Alignment */}
-          <div className="flex justify-between px-1 text-[9px] uppercase font-bold tracking-widest text-[#1a1a1a]/45 mt-2">
+          <div className="flex justify-between px-1 text-[9px] uppercase font-bold tracking-widest text-brand-charcoal/45 mt-2">
             {charts.salesTrend.map((item, idx) => (
               <div key={idx} className="text-center w-10 flex flex-col items-center">
                 <span>{item.date}</span>
-                <span className="text-[8px] text-[#d4af37] mt-0.5">FCFA {item.amount.toFixed(0)}</span>
+                <span className="text-[8px] text-brand-gold mt-0.5">FCFA {item.amount.toFixed(0)}</span>
               </div>
             ))}
           </div>
@@ -311,12 +311,12 @@ const DashboardOverview = () => {
           
           <div className="flex items-center justify-between border-b border-[#ebdcae]/10 pb-4">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-[#d4af37]/10 rounded-xl text-[#d4af37]">
+              <div className="p-2 bg-brand-gold/10 rounded-xl text-brand-gold">
                 <Activity size={16} />
               </div>
               <div>
-                <h3 className="text-sm font-bold tracking-wider uppercase text-[#1a1a1a]">Popularity By Category</h3>
-                <p className="text-[9px] uppercase tracking-widest text-[#1a1a1a]/40 font-semibold mt-0.5">Real Sold Volume Ratios</p>
+                <h3 className="text-sm font-bold tracking-wider uppercase text-brand-charcoal">Popularity By Category</h3>
+                <p className="text-[9px] uppercase tracking-widest text-brand-charcoal/40 font-semibold mt-0.5">Real Sold Volume Ratios</p>
               </div>
             </div>
           </div>
@@ -327,15 +327,15 @@ const DashboardOverview = () => {
               return (
                 <div key={idx} className="flex flex-col gap-1.5">
                   <div className="flex items-center justify-between text-xs font-bold">
-                    <span className="text-[#1a1a1a]">{item.name}</span>
-                    <span className="text-[#1a1a1a]/50 text-[10px] tracking-wider uppercase">
+                    <span className="text-brand-charcoal">{item.name}</span>
+                    <span className="text-brand-charcoal/50 text-[10px] tracking-wider uppercase">
                       {item.value} Sold ({ratio.toFixed(0)}%)
                     </span>
                   </div>
                   {/* Glowing progress slider */}
-                  <div className="h-2 bg-[#1a1a1a]/5 rounded-full overflow-hidden relative">
+                  <div className="h-2 bg-brand-charcoal/5 rounded-full overflow-hidden relative">
                     <div 
-                      className="h-full bg-gradient-to-r from-[#d4af37]/60 to-[#d4af37] rounded-full transition-all duration-1000 ease-out" 
+                      className="h-full bg-gradient-to-r from-brand-gold/60 to-[#d4af37] rounded-full transition-all duration-1000 ease-out" 
                       style={{ width: `${Math.max(ratio, 4)}%` }} 
                     />
                   </div>
@@ -344,7 +344,7 @@ const DashboardOverview = () => {
             })}
             
             {charts.salesByCategory.length === 0 && (
-              <div className="py-12 text-center text-xs text-[#1a1a1a]/40 font-light italic">
+              <div className="py-12 text-center text-xs text-brand-charcoal/40 font-light italic">
                 No purchases logged in the database database yet.
               </div>
             )}
@@ -359,12 +359,12 @@ const DashboardOverview = () => {
         
         <div className="flex items-center justify-between border-b border-[#ebdcae]/10 pb-4">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-[#d4af37]/10 rounded-xl text-[#d4af37]">
+            <div className="p-2 bg-brand-gold/10 rounded-xl text-brand-gold">
               <ClipboardList size={16} />
             </div>
             <div>
-              <h3 className="text-sm font-bold tracking-wider uppercase text-[#1a1a1a]">Operational Timeline</h3>
-              <p className="text-[9px] uppercase tracking-widest text-[#1a1a1a]/40 font-semibold mt-0.5">Real Audit Feed</p>
+              <h3 className="text-sm font-bold tracking-wider uppercase text-brand-charcoal">Operational Timeline</h3>
+              <p className="text-[9px] uppercase tracking-widest text-brand-charcoal/40 font-semibold mt-0.5">Real Audit Feed</p>
             </div>
           </div>
         </div>
@@ -377,7 +377,7 @@ const DashboardOverview = () => {
 
           {timeline.map((act, index) => {
             let IconComponent = ClipboardList;
-            let themeClass = "bg-[#d4af37]/10 text-[#d4af37] border-[#d4af37]/20";
+            let themeClass = "bg-brand-gold/10 text-brand-gold border-brand-gold/20";
             
             if (act.type === "user") {
               IconComponent = UserPlus;
@@ -398,12 +398,12 @@ const DashboardOverview = () => {
                 {/* Content details block */}
                 <div className="flex-grow flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-6 border-b border-[#ebdcae]/5 pb-4">
                   <div className="flex flex-col gap-0.5 text-left">
-                    <p className="text-xs font-bold text-[#1a1a1a]">{act.message}</p>
-                    <span className="text-[10px] text-[#1a1a1a]/50 font-light">{act.detail}</span>
+                    <p className="text-xs font-bold text-brand-charcoal">{act.message}</p>
+                    <span className="text-[10px] text-brand-charcoal/50 font-light">{act.detail}</span>
                   </div>
-                  <div className="shrink-0 flex items-center gap-1.5 sm:flex-col sm:items-end sm:gap-0.5 text-[9px] uppercase tracking-widest text-[#1a1a1a]/35 font-bold">
+                  <div className="shrink-0 flex items-center gap-1.5 sm:flex-col sm:items-end sm:gap-0.5 text-[9px] uppercase tracking-widest text-brand-charcoal/35 font-bold">
                     <span>{act.dateLabel}</span>
-                    <span className="hidden sm:inline text-[#1a1a1a]/25">•</span>
+                    <span className="hidden sm:inline text-brand-charcoal/25">•</span>
                     <span>{act.timeLabel}</span>
                   </div>
                 </div>
@@ -413,7 +413,7 @@ const DashboardOverview = () => {
           })}
 
           {timeline.length === 0 && (
-            <div className="py-12 text-center text-xs text-[#1a1a1a]/40 font-light italic">
+            <div className="py-12 text-center text-xs text-brand-charcoal/40 font-light italic">
               No logs populated. Perform catalog updates or order placements in the system.
             </div>
           )}

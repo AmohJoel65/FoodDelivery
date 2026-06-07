@@ -182,10 +182,10 @@ const ArticleDetail = () => {
     return (
       <div className="min-h-screen bg-[#f5f0e6] flex items-center justify-center">
         <div className="text-center">
-          <BookOpen className="w-16 h-16 text-[#d4af37] mx-auto mb-4" />
+          <BookOpen className="w-16 h-16 text-brand-gold mx-auto mb-4" />
           <h2 className="text-2xl font-serif font-bold mb-2">Article Not Found</h2>
           <p className="text-gray-600 mb-6">The article you're looking for doesn't exist.</p>
-          <Link to="/journal" className="text-[#d4af37] font-semibold hover:underline">
+          <Link to="/journal" className="text-brand-gold font-semibold hover:underline">
             Return to Journal
           </Link>
         </div>
@@ -220,7 +220,7 @@ const ArticleDetail = () => {
         {/* Back Button */}
         <Link
           to="/journal"
-          className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm text-[#1a1a1a] px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 hover:bg-white transition-all"
+          className="absolute top-6 left-6 bg-white/90 backdrop-blur-sm text-brand-charcoal px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 hover:bg-white transition-all"
         >
           <ArrowLeft size={16} />
           Back to Journal
@@ -232,20 +232,20 @@ const ArticleDetail = () => {
         <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
           {/* Article Header */}
           <header className="mb-8">
-            <span className="text-[#d4af37] text-xs font-semibold uppercase tracking-widest block mb-4">
+            <span className="text-brand-gold text-xs font-semibold uppercase tracking-widest block mb-4">
               {article.category}
             </span>
-            <h1 className="text-3xl md:text-4xl font-serif font-bold text-[#1a1a1a] leading-tight mb-6">
+            <h1 className="text-3xl md:text-4xl font-serif font-bold text-brand-charcoal leading-tight mb-6">
               {article.title}
             </h1>
             
             <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 border-b border-gray-200 pb-6">
               <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-[#1a1a1a] text-[#d4af37] flex items-center justify-center font-serif text-sm font-bold">
+                <div className="w-10 h-10 rounded-full bg-brand-charcoal text-brand-gold flex items-center justify-center font-serif text-sm font-bold">
                   {article.author.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div>
-                  <p className="font-semibold text-[#1a1a1a]">{article.author}</p>
+                  <p className="font-semibold text-brand-charcoal">{article.author}</p>
                   <p className="text-xs text-gray-400">{article.date}</p>
                 </div>
               </div>
@@ -255,7 +255,7 @@ const ArticleDetail = () => {
               </div>
               <button
                 onClick={handleShare}
-                className="flex items-center gap-2 text-gray-400 hover:text-[#d4af37] transition-colors ml-auto"
+                className="flex items-center gap-2 text-gray-400 hover:text-brand-gold transition-colors ml-auto"
               >
                 <Share2 size={16} />
                 Share
@@ -274,7 +274,7 @@ const ArticleDetail = () => {
             <div className="flex items-center justify-between">
               <Link
                 to="/journal"
-                className="text-[#d4af37] font-semibold flex items-center gap-2 hover:underline"
+                className="text-brand-gold font-semibold flex items-center gap-2 hover:underline"
               >
                 <ArrowLeft size={16} />
                 Read More Articles
@@ -304,7 +304,7 @@ const ArticleDetail = () => {
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="font-serif font-bold text-lg group-hover:text-[#d4af37] transition-colors line-clamp-2">
+                    <h3 className="font-serif font-bold text-lg group-hover:text-brand-gold transition-colors line-clamp-2">
                       {relatedArticle.title}
                     </h3>
                     <p className="text-sm text-gray-500 mt-2 line-clamp-2">

@@ -179,29 +179,29 @@ const LoginModal = ({ setShowLogin }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 glass-modal animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-brand-charcoal/50 backdrop-blur-sm animate-fade-in">
       
       {/* Background click listener to close */}
       <div className="absolute inset-0" onClick={() => setShowLogin(false)}></div>
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-[420px] bg-[#fdfbf7] rounded-3xl border border-[#1a1a1a]/5 shadow-2xl p-8 z-10 animate-in zoom-in-95 slide-in-from-bottom-4 duration-300">
+      <div className="relative w-full sm:max-w-[420px] max-h-[92dvh] sm:max-h-[90vh] overflow-y-auto bg-brand-cream rounded-t-2xl sm:rounded-2xl border border-brand-charcoal/5 shadow-2xl p-6 sm:p-8 z-10 animate-scale-in safe-bottom">
         
         {/* Close Button */}
         <button 
           onClick={() => setShowLogin(false)}
-          className="absolute top-6 right-6 text-[#1a1a1a]/40 hover:text-[#1a1a1a] p-1.5 rounded-full hover:bg-[#1a1a1a]/5 transition-all"
+          className="absolute top-6 right-6 text-brand-charcoal/40 hover:text-brand-charcoal p-1.5 rounded-full hover:bg-brand-charcoal/5 transition-all"
         >
           <X size={18} strokeWidth={2.5} />
         </button>
 
         {/* Brand/Title */}
         <div className="text-left mb-6">
-          <h2 className="text-3xl font-bold font-serif text-[#1a1a1a]">
-            {currState === "Login" ? "Welcome Back" : "Begin Gastronomy"}
+          <h2 className="text-3xl font-bold font-serif text-brand-charcoal">
+            {currState === "Login" ? "Welcome back" : "Create account"}
           </h2>
-          <p className="text-xs text-[#1a1a1a]/50 mt-1.5 font-light">
-            {currState === "Login" ? "Sign in to access your culinary orders and carts." : "Create an account to begin ordering fresh artisanal food."}
+          <p className="text-xs text-brand-charcoal/50 mt-1.5 font-light">
+            {currState === "Login" ? "Sign in to view orders and manage your cart." : "Create an account to start ordering from Joel's Kitchen."}
           </p>
         </div>
 
@@ -223,7 +223,7 @@ const LoginModal = ({ setShowLogin }) => {
         {currState === "Forgot Password" && (
           <form onSubmit={handleForgotPassword} className="flex flex-col gap-4 text-left">
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]/50">Email Address</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-brand-charcoal/50">Email Address</label>
               <div className="relative">
                 <input 
                   type="email" 
@@ -231,31 +231,31 @@ const LoginModal = ({ setShowLogin }) => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Enter your email" 
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] outline-none text-sm transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-sm transition-all"
                   required
                 />
-                <Mail className="absolute left-3.5 top-3.5 text-[#1a1a1a]/30" size={16} />
+                <Mail className="absolute left-3.5 top-3.5 text-brand-charcoal/30" size={16} />
               </div>
             </div>
 
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full mt-4 py-4 bg-[#d4af37] hover:bg-[#b88934] text-[#1a1a1a] font-bold text-sm rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2"
+              className="w-full mt-4 py-4 bg-brand-gold hover:bg-brand-gold-dark text-brand-charcoal font-bold text-sm rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-[#1a1a1a] border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-5 h-5 border-2 border-brand-charcoal border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 "Send Reset Token"
               )}
             </button>
 
-            <div className="text-center mt-4 pt-4 border-t border-[#1a1a1a]/5 text-xs">
-              <p className="text-[#1a1a1a]/60">
+            <div className="text-center mt-4 pt-4 border-t border-brand-charcoal/5 text-xs">
+              <p className="text-brand-charcoal/60">
                 Remember your password?{" "}
                 <span 
                   onClick={() => { setCurrState("Login"); setErrorMsg(""); setSuccessMsg(""); }}
-                  className="text-[#d4af37] font-bold cursor-pointer hover:underline"
+                  className="text-brand-gold font-bold cursor-pointer hover:underline"
                 >
                   Back to Login
                 </span>
@@ -268,20 +268,20 @@ const LoginModal = ({ setShowLogin }) => {
         {currState === "Reset Password" && (
           <form onSubmit={handleResetPassword} className="flex flex-col gap-4 text-left">
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]/50">Reset Token</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-brand-charcoal/50">Reset Token</label>
               <input 
                 type="text" 
                 name="resetToken" 
                 value={formData.resetToken}
                 onChange={handleChange}
                 placeholder="Enter the reset token" 
-                className="w-full px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] outline-none text-sm transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-sm transition-all"
                 required
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]/50">New Password</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-brand-charcoal/50">New Password</label>
               <div className="relative">
                 <input 
                   type={showPassword ? "text" : "password"} 
@@ -289,14 +289,14 @@ const LoginModal = ({ setShowLogin }) => {
                   value={formData.newPassword}
                   onChange={handleChange}
                   placeholder="Enter new password (6+ characters)" 
-                  className="w-full pl-10 pr-12 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] outline-none text-sm transition-all"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-sm transition-all"
                   required
                 />
-                <Lock className="absolute left-3.5 top-3.5 text-[#1a1a1a]/30" size={16} />
+                <Lock className="absolute left-3.5 top-3.5 text-brand-charcoal/30" size={16} />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3.5 text-[#1a1a1a]/40 hover:text-[#1a1a1a]"
+                  className="absolute right-3.5 top-3.5 text-brand-charcoal/40 hover:text-brand-charcoal"
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -306,20 +306,20 @@ const LoginModal = ({ setShowLogin }) => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full mt-4 py-4 bg-[#d4af37] hover:bg-[#b88934] text-[#1a1a1a] font-bold text-sm rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2"
+              className="w-full mt-4 py-4 bg-brand-gold hover:bg-brand-gold-dark text-brand-charcoal font-bold text-sm rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-[#1a1a1a] border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-5 h-5 border-2 border-brand-charcoal border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 "Reset Password"
               )}
             </button>
 
-            <div className="text-center mt-4 pt-4 border-t border-[#1a1a1a]/5 text-xs">
-              <p className="text-[#1a1a1a]/60">
+            <div className="text-center mt-4 pt-4 border-t border-brand-charcoal/5 text-xs">
+              <p className="text-brand-charcoal/60">
                 <span 
                   onClick={() => { setCurrState("Login"); setErrorMsg(""); setSuccessMsg(""); }}
-                  className="text-[#d4af37] font-bold cursor-pointer hover:underline"
+                  className="text-brand-gold font-bold cursor-pointer hover:underline"
                 >
                   Back to Login
                 </span>
@@ -335,7 +335,7 @@ const LoginModal = ({ setShowLogin }) => {
           {/* Name Field (Sign Up ONLY) */}
           {currState === "Sign Up" && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]/50">Full Name</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-brand-charcoal/50">Full Name</label>
               <div className="relative">
                 <input 
                   type="text" 
@@ -343,17 +343,17 @@ const LoginModal = ({ setShowLogin }) => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="e.g. Jean Joel" 
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] outline-none text-sm transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-sm transition-all"
                   required
                 />
-                <User className="absolute left-3.5 top-3.5 text-[#1a1a1a]/30" size={16} />
+                <User className="absolute left-3.5 top-3.5 text-brand-charcoal/30" size={16} />
               </div>
             </div>
           )}
 
           {/* Email Field */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]/50">Email Address</label>
+            <label className="text-[10px] font-bold uppercase tracking-wider text-brand-charcoal/50">Email Address</label>
             <div className="relative">
               <input 
                 type="email" 
@@ -361,16 +361,16 @@ const LoginModal = ({ setShowLogin }) => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="e.g. you@example.com" 
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] outline-none text-sm transition-all"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-sm transition-all"
                 required
               />
-              <Mail className="absolute left-3.5 top-3.5 text-[#1a1a1a]/30" size={16} />
+              <Mail className="absolute left-3.5 top-3.5 text-brand-charcoal/30" size={16} />
             </div>
           </div>
 
           {/* Password Field */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]/50">Password</label>
+            <label className="text-[10px] font-bold uppercase tracking-wider text-brand-charcoal/50">Password</label>
             <div className="relative">
               <input 
                 type={showPassword ? "text" : "password"} 
@@ -378,14 +378,14 @@ const LoginModal = ({ setShowLogin }) => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter 6+ characters" 
-                className="w-full pl-10 pr-12 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] outline-none text-sm transition-all"
+                className="w-full pl-10 pr-12 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-sm transition-all"
                 required
               />
-              <Lock className="absolute left-3.5 top-3.5 text-[#1a1a1a]/30" size={16} />
+              <Lock className="absolute left-3.5 top-3.5 text-brand-charcoal/30" size={16} />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-3.5 text-[#1a1a1a]/40 hover:text-[#1a1a1a]"
+                className="absolute right-3.5 top-3.5 text-brand-charcoal/40 hover:text-brand-charcoal"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -395,7 +395,7 @@ const LoginModal = ({ setShowLogin }) => {
           {/* Password Confirmation Field (Sign Up ONLY) */}
           {currState === "Sign Up" && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]/50">Confirm Password</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-brand-charcoal/50">Confirm Password</label>
               <div className="relative">
                 <input 
                   type={showPassword ? "text" : "password"} 
@@ -403,10 +403,10 @@ const LoginModal = ({ setShowLogin }) => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Repeat your password" 
-                  className="w-full pl-10 pr-12 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] outline-none text-sm transition-all"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold outline-none text-sm transition-all"
                   required
                 />
-                <Lock className="absolute left-3.5 top-3.5 text-[#1a1a1a]/30" size={16} />
+                <Lock className="absolute left-3.5 top-3.5 text-brand-charcoal/30" size={16} />
               </div>
             </div>
           )}
@@ -415,10 +415,10 @@ const LoginModal = ({ setShowLogin }) => {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full mt-4 py-4 bg-[#1a1a1a] hover:bg-[#d4af37] hover:text-[#1a1a1a] text-[#fdfbf7] font-bold text-sm rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2"
+            className="w-full mt-4 py-4 bg-brand-charcoal hover:bg-brand-gold hover:text-brand-charcoal text-brand-cream font-bold text-sm rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2"
           >
             {loading ? (
-              <div className="w-5 h-5 border-2 border-[#fdfbf7] border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-2 border-brand-cream border-t-transparent rounded-full animate-spin"></div>
             ) : (
               currState === "Login" ? "Sign In" : "Register Account"
             )}
@@ -426,29 +426,29 @@ const LoginModal = ({ setShowLogin }) => {
 
           {/* Disclaimer (Sign Up ONLY) */}
           {currState === "Sign Up" && (
-            <p className="text-[10px] text-[#1a1a1a]/40 leading-normal text-center mt-2">
+            <p className="text-[10px] text-brand-charcoal/40 leading-normal text-center mt-2">
               By creating an account, you agree to Joel.'s Terms of Service and Privacy Policies.
             </p>
           )}
 
           {/* Mode Switcher */}
-          <div className="text-center mt-4 pt-4 border-t border-[#1a1a1a]/5 text-xs">
+          <div className="text-center mt-4 pt-4 border-t border-brand-charcoal/5 text-xs">
             {currState === "Login" ? (
-              <p className="text-[#1a1a1a]/60">
+              <p className="text-brand-charcoal/60">
                 New to Joel.?{" "}
                 <span 
                   onClick={() => { setCurrState("Sign Up"); setErrorMsg(""); }}
-                  className="text-[#d4af37] font-bold cursor-pointer hover:underline"
+                  className="text-brand-gold font-bold cursor-pointer hover:underline"
                 >
                   Create account
                 </span>
               </p>
             ) : (
-              <p className="text-[#1a1a1a]/60">
+              <p className="text-brand-charcoal/60">
                 Already registered?{" "}
                 <span 
                   onClick={() => { setCurrState("Login"); setErrorMsg(""); }}
-                  className="text-[#d4af37] font-bold cursor-pointer hover:underline"
+                  className="text-brand-gold font-bold cursor-pointer hover:underline"
                 >
                   Sign in here
                 </span>
@@ -461,7 +461,7 @@ const LoginModal = ({ setShowLogin }) => {
             <div className="text-center mt-2 text-xs">
               <span 
                 onClick={() => { setCurrState("Forgot Password"); setErrorMsg(""); }}
-                className="text-[#1a1a1a]/40 hover:text-[#d4af37] cursor-pointer hover:underline"
+                className="text-brand-charcoal/40 hover:text-brand-gold cursor-pointer hover:underline"
               >
                 Forgot Password?
               </span>

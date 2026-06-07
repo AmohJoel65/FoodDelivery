@@ -59,13 +59,13 @@ const Profile = ({ setShowLogin }) => {
   // Default Fallback details for unauthenticated views
   if (!token) {
     return (
-      <main className="min-h-screen bg-[#fdfbf7] flex items-center justify-center py-20 px-6" aria-label="Joel Profile Gate Screen">
+      <main className="min-h-screen bg-brand-cream flex items-center justify-center py-20 px-6" aria-label="Joel Profile Gate Screen">
         <div className="max-w-md w-full bg-white rounded-3xl border border-[#e4e1db]/80 shadow-2xl p-8 text-center space-y-6 animate-fade-in">
-          <div className="w-16 h-16 rounded-full bg-[#fdfbf7] border border-[#d4af37]/30 flex items-center justify-center mx-auto text-[#d4af37] shadow-sm">
+          <div className="w-16 h-16 rounded-full bg-brand-cream border border-brand-gold/30 flex items-center justify-center mx-auto text-brand-gold shadow-sm">
             <User className="w-8 h-8" />
           </div>
           <div className="space-y-2">
-            <span className="text-[10px] tracking-widest uppercase font-bold text-[#d4af37]">Members Entrance</span>
+            <span className="text-[10px] tracking-widest uppercase font-bold text-brand-gold">Members Entrance</span>
             <h1 className="text-2xl font-serif font-bold text-gray-900">Your Gastronomy Profile</h1>
             <p className="text-sm text-gray-500 font-light leading-relaxed">
               Unlock your exclusive Gold Member loyalty point progressions, saved delivery coordinates, and bookmark your favorite artisan recipes.
@@ -73,10 +73,10 @@ const Profile = ({ setShowLogin }) => {
           </div>
           <button 
             onClick={() => setShowLogin && setShowLogin(true)}
-            className="w-full py-3.5 bg-[#1a1a1a] text-white hover:bg-[#1a1a1a]/95 text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all font-bold shadow-md"
+            className="w-full py-3.5 bg-brand-charcoal text-white hover:bg-brand-charcoal/95 text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all font-bold shadow-md"
             aria-label="Sign In or Register to Joel"
           >
-            <LogIn className="w-4 h-4 text-[#d4af37]" /> Sign In / Register
+            <LogIn className="w-4 h-4 text-brand-gold" /> Sign In / Register
           </button>
         </div>
       </main>
@@ -130,18 +130,18 @@ const Profile = ({ setShowLogin }) => {
   ];
 
   return (
-    <main className="min-h-screen bg-[#fdfbf7] text-[#1a1a1a] pb-24" aria-label="User Account Profile and Loyalty Desk">
+    <main className="min-h-screen bg-brand-cream text-brand-charcoal pb-24" aria-label="User Account Profile and Loyalty Desk">
       {/* Upper header */}
-      <section className="bg-[#1a1a1a] text-white py-16 px-6">
+      <section className="bg-brand-charcoal text-white py-16 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-5 text-center md:text-left flex-col md:flex-row">
-            <div className="w-20 h-20 rounded-full bg-[#d4af37] text-[#1a1a1a] font-serif text-3xl font-bold flex items-center justify-center border-2 border-white shadow-xl">
+            <div className="w-20 h-20 rounded-full bg-brand-gold text-brand-charcoal font-serif text-3xl font-bold flex items-center justify-center border-2 border-white shadow-xl">
               {user?.name ? user.name.substring(0, 2).toUpperCase() : "JL"}
             </div>
             <div className="space-y-1">
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
                 <h1 className="text-2xl md:text-3xl font-serif font-bold">{user?.name || "Artisan Guest"}</h1>
-                <span className="bg-[#d4af37]/20 border border-[#d4af37]/50 text-[#d4af37] text-[9px] tracking-widest uppercase font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                <span className="bg-brand-gold/20 border border-brand-gold/50 text-brand-gold text-[9px] tracking-widest uppercase font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
                   <Star className="w-2.5 h-2.5 fill-[#d4af37]" /> Gold Tier
                 </span>
               </div>
@@ -151,12 +151,12 @@ const Profile = ({ setShowLogin }) => {
           
           {/* Quick Point Tracker */}
           <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center gap-4 shrink-0 shadow-lg">
-            <div className="w-12 h-12 rounded-full border-2 border-[#d4af37] flex items-center justify-center text-lg font-serif font-bold text-[#d4af37]">
+            <div className="w-12 h-12 rounded-full border-2 border-brand-gold flex items-center justify-center text-lg font-serif font-bold text-brand-gold">
               450
             </div>
             <div>
               <p className="text-[10px] tracking-wider uppercase font-bold text-gray-400">Available Points</p>
-              <p className="text-xs text-[#d4af37] font-semibold">100 Points to next dessert reward</p>
+              <p className="text-xs text-brand-gold font-semibold">100 Points to next dessert reward</p>
             </div>
           </div>
         </div>
@@ -172,7 +172,7 @@ const Profile = ({ setShowLogin }) => {
               onClick={() => setActiveTab("settings")}
               className={`w-full p-4 rounded-xl text-left text-xs font-semibold tracking-widest uppercase flex items-center gap-3 transition-all ${
                 activeTab === "settings" 
-                  ? "bg-[#1a1a1a] text-white" 
+                  ? "bg-brand-charcoal text-white" 
                   : "bg-white text-gray-600 border border-[#e4e1db]/80 hover:bg-gray-50 active:scale-95"
               }`}
             >
@@ -182,7 +182,7 @@ const Profile = ({ setShowLogin }) => {
               onClick={() => setActiveTab("rewards")}
               className={`w-full p-4 rounded-xl text-left text-xs font-semibold tracking-widest uppercase flex items-center gap-3 transition-all ${
                 activeTab === "rewards" 
-                  ? "bg-[#1a1a1a] text-white" 
+                  ? "bg-brand-charcoal text-white" 
                   : "bg-white text-gray-600 border border-[#e4e1db]/80 hover:bg-gray-50 active:scale-95"
               }`}
             >
@@ -192,7 +192,7 @@ const Profile = ({ setShowLogin }) => {
               onClick={() => setActiveTab("favorites")}
               className={`w-full p-4 rounded-xl text-left text-xs font-semibold tracking-widest uppercase flex items-center gap-3 transition-all ${
                 activeTab === "favorites" 
-                  ? "bg-[#1a1a1a] text-white" 
+                  ? "bg-brand-charcoal text-white" 
                   : "bg-white text-gray-600 border border-[#e4e1db]/80 hover:bg-gray-50 active:scale-95"
               }`}
             >
@@ -202,7 +202,7 @@ const Profile = ({ setShowLogin }) => {
               onClick={() => setActiveTab("addresses")}
               className={`w-full p-4 rounded-xl text-left text-xs font-semibold tracking-widest uppercase flex items-center gap-3 transition-all ${
                 activeTab === "addresses" 
-                  ? "bg-[#1a1a1a] text-white" 
+                  ? "bg-brand-charcoal text-white" 
                   : "bg-white text-gray-600 border border-[#e4e1db]/80 hover:bg-gray-50 active:scale-95"
               }`}
             >
@@ -219,7 +219,7 @@ const Profile = ({ setShowLogin }) => {
                 <div>
                   <h2 className="text-2xl font-serif mb-1 font-bold">Profile Credentials</h2>
                   <p className="text-xs text-gray-500 font-light">Update your profile identity and login security credentials.</p>
-                  <div className="w-12 h-[1px] bg-[#d4af37] mt-3"></div>
+                  <div className="w-12 h-[1px] bg-brand-gold mt-3"></div>
                 </div>
 
                 <form onSubmit={handleProfileSubmit} className="space-y-6">
@@ -233,7 +233,7 @@ const Profile = ({ setShowLogin }) => {
                           id="prof-name"
                           value={profileName}
                           onChange={(e) => setProfileName(e.target.value)}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm"
                         />
                       </div>
                     </div>
@@ -247,7 +247,7 @@ const Profile = ({ setShowLogin }) => {
                           id="prof-email"
                           value={profileEmail}
                           onChange={(e) => setProfileEmail(e.target.value)}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm"
                         />
                       </div>
                     </div>
@@ -264,7 +264,7 @@ const Profile = ({ setShowLogin }) => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm"
                         />
                       </div>
                     </div>
@@ -279,7 +279,7 @@ const Profile = ({ setShowLogin }) => {
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm"
                         />
                       </div>
                     </div>
@@ -288,7 +288,7 @@ const Profile = ({ setShowLogin }) => {
                   <div className="flex justify-end pt-4">
                     <button 
                       type="submit"
-                      className="py-3 px-8 bg-[#1a1a1a] text-white hover:bg-[#1a1a1a]/95 text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center gap-2 active:scale-95 transition-all shadow-md"
+                      className="py-3 px-8 bg-brand-charcoal text-white hover:bg-brand-charcoal/95 text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center gap-2 active:scale-95 transition-all shadow-md"
                     >
                       Save Settings
                     </button>
@@ -303,18 +303,18 @@ const Profile = ({ setShowLogin }) => {
                 <div>
                   <h2 className="text-2xl font-serif mb-1 font-bold">Joel's Rewards Loyalty Desk</h2>
                   <p className="text-xs text-gray-500 font-light">Your dedication to artisan dining earns points, unlocking custom culinary rewards.</p>
-                  <div className="w-12 h-[1px] bg-[#d4af37] mt-3"></div>
+                  <div className="w-12 h-[1px] bg-brand-gold mt-3"></div>
                 </div>
 
                 {/* Point progression meter */}
-                <div className="bg-[#1a1a1a] text-white p-8 rounded-3xl border border-[#d4af37]/20 relative overflow-hidden">
+                <div className="bg-brand-charcoal text-white p-8 rounded-3xl border border-brand-gold/20 relative overflow-hidden">
                   <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none">
-                    <Star className="w-64 h-64 text-[#d4af37]" />
+                    <Star className="w-64 h-64 text-brand-gold" />
                   </div>
                   
                   <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="space-y-3 text-center md:text-left">
-                      <span className="text-[#d4af37] text-[10px] tracking-widest uppercase font-bold">Loyalty Progression</span>
+                      <span className="text-brand-gold text-[10px] tracking-widest uppercase font-bold">Loyalty Progression</span>
                       <h3 className="text-2xl font-serif text-white font-semibold">Gold Member Tier</h3>
                       <p className="text-xs text-gray-300 font-light max-w-sm">
                         You have earned **450 points** total! We award 1 point for every dollar spent on signature orders, private bookings, and curations.
@@ -331,7 +331,7 @@ const Profile = ({ setShowLogin }) => {
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <span className="text-2xl font-serif font-bold text-white">450</span>
-                        <span className="text-[8px] tracking-widest text-[#d4af37] uppercase font-bold">Points</span>
+                        <span className="text-[8px] tracking-widest text-brand-gold uppercase font-bold">Points</span>
                       </div>
                     </div>
                   </div>
@@ -343,7 +343,7 @@ const Profile = ({ setShowLogin }) => {
                       <span>600 Points (Next Premium Milestone)</span>
                     </div>
                     <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#d4af37] rounded-full" style={{ width: "75%" }}></div>
+                      <div className="h-full bg-brand-gold rounded-full" style={{ width: "75%" }}></div>
                     </div>
                   </div>
                 </div>
@@ -377,12 +377,12 @@ const Profile = ({ setShowLogin }) => {
                           key={idx} 
                           className={`p-3 rounded-xl border text-center transition-all ${
                             badge.unlocked 
-                              ? "bg-[#fdfbf7] border-[#d4af37]/30 text-gray-900" 
+                              ? "bg-brand-cream border-brand-gold/30 text-gray-900" 
                               : "bg-gray-50 border-gray-200 text-gray-400 opacity-60"
                           }`}
                         >
                           <div className="flex justify-center mb-1.5">
-                            <Sparkles className={`w-5 h-5 ${badge.unlocked ? "text-[#d4af37]" : "text-gray-300"}`} />
+                            <Sparkles className={`w-5 h-5 ${badge.unlocked ? "text-brand-gold" : "text-gray-300"}`} />
                           </div>
                           <h5 className="text-[10px] font-serif font-bold truncate">{badge.name}</h5>
                           <p className="text-[9px] font-light mt-0.5 line-clamp-2 leading-tight">{badge.desc}</p>
@@ -400,13 +400,13 @@ const Profile = ({ setShowLogin }) => {
                 <div>
                   <h2 className="text-2xl font-serif mb-1 font-bold">Saved Favorites</h2>
                   <p className="text-xs text-gray-500 font-light">Quickly view and immediately re-order your bookmarked dishes.</p>
-                  <div className="w-12 h-[1px] bg-[#d4af37] mt-3"></div>
+                  <div className="w-12 h-[1px] bg-brand-gold mt-3"></div>
                 </div>
 
                 {favoriteItems.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {favoriteItems.map((item) => (
-                      <div key={item._id} className="bg-[#fdfbf7] border border-[#e4e1db]/80 rounded-2xl p-4 flex gap-4 hover:shadow-md transition-all group">
+                      <div key={item._id} className="bg-brand-cream border border-[#e4e1db]/80 rounded-2xl p-4 flex gap-4 hover:shadow-md transition-all group">
                         <img 
                           src={item.image} 
                           alt={item.name} 
@@ -431,7 +431,7 @@ const Profile = ({ setShowLogin }) => {
                             <span className="text-xs font-semibold font-serif text-gray-800">{item.price.toFixed(0)} FCFA</span>
                             <button 
                               onClick={() => addToCart(item._id)}
-                              className="py-1 px-3 bg-[#1a1a1a] text-white hover:bg-[#d4af37] hover:text-[#1a1a1a] text-[10px] tracking-widest uppercase font-bold rounded-lg flex items-center gap-1 transition-all active:scale-95"
+                              className="py-1 px-3 bg-brand-charcoal text-white hover:bg-brand-gold hover:text-brand-charcoal text-[10px] tracking-widest uppercase font-bold rounded-lg flex items-center gap-1 transition-all active:scale-95"
                               aria-label={`Reorder ${item.name}`}
                             >
                               <ShoppingBag className="w-3 h-3" /> Reorder
@@ -442,7 +442,7 @@ const Profile = ({ setShowLogin }) => {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-20 border border-dashed border-[#e4e1db] rounded-2xl p-8 bg-[#fdfbf7]/50">
+                  <div className="text-center py-20 border border-dashed border-[#e4e1db] rounded-2xl p-8 bg-brand-cream/50">
                     <Heart className="w-10 h-10 text-gray-300 mx-auto mb-4" />
                     <h3 className="text-base font-serif mb-1 font-semibold">No Bookmarks Saved</h3>
                     <p className="text-xs text-gray-500 max-w-xs mx-auto">Click the heart bookmark icons on dishes across the menu display grids to populate your saved favorites.</p>
@@ -458,12 +458,12 @@ const Profile = ({ setShowLogin }) => {
                   <div>
                     <h2 className="text-2xl font-serif mb-1 font-bold">Delivery Coordinates</h2>
                     <p className="text-xs text-gray-500 font-light">Manage your saved home, office, and estate delivery profiles.</p>
-                    <div className="w-12 h-[1px] bg-[#d4af37] mt-3"></div>
+                    <div className="w-12 h-[1px] bg-brand-gold mt-3"></div>
                   </div>
                   {!showAddressForm && (
                     <button 
                       onClick={() => setShowAddressForm(true)}
-                      className="py-2.5 px-4 bg-[#1a1a1a] text-white hover:bg-[#d4af37] hover:text-[#1a1a1a] text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center gap-1.5 active:scale-95 transition-all shadow-sm"
+                      className="py-2.5 px-4 bg-brand-charcoal text-white hover:bg-brand-gold hover:text-brand-charcoal text-xs font-semibold tracking-widest uppercase rounded-xl flex items-center gap-1.5 active:scale-95 transition-all shadow-sm"
                     >
                       <Plus className="w-4 h-4" /> Add Address
                     </button>
@@ -472,7 +472,7 @@ const Profile = ({ setShowLogin }) => {
 
                 {/* New Address Form Modal overlay sheet */}
                 {showAddressForm && (
-                  <form onSubmit={handleAddressSubmit} className="bg-[#fdfbf7] p-6 rounded-2xl border border-[#d4af37]/20 space-y-4 animate-fade-in">
+                  <form onSubmit={handleAddressSubmit} className="bg-brand-cream p-6 rounded-2xl border border-brand-gold/20 space-y-4 animate-fade-in">
                     <div className="flex items-center justify-between border-b border-gray-200 pb-3">
                       <h3 className="text-sm font-serif font-bold text-gray-900">{addressForm.id ? "Edit Address Profile" : "New Address Profile"}</h3>
                       <button 
@@ -493,7 +493,7 @@ const Profile = ({ setShowLogin }) => {
                           required
                           value={addressForm.name}
                           onChange={(e) => setAddressForm({...addressForm, name: e.target.value})}
-                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20"
+                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
                         />
                       </div>
                       <div className="md:col-span-2">
@@ -504,7 +504,7 @@ const Profile = ({ setShowLogin }) => {
                           required
                           value={addressForm.street}
                           onChange={(e) => setAddressForm({...addressForm, street: e.target.value})}
-                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20"
+                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
                         />
                       </div>
                     </div>
@@ -518,7 +518,7 @@ const Profile = ({ setShowLogin }) => {
                           required
                           value={addressForm.city}
                           onChange={(e) => setAddressForm({...addressForm, city: e.target.value})}
-                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20"
+                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
                         />
                       </div>
                       <div>
@@ -529,7 +529,7 @@ const Profile = ({ setShowLogin }) => {
                           required
                           value={addressForm.state}
                           onChange={(e) => setAddressForm({...addressForm, state: e.target.value})}
-                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20"
+                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
                         />
                       </div>
                       <div>
@@ -539,7 +539,7 @@ const Profile = ({ setShowLogin }) => {
                           placeholder="90210"
                           value={addressForm.zip}
                           onChange={(e) => setAddressForm({...addressForm, zip: e.target.value})}
-                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20"
+                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
                         />
                       </div>
                       <div>
@@ -550,7 +550,7 @@ const Profile = ({ setShowLogin }) => {
                           required
                           value={addressForm.phone}
                           onChange={(e) => setAddressForm({...addressForm, phone: e.target.value})}
-                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20"
+                          className="w-full px-3 py-2 border border-[#e4e1db] rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold/20"
                         />
                       </div>
                     </div>
@@ -565,7 +565,7 @@ const Profile = ({ setShowLogin }) => {
                       </button>
                       <button 
                         type="submit"
-                        className="py-2 px-5 bg-[#d4af37] text-[#1a1a1a] hover:bg-[#d4af37]/90 text-xs font-semibold tracking-wider uppercase rounded-xl font-bold active:scale-95"
+                        className="py-2 px-5 bg-brand-gold text-brand-charcoal hover:bg-brand-gold/90 text-xs font-semibold tracking-wider uppercase rounded-xl font-bold active:scale-95"
                       >
                         Save Address
                       </button>
@@ -576,14 +576,14 @@ const Profile = ({ setShowLogin }) => {
                 {/* Addresses Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {addresses.map((addr) => (
-                    <div key={addr.id} className="border border-[#e4e1db] rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:shadow-md transition-all bg-[#fdfbf7]/20">
+                    <div key={addr.id} className="border border-[#e4e1db] rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:shadow-md transition-all bg-brand-cream/20">
                       <div className="space-y-2">
                         <div className="flex justify-between items-center">
                           <h3 className="text-sm font-serif font-bold text-gray-900">{addr.name}</h3>
                           <div className="flex gap-2">
                             <button 
                               onClick={() => openEditAddress(addr)}
-                              className="text-gray-400 hover:text-[#d4af37] text-[10px] uppercase font-bold"
+                              className="text-gray-400 hover:text-brand-gold text-[10px] uppercase font-bold"
                               aria-label={`Edit address ${addr.name}`}
                             >
                               Edit
@@ -603,14 +603,14 @@ const Profile = ({ setShowLogin }) => {
                           {addr.street}, {addr.city}, {addr.state} {addr.zip}
                         </p>
                         <p className="text-[10px] text-gray-400 font-light flex items-center gap-1">
-                          <Phone className="w-3.5 h-3.5 text-[#d4af37]" /> {addr.phone}
+                          <Phone className="w-3.5 h-3.5 text-brand-gold" /> {addr.phone}
                         </p>
                       </div>
                     </div>
                   ))}
 
                   {addresses.length === 0 && (
-                    <div className="col-span-2 text-center py-16 border border-dashed border-[#e4e1db] rounded-2xl p-8 bg-[#fdfbf7]/50">
+                    <div className="col-span-2 text-center py-16 border border-dashed border-[#e4e1db] rounded-2xl p-8 bg-brand-cream/50">
                       <MapPin className="w-10 h-10 text-gray-300 mx-auto mb-4" />
                       <h3 className="text-base font-serif mb-1 font-semibold">No Addresses Saved</h3>
                       <p className="text-xs text-gray-500 max-w-xs mx-auto">Create a saved address coordinate profile to complete checkout in a single click.</p>

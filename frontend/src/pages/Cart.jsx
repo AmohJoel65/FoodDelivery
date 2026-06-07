@@ -1,233 +1,248 @@
-import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { StoreContext } from "../context/StoreContext";
-import { Trash2, ShoppingBag, ArrowRight } from "lucide-react";
-
-const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getCartSubtotal, token, formatPrice, showAlert } = useContext(StoreContext);
-  const navigate = useNavigate();
-  
-  const [promoCode, setPromoCode] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [promoApplied, setPromoApplied] = useState(false);
-  const [promoError, setPromoError] = useState("");
-
-  const subtotal = getCartSubtotal();
-  const deliveryFee = subtotal > 0 ? 5.00 : 0;
-  
-  const handleApplyPromo = (e) => {
-    e.preventDefault();
-    setPromoError("");
-    
-    if (promoCode.trim().toUpperCase() === "ARTISAN10") {
-      setDiscount(subtotal * 0.10); // 10% discount
-      setPromoApplied(true);
-    } else if (promoCode.trim().toUpperCase() === "FREEDELIVERY") {
-      setDiscount(5.00); // covers the delivery fee
-      setPromoApplied(true);
-    } else {
-      setPromoError("Invalid promo code. Try 'ARTISAN10' or 'FREEDELIVERY'.");
-    }
-  };
-
-  const total = Math.max(0, subtotal + deliveryFee - discount);
-
-  const handleCheckoutRedirect = () => {
-    if (!token) {
-      showAlert("Please sign in or register to proceed to payment.", "warning", "Authentication Required");
-      return;
-    }
-    // Navigate and pass total/discount info to payment
-    navigate("/order", { state: { total, subtotal, deliveryFee, discount } });
-  };
-
-  const hasItems = Object.keys(cartItems).length > 0 && subtotal > 0;
-
-  return (
-    <div className="max-w-7xl mx-auto px-6 py-12 min-h-[600px] animate-in fade-in duration-500">
-      
-      {/* Page Title */}
-      <div className="text-left mb-10">
-        <h2 className="text-3xl font-bold text-[#1a1a1a]">Shopping Bag</h2>
-        <p className="text-xs text-[#1a1a1a]/50 mt-1 font-light">Review your selected gourmet plates before entering delivery options.</p>
-      </div>
-
-      {!hasItems ? (
-        <div className="text-center py-20 bg-[#1a1a1a]/5 rounded-3xl border border-dashed border-[#1a1a1a]/10 max-w-2xl mx-auto flex flex-col items-center gap-6">
-          <ShoppingBag size={48} className="text-[#1a1a1a]/30" />
-          <div>
-            <h3 className="text-xl font-bold font-serif text-[#1a1a1a]">Your Shopping Bag is Empty</h3>
-            <p className="text-xs text-[#1a1a1a]/50 mt-1 max-w-xs font-light">Add some of our freshly-crafted signature items to begin your culinary checkout.</p>
-          </div>
-          <Link 
-            to="/" 
-            className="px-6 py-3 bg-[#1a1a1a] hover:bg-[#d4af37] hover:text-[#1a1a1a] text-[#fdfbf7] font-bold text-xs rounded-full shadow-md transition-all duration-300"
-          >
-            Explore Menu Selection
-          </Link>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          
-          {/* Items Table Section */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-[#1a1a1a]/5 text-[10px] uppercase font-extrabold tracking-widest text-[#1a1a1a]/40 pb-4">
-                    <th className="pb-4">Product</th>
-                    <th className="pb-4">Name</th>
-                    <th className="pb-4">Price</th>
-                    <th className="pb-4">Qty</th>
-                    <th className="pb-4">Total</th>
-                    <th className="pb-4 text-right">Remove</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#1a1a1a]/5 text-sm">
-                  {food_list.map((item) => {
-                    const quantity = cartItems[item._id] || 0;
-                    if (quantity > 0) {
-                      return (
-                        <tr key={item._id} className="group">
-                          {/* Thumbnail */}
-                          <td className="py-4">
-                            <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#1a1a1a]/5 border border-[#1a1a1a]/5">
-                              <img 
-                                src={item.image} 
-                                alt={item.name} 
-                                className="w-full h-full object-cover object-center"
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800";
-                                }}
-                              />
-                            </div>
-                          </td>
-                          {/* Name */}
-                          <td className="py-4 font-bold text-[#1a1a1a]">
-                            <p>{item.name}</p>
-                            <span className="text-[10px] text-[#d4af37] font-sans uppercase font-semibold tracking-wider">
-                              {item.category}
-                            </span>
-                          </td>
-                          {/* Price */}
-                          <td className="py-4 font-medium text-[#1a1a1a]/70">{formatPrice(item.price)}</td>
-                          {/* Qty */}
-                          <td className="py-4 font-bold text-[#1a1a1a]">{quantity}</td>
-                          {/* Total */}
-                          <td className="py-4 font-bold text-[#1a1a1a]">{formatPrice(item.price * quantity)}</td>
-                          {/* Remove */}
-                          <td className="py-4 text-right">
-                            <button 
-                              onClick={() => removeFromCart(item._id)}
-                              className="text-[#1a1a1a]/30 hover:text-red-650 p-2 rounded-full hover:bg-red-50 transition-colors"
-                              title="Decrease Quantity"
-                            >
-                              <Trash2 size={16} />
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    }
-                    return null;
-                  })}
-                </tbody>
-              </table>
-            </div>
-            
-            {/* Promo Code Input Block */}
-            <div className="glass-panel p-6 rounded-2xl text-left border border-[#1a1a1a]/5 mt-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#1a1a1a]/70 mb-2">Have a promotional coupon?</h4>
-              <p className="text-[11px] text-[#1a1a1a]/40 mb-4 font-light">Apply valid discount credentials to subtract final checkout costs. Try 'ARTISAN10' or 'FREEDELIVERY'.</p>
-              
-              <form onSubmit={handleApplyPromo} className="flex gap-3">
-                <input 
-                  type="text" 
-                  value={promoCode}
-                  onChange={(e) => { setPromoCode(e.target.value); setPromoError(""); }}
-                  placeholder="Promo Code" 
-                  disabled={promoApplied}
-                  className="flex-grow px-4 py-3 rounded-xl border border-[#1a1a1a]/10 focus:border-[#d4af37] outline-none text-xs disabled:bg-gray-100 disabled:text-gray-400"
-                />
-                <button 
-                  type="submit"
-                  disabled={promoApplied || !promoCode}
-                  className="px-6 py-3 bg-[#1a1a1a] hover:bg-[#d4af37] hover:text-[#1a1a1a] text-[#fdfbf7] text-xs font-bold rounded-xl disabled:bg-gray-200 disabled:text-gray-450 transition-colors shrink-0"
-                >
-                  {promoApplied ? "Applied" : "Apply"}
-                </button>
-              </form>
-
-              {promoApplied && (
-                <p className="text-[11px] text-green-700 font-semibold mt-3 text-left">
-                  ✓ Code successfully validated! Saved {formatPrice(discount)} on this order.
-                </p>
-              )}
-              {promoError && (
-                <p className="text-[11px] text-red-600 font-semibold mt-3 text-left">
-                  ✗ {promoError}
-                </p>
-              )}
-            </div>
-
-          </div>
-
-          {/* Cart Summary Totals column */}
-          <div className="glass-panel p-8 rounded-3xl border border-[#1a1a1a]/5 h-fit text-left flex flex-col gap-6 shadow-md">
-            <h3 className="text-xl font-bold font-serif text-[#1a1a1a] border-b border-[#1a1a1a]/5 pb-4">Order Totals</h3>
-            
-            <div className="flex flex-col gap-4 text-xs font-medium text-[#1a1a1a]/70">
-              
-              {/* Subtotal */}
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span className="font-bold text-[#1a1a1a]">{formatPrice(subtotal)}</span>
-              </div>
-              
-              {/* Delivery */}
-              <div className="flex justify-between">
-                <span>Delivery Fee</span>
-                <span className="font-bold text-[#1a1a1a]">{formatPrice(deliveryFee)}</span>
-              </div>
-
-              {/* Discount if present */}
-              {promoApplied && (
-                <div className="flex justify-between text-green-700 font-bold">
-                  <span>Promo Discount</span>
-                  <span>-{formatPrice(discount)}</span>
-                </div>
-              )}
-
-              {/* Grand Total */}
-              <div className="flex justify-between text-sm font-extrabold text-[#1a1a1a] border-t border-[#1a1a1a]/5 pt-4">
-                <span>Grand Total</span>
-                <span className="text-lg font-serif font-bold text-[#1a1a1a]">{formatPrice(total)}</span>
-              </div>
-
-            </div>
-
-            {/* Checkout CTA */}
-            <button 
-              onClick={handleCheckoutRedirect}
-              className="w-full mt-2 py-4 bg-[#1a1a1a] hover:bg-[#d4af37] hover:text-[#1a1a1a] text-[#fdfbf7] font-bold text-xs rounded-xl shadow-lg transition-all duration-300 flex justify-center items-center gap-2"
-            >
-              Proceed to Checkout
-              <ArrowRight size={14} />
-            </button>
-
-            {!token && (
-              <p className="text-[10px] text-red-650 text-center font-bold">
-                * Authorization required. Please Sign In first.
-              </p>
-            )}
-
-          </div>
-
-        </div>
-      )}
-
-    </div>
-  );
-};
-
-export default Cart;
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { StoreContext } from "../context/StoreContext";
+import { Trash2, ShoppingBag, ArrowRight, Minus } from "lucide-react";
+
+const Cart = () => {
+  const { cartItems, food_list, removeFromCart, getCartSubtotal, token, formatPrice, showAlert } =
+    useContext(StoreContext);
+  const navigate = useNavigate();
+
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [promoApplied, setPromoApplied] = useState(false);
+  const [promoError, setPromoError] = useState("");
+
+  const subtotal = getCartSubtotal();
+  const deliveryFee = subtotal > 0 ? 3000 : 0;
+
+  const handleApplyPromo = (e) => {
+    e.preventDefault();
+    setPromoError("");
+
+    if (promoCode.trim().toUpperCase() === "ARTISAN10") {
+      setDiscount(subtotal * 0.1);
+      setPromoApplied(true);
+    } else if (promoCode.trim().toUpperCase() === "FREEDELIVERY") {
+      setDiscount(3000);
+      setPromoApplied(true);
+    } else {
+      setPromoError("Invalid code. Try ARTISAN10 or FREEDELIVERY.");
+    }
+  };
+
+  const total = Math.max(0, subtotal + deliveryFee - discount);
+
+  const handleCheckoutRedirect = () => {
+    if (!token) {
+      showAlert("Please sign in to continue.", "warning", "Sign in required");
+      return;
+    }
+    navigate("/order", { state: { total, subtotal, deliveryFee, discount } });
+  };
+
+  const cartLineItems = food_list.filter((item) => (cartItems[item._id] || 0) > 0);
+  const hasItems = cartLineItems.length > 0 && subtotal > 0;
+
+  const SummaryBlock = ({ className = "" }) => (
+    <div className={`brand-card p-5 sm:p-8 rounded-2xl border border-brand-charcoal/5 flex flex-col gap-5 ${className}`}>
+      <h3 className="text-lg sm:text-xl font-bold font-serif text-brand-charcoal border-b border-brand-charcoal/5 pb-3">
+        Order total
+      </h3>
+      <div className="flex flex-col gap-3 text-sm text-brand-charcoal/70">
+        <div className="flex justify-between">
+          <span>Subtotal</span>
+          <span className="font-semibold text-brand-charcoal">{formatPrice(subtotal)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Delivery</span>
+          <span className="font-semibold text-brand-charcoal">{formatPrice(deliveryFee)}</span>
+        </div>
+        {promoApplied && (
+          <div className="flex justify-between text-green-700 font-semibold">
+            <span>Discount</span>
+            <span>-{formatPrice(discount)}</span>
+          </div>
+        )}
+        <div className="flex justify-between text-base font-bold text-brand-charcoal border-t border-brand-charcoal/5 pt-3">
+          <span>Total</span>
+          <span className="font-serif text-lg">{formatPrice(total)}</span>
+        </div>
+      </div>
+      <button
+        onClick={handleCheckoutRedirect}
+        className="w-full py-3.5 bg-brand-charcoal hover:bg-brand-gold hover:text-brand-charcoal text-brand-cream font-bold text-sm rounded-xl transition-colors flex justify-center items-center gap-2 min-h-[48px]"
+      >
+        Continue to delivery
+        <ArrowRight size={16} />
+      </button>
+      {!token && (
+        <p className="text-xs text-red-600 text-center font-medium">Sign in required to checkout</p>
+      )}
+    </div>
+  );
+
+  return (
+    <div className={`page-container py-8 sm:py-12 min-h-[50vh] animate-fade-in ${hasItems ? "pb-28 lg:pb-12" : ""}`}>
+      <div className="text-left mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-brand-charcoal">Your order</h2>
+        <p className="text-sm text-brand-charcoal/50 mt-1">Review items, then continue to delivery.</p>
+      </div>
+
+      {!hasItems ? (
+        <div className="text-center py-16 sm:py-20 bg-brand-charcoal/5 rounded-2xl border border-dashed border-brand-charcoal/10 max-w-2xl mx-auto flex flex-col items-center gap-5 px-4">
+          <ShoppingBag size={44} className="text-brand-charcoal/30" />
+          <div>
+            <h3 className="text-lg sm:text-xl font-bold font-serif text-brand-charcoal">Your bag is empty</h3>
+            <p className="text-sm text-brand-charcoal/50 mt-1 max-w-xs">Add something from the menu to get started.</p>
+          </div>
+          <Link
+            to="/"
+            className="px-6 py-3 bg-brand-charcoal hover:bg-brand-gold hover:text-brand-charcoal text-brand-cream font-bold text-sm rounded-full transition-colors min-h-[44px] flex items-center"
+          >
+            Browse menu
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
+          <div className="lg:col-span-2 flex flex-col gap-5">
+            {/* Mobile card list */}
+            <div className="flex flex-col gap-3 lg:hidden">
+              {cartLineItems.map((item) => {
+                const quantity = cartItems[item._id];
+                return (
+                  <div key={item._id} className="brand-card-accent p-4 flex gap-3">
+                    <div className="w-16 h-16 rounded-lg overflow-hidden bg-brand-charcoal/5 shrink-0">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src =
+                            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800";
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-brand-charcoal truncate">{item.name}</p>
+                      <p className="text-[10px] text-brand-gold uppercase font-semibold tracking-wider">{item.category}</p>
+                      <div className="flex items-center justify-between mt-2">
+                        <span className="text-sm text-brand-charcoal/60">Qty: {quantity}</span>
+                        <span className="font-bold text-brand-charcoal">{formatPrice(item.price * quantity)}</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(item._id)}
+                      className="self-start p-2 text-brand-charcoal/40 hover:text-red-600 rounded-lg min-w-[40px] min-h-[40px] flex items-center justify-center"
+                      aria-label={`Remove ${item.name}`}
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Desktop table */}
+            <div className="hidden lg:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-charcoal/5 text-[10px] uppercase font-bold tracking-wider text-brand-charcoal/40">
+                    <th className="pb-4">Product</th>
+                    <th className="pb-4">Name</th>
+                    <th className="pb-4">Price</th>
+                    <th className="pb-4">Qty</th>
+                    <th className="pb-4">Total</th>
+                    <th className="pb-4 text-right">Remove</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-brand-charcoal/5 text-sm">
+                  {cartLineItems.map((item) => {
+                    const quantity = cartItems[item._id];
+                    return (
+                      <tr key={item._id}>
+                        <td className="py-4">
+                          <div className="w-14 h-14 rounded-xl overflow-hidden bg-brand-charcoal/5">
+                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                          </div>
+                        </td>
+                        <td className="py-4 font-bold text-brand-charcoal">
+                          <p>{item.name}</p>
+                          <span className="text-[10px] text-brand-gold uppercase font-semibold">{item.category}</span>
+                        </td>
+                        <td className="py-4 text-brand-charcoal/70">{formatPrice(item.price)}</td>
+                        <td className="py-4 font-bold">{quantity}</td>
+                        <td className="py-4 font-bold">{formatPrice(item.price * quantity)}</td>
+                        <td className="py-4 text-right">
+                          <button
+                            onClick={() => removeFromCart(item._id)}
+                            className="p-2 text-brand-charcoal/30 hover:text-red-600 rounded-full hover:bg-red-50"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Promo */}
+            <div className="brand-card p-5 rounded-2xl text-left">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-brand-charcoal/70 mb-2">Promo code</h4>
+              <form onSubmit={handleApplyPromo} className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <input
+                  type="text"
+                  value={promoCode}
+                  onChange={(e) => {
+                    setPromoCode(e.target.value);
+                    setPromoError("");
+                  }}
+                  placeholder="Enter code"
+                  disabled={promoApplied}
+                  className="flex-1 px-4 py-3 rounded-xl border border-brand-charcoal/10 focus:border-brand-gold outline-none text-sm min-h-[44px] disabled:bg-gray-100"
+                />
+                <button
+                  type="submit"
+                  disabled={promoApplied || !promoCode}
+                  className="px-6 py-3 bg-brand-charcoal hover:bg-brand-gold hover:text-brand-charcoal text-brand-cream text-sm font-bold rounded-xl disabled:opacity-50 transition-colors min-h-[44px] shrink-0"
+                >
+                  {promoApplied ? "Applied" : "Apply"}
+                </button>
+              </form>
+              {promoApplied && (
+                <p className="text-xs text-green-700 font-medium mt-2">Saved {formatPrice(discount)} on this order.</p>
+              )}
+              {promoError && <p className="text-xs text-red-600 font-medium mt-2">{promoError}</p>}
+            </div>
+          </div>
+
+          {/* Desktop summary */}
+          <SummaryBlock className="hidden lg:flex h-fit" />
+        </div>
+      )}
+
+      {/* Mobile sticky checkout bar */}
+      {hasItems && (
+        <div className="mobile-sticky-bar lg:hidden flex items-center justify-between gap-4">
+          <div>
+            <p className="text-[10px] uppercase tracking-wider text-brand-charcoal/50">Total</p>
+            <p className="text-lg font-bold font-serif text-brand-charcoal">{formatPrice(total)}</p>
+          </div>
+          <button
+            onClick={handleCheckoutRedirect}
+            className="flex-1 max-w-[200px] py-3 bg-brand-charcoal text-brand-cream font-bold text-sm rounded-xl flex items-center justify-center gap-2 min-h-[48px]"
+          >
+            Checkout
+            <ArrowRight size={16} />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Cart;
+

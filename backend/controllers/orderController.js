@@ -7,7 +7,7 @@ const placeOrder = async (req, res) => {
     const { userId, items, amount, address, couponCode, deliveryZoneId, deliveryTimeSlotId, deliveryDate } = req.body;
 
     if (!userId || !items || !amount || !address) {
-      return res.json({ success: false, message: "Missing required order details" });
+      return res.json({ success: false, message: "Please complete your delivery details and try again." });
     }
 
     const db = readDB();
@@ -15,7 +15,7 @@ const placeOrder = async (req, res) => {
     // Check if user exists
     const userIndex = db.users.findIndex(u => u._id === userId);
     if (userIndex === -1) {
-      return res.json({ success: false, message: "User not found" });
+      return res.json({ success: false, message: "Your account was not found. Please sign in again." });
     }
 
     // Validate stock availability for all items

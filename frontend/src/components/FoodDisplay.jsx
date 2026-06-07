@@ -4,7 +4,7 @@ import FoodDetailsModal from "./FoodDetailsModal";
 import FoodItemCard from "./FoodItemCard";
 import SkeletonLoader from "./SkeletonLoader";
 
-const FoodDisplay = ({ category, searchQuery }) => {
+const FoodDisplay = ({ category, searchQuery, sortOption = "popular" }) => {
   const { food_list, cartItems, addToCart, removeFromCart, loading, favorites, toggleFavorite } = useContext(StoreContext);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -25,23 +25,39 @@ const FoodDisplay = ({ category, searchQuery }) => {
     return categoryMatch && searchMatch;
   });
 
+  // Sort the filtered foods
+  const sortedFoods = [...filteredFoods].sort((a, b) => {
+    switch (sortOption) {
+      case "price-asc":
+        return a.price - b.price;
+      case "price-desc":
+        return b.price - a.price;
+      case "alpha":
+        return a.name.localeCompare(b.name);
+      case "popular":
+      default:
+        // In a real app this would sort by a popularity score. For now we leave it in the original API order.
+        return 0;
+    }
+  });
+
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="page-container py-10 sm:py-16">
         <SkeletonLoader count={8} />
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16">
-      {filteredFoods.length === 0 ? (
-        <div className="text-center py-20 bg-[#1a1a1a]/5 rounded-3xl border border-dashed border-[#1a1a1a]/10">
-          <p className="text-lg font-serif text-[#1a1a1a]/60 italic">No dishes found matching your search or category.</p>
+    <div className="page-container py-10 sm:py-16">
+      {sortedFoods.length === 0 ? (
+        <div className="text-center py-20 bg-brand-charcoal/5 rounded-3xl border border-dashed border-brand-charcoal/10">
+          <p className="text-lg font-serif text-brand-charcoal/60 italic">No dishes found matching your search or category.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredFoods.map((item, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          {sortedFoods.map((item, index) => (
             <FoodItemCard
               key={item._id}
               item={item}

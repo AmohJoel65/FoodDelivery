@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 const Catering = () => {
-  const { showToast } = useContext(StoreContext);
+  const { showToast, url } = useContext(StoreContext);
   const [formStep, setFormStep] = useState(1);
   const [formData, setFormData] = useState({
     date: "",
@@ -34,6 +34,8 @@ const Catering = () => {
   });
   
   const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   // Experience Packages Seeding
   const packages = [
@@ -141,26 +143,71 @@ const Catering = () => {
     setFormStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (validateStep()) {
-      // Simulate API submit
-      showToast("Thank you! Your private catering inquiry has been received.", "success");
-      setFormStep(1);
-      setFormData({
-        date: "",
-        eventType: "Corporate Gala",
-        guestCount: "",
-        theme: "Artisan French Gastronomy",
-        dietaryTheme: "None",
-        customRequests: "",
-        name: "",
-        email: "",
-        phone: ""
-      });
-    } else {
-      showToast("Please correct the errors in the form before submitting.", "error");
+    if (!validateStep()) {
+      showToast('Please correct the errors before submitting.', 'error');
+      return;
     }
+
+    setSubmitting(true);
+    try {
+      const response = await fetch(`${url}/api/catering/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        // Build WhatsApp message
+        const waMsg = [
+          `*New Catering Inquiry — Joel's Kitchen*`,
+          ``,
+          `*Client:* ${formData.name}`,
+          `*Email:* ${formData.email}`,
+          `*Phone:* ${formData.phone}`,
+          ``,
+          `*Event Date:* ${formData.date}`,
+          `*Event Type:* ${formData.eventType}`,
+          `*Guests:* ${formData.guestCount}`,
+          `*Theme:* ${formData.theme}`,
+          `*Dietary:* ${formData.dietaryTheme}`,
+          formData.customRequests ? `*Special Requests:*\n${formData.customRequests}` : ''
+        ].filter(Boolean).join('\n');
+
+        const waNumber = '237673184599';
+        const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+
+        setSubmitted(true);
+        showToast('Inquiry submitted! Opening WhatsApp...', 'success');
+
+        // Open WhatsApp after a brief delay so the success screen shows first
+        setTimeout(() => window.open(waUrl, '_blank'), 800);
+      } else {
+        showToast(data.message || 'Failed to submit. Please try again.', 'error');
+      }
+    } catch {
+      showToast('Network error. Please check your connection and try again.', 'error');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const resetForm = () => {
+    setSubmitted(false);
+    setFormStep(1);
+    setFormData({
+      date: '',
+      eventType: 'Corporate Gala',
+      guestCount: '',
+      theme: 'Artisan French Gastronomy',
+      dietaryTheme: 'None',
+      customRequests: '',
+      name: '',
+      email: '',
+      phone: ''
+    });
   };
 
   const downloadMenu = (fileName) => {
@@ -168,20 +215,20 @@ const Catering = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#fdfbf7] text-[#1a1a1a] pb-24" aria-label="Catering and Private Events Page">
+    <main className="min-h-screen bg-brand-cream text-brand-charcoal pb-24" aria-label="Catering and Private Events Page">
       {/* 1. Luxurious Banner Header */}
-      <section className="relative bg-[#1a1a1a] text-[#fdfbf7] py-28 md:py-36 px-6 overflow-hidden">
+      <section className="relative bg-brand-charcoal text-brand-cream py-28 md:py-36 px-6 overflow-hidden">
         <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-[#d4af37] blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-brand-gold blur-3xl"></div>
         </div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          <span className="text-[#d4af37] font-medium tracking-[0.2em] text-xs uppercase block mb-3 animate-fade-in">
+          <span className="text-brand-gold font-medium tracking-[0.2em] text-xs uppercase block mb-3 animate-fade-in">
             Exclusive Gastronomic Services
           </span>
-          <h1 className="text-4xl md:text-6xl font-serif tracking-tight mb-6 text-[#fdfbf7]">
+          <h1 className="text-4xl md:text-6xl font-serif tracking-tight mb-6 text-brand-cream">
             Catering & Private Events
           </h1>
-          <p className="max-w-2xl mx-auto text-[#fdfbf7]/80 text-base md:text-lg font-light leading-relaxed">
+          <p className="max-w-2xl mx-auto text-brand-cream/80 text-base md:text-lg font-light leading-relaxed">
             Elevate your personal celebrations and corporate galas with **Joel.** Curated Artistry. 
             We deliver uncompromised fine-dining culinary theater, customized menus, and flawless execution directly to your venue.
           </p>
@@ -191,19 +238,19 @@ const Catering = () => {
       {/* 2. Visual Timeline - How We Work */}
       <section className="max-w-7xl mx-auto px-6 py-20" aria-label="Our Service Execution Process">
         <div className="text-center mb-16">
-          <span className="text-[#d4af37] text-xs tracking-widest uppercase font-semibold block mb-2">Our Process</span>
+          <span className="text-brand-gold text-xs tracking-widest uppercase font-semibold block mb-2">Our Process</span>
           <h2 className="text-3xl md:text-4xl font-serif">A Flawless Journey from Consult to Table</h2>
-          <div className="w-12 h-[2px] bg-[#d4af37] mx-auto mt-4"></div>
+          <div className="w-12 h-[2px] bg-brand-gold mx-auto mt-4"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
           <div className="hidden md:block absolute top-[52px] left-[12%] right-[12%] h-[1px] bg-[#e4e1db] z-0"></div>
           {timeline.map((item, idx) => (
             <div key={idx} className="relative z-10 bg-white p-6 rounded-2xl border border-[#e4e1db]/60 hover:shadow-xl transition-all duration-300 group">
-              <div className="w-14 h-14 rounded-full bg-[#1a1a1a] text-[#d4af37] flex items-center justify-center font-serif text-xl font-bold mb-6 border border-[#d4af37]/30 group-hover:scale-110 transition-transform duration-300 mx-auto md:mx-0">
+              <div className="w-14 h-14 rounded-full bg-brand-charcoal text-brand-gold flex items-center justify-center font-serif text-xl font-bold mb-6 border border-brand-gold/30 group-hover:scale-110 transition-transform duration-300 mx-auto md:mx-0">
                 {item.step}
               </div>
-              <h3 className="text-lg font-serif mb-3 font-semibold group-hover:text-[#d4af37] transition-colors">{item.title}</h3>
+              <h3 className="text-lg font-serif mb-3 font-semibold group-hover:text-brand-gold transition-colors">{item.title}</h3>
               <p className="text-sm text-gray-600 leading-relaxed font-light">{item.description}</p>
             </div>
           ))}
@@ -214,10 +261,10 @@ const Catering = () => {
       <section className="bg-white border-y border-[#e4e1db]/60 py-20" aria-label="Experience Packages">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-[#d4af37] text-xs tracking-widest uppercase font-semibold block mb-2">Curated Tiers</span>
+            <span className="text-brand-gold text-xs tracking-widest uppercase font-semibold block mb-2">Curated Tiers</span>
             <h2 className="text-3xl md:text-4xl font-serif">Tailored Dining Packages</h2>
             <p className="text-sm text-gray-500 max-w-md mx-auto mt-2">Choose a baseline structure, then collaborate with our chef to finalize details.</p>
-            <div className="w-12 h-[2px] bg-[#d4af37] mx-auto mt-4"></div>
+            <div className="w-12 h-[2px] bg-brand-gold mx-auto mt-4"></div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
@@ -226,18 +273,18 @@ const Catering = () => {
                 key={idx} 
                 className={`relative flex flex-col justify-between p-8 rounded-3xl transition-all duration-300 ${
                   pkg.featured 
-                    ? "bg-[#1a1a1a] text-[#fdfbf7] shadow-2xl scale-105 border border-[#d4af37]/40 z-10" 
-                    : "bg-[#fdfbf7] text-[#1a1a1a] border border-[#e4e1db]/80 hover:shadow-xl"
+                    ? "bg-brand-charcoal text-brand-cream shadow-2xl scale-105 border border-brand-gold/40 z-10" 
+                    : "bg-brand-cream text-brand-charcoal border border-[#e4e1db]/80 hover:shadow-xl"
                 }`}
               >
                 {pkg.featured && (
-                  <span className="absolute top-4 right-4 bg-[#d4af37] text-[#1a1a1a] text-[10px] tracking-widest uppercase font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                  <span className="absolute top-4 right-4 bg-brand-gold text-brand-charcoal text-[10px] tracking-widest uppercase font-bold px-3 py-1 rounded-full flex items-center gap-1">
                     <Sparkles className="w-3 h-3" /> Chef's Signature
                   </span>
                 )}
                 <div>
                   <h3 className="text-2xl font-serif mb-2 font-bold">{pkg.title}</h3>
-                  <div className={`text-xl font-serif font-semibold mb-4 ${pkg.featured ? "text-[#d4af37]" : "text-gray-900"}`}>
+                  <div className={`text-xl font-serif font-semibold mb-4 ${pkg.featured ? "text-brand-gold" : "text-gray-900"}`}>
                     {pkg.price}
                   </div>
                   <p className={`text-sm mb-6 font-light leading-relaxed ${pkg.featured ? "text-gray-300" : "text-gray-600"}`}>
@@ -249,7 +296,7 @@ const Catering = () => {
                   <ul className="space-y-4 mb-8">
                     {pkg.inclusions.map((inc, i) => (
                       <li key={i} className="flex items-start gap-3 text-sm">
-                        <CheckCircle2 className={`w-4 h-4 mt-0.5 shrink-0 ${pkg.featured ? "text-[#d4af37]" : "text-emerald-600"}`} />
+                        <CheckCircle2 className={`w-4 h-4 mt-0.5 shrink-0 ${pkg.featured ? "text-brand-gold" : "text-emerald-600"}`} />
                         <span className="font-light">{inc}</span>
                       </li>
                     ))}
@@ -260,8 +307,8 @@ const Catering = () => {
                   onClick={() => downloadMenu(pkg.pdfName)}
                   className={`w-full py-3.5 px-4 rounded-xl text-xs font-semibold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-300 ${
                     pkg.featured 
-                      ? "bg-[#d4af37] text-[#1a1a1a] hover:bg-[#d4af37]/90 active:scale-[0.98]" 
-                      : "bg-[#1a1a1a] text-white hover:bg-[#1a1a1a]/90 active:scale-[0.98]"
+                      ? "bg-brand-gold text-brand-charcoal hover:bg-brand-gold/90 active:scale-[0.98]" 
+                      : "bg-brand-charcoal text-white hover:bg-brand-charcoal/90 active:scale-[0.98]"
                   }`}
                   aria-label={`Download PDF menu for ${pkg.title}`}
                 >
@@ -277,31 +324,61 @@ const Catering = () => {
       <section className="max-w-3xl mx-auto px-6 mt-20" aria-label="Event Inquiry Form Section">
         <div className="bg-white rounded-3xl border border-[#e4e1db]/80 shadow-xl overflow-hidden">
           {/* Progress Indicators */}
-          <div className="bg-[#1a1a1a] px-8 py-6 text-white flex justify-between items-center border-b border-[#d4af37]/20">
+          <div className="bg-brand-charcoal px-8 py-6 text-white flex justify-between items-center border-b border-brand-gold/20">
             <div>
-              <h3 className="text-xl font-serif text-[#d4af37]">Private Event Inquiry</h3>
+              <h3 className="text-xl font-serif text-brand-gold">Private Event Inquiry</h3>
               <p className="text-xs text-gray-400 font-light mt-0.5">Let's craft your masterpiece culinary event.</p>
             </div>
             <div className="flex gap-2 items-center">
               <span className={`w-7 h-7 rounded-full text-xs font-semibold flex items-center justify-center transition-all ${
-                formStep >= 1 ? "bg-[#d4af37] text-[#1a1a1a]" : "bg-gray-800 text-gray-400"
+                formStep >= 1 ? "bg-brand-gold text-brand-charcoal" : "bg-gray-800 text-gray-400"
               }`}>1</span>
               <div className="w-4 h-[1px] bg-gray-800"></div>
               <span className={`w-7 h-7 rounded-full text-xs font-semibold flex items-center justify-center transition-all ${
-                formStep >= 2 ? "bg-[#d4af37] text-[#1a1a1a]" : "bg-gray-800 text-gray-400"
+                formStep >= 2 ? "bg-brand-gold text-brand-charcoal" : "bg-gray-800 text-gray-400"
               }`}>2</span>
               <div className="w-4 h-[1px] bg-gray-800"></div>
               <span className={`w-7 h-7 rounded-full text-xs font-semibold flex items-center justify-center transition-all ${
-                formStep >= 3 ? "bg-[#d4af37] text-[#1a1a1a]" : "bg-gray-800 text-gray-400"
+                formStep >= 3 ? "bg-brand-gold text-brand-charcoal" : "bg-gray-800 text-gray-400"
               }`}>3</span>
             </div>
           </div>
 
           <form onSubmit={handleFormSubmit} className="p-8 space-y-6">
+            {/* SUCCESS STATE */}
+            {submitted ? (
+              <div className="py-12 flex flex-col items-center gap-5 text-center animate-fade-in">
+                <div className="w-20 h-20 rounded-full bg-green-50 border-2 border-green-200 flex items-center justify-center">
+                  <CheckCircle2 className="w-10 h-10 text-green-500" />
+                </div>
+                <div>
+                  <h4 className="text-2xl font-serif font-bold text-brand-charcoal mb-2">Inquiry Received!</h4>
+                  <p className="text-sm text-gray-500 max-w-xs mx-auto">We've received your catering inquiry and sent it to our team. A WhatsApp message has also been opened so you can send the details directly.</p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xs">
+                  <a
+                    href={`https://wa.me/237673184599`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-3 px-4 rounded-xl bg-[#25D366] text-white text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2"
+                  >
+                    <Phone className="w-4 h-4" /> WhatsApp Us
+                  </a>
+                  <button
+                    type="button"
+                    onClick={resetForm}
+                    className="flex-1 py-3 px-4 rounded-xl border border-brand-charcoal/20 text-xs font-semibold tracking-wider uppercase text-brand-charcoal"
+                  >
+                    New Inquiry
+                  </button>
+                </div>
+              </div>
+            ) : (
+            <>
             {/* STEP 1: Date & Basics */}
             {formStep === 1 && (
               <div className="space-y-6 animate-fade-in">
-                <h4 className="text-[#d4af37] font-serif text-lg border-b border-gray-100 pb-2">Step 1: Event Coordination</h4>
+                <h4 className="text-brand-gold font-serif text-lg border-b border-gray-100 pb-2">Step 1: Event Coordination</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -314,7 +391,7 @@ const Catering = () => {
                         name="date"
                         value={formData.date}
                         onChange={handleInputChange}
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.date ? "border-red-500 focus:ring-red-200" : "border-[#e4e1db] focus:ring-[#d4af37]/20"} focus:outline-none focus:ring-4 transition-all bg-[#fdfbf7] text-sm`}
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.date ? "border-red-500 focus:ring-red-200" : "border-[#e4e1db] focus:ring-brand-gold/20"} focus:outline-none focus:ring-4 transition-all bg-brand-cream text-sm`}
                         aria-required="true"
                       />
                     </div>
@@ -330,7 +407,7 @@ const Catering = () => {
                         name="eventType"
                         value={formData.eventType}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm appearance-none cursor-pointer"
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm appearance-none cursor-pointer"
                       >
                         <option value="Corporate Gala">Corporate Gala / Dinner</option>
                         <option value="Luxury Wedding">Luxury Wedding Reception</option>
@@ -353,7 +430,7 @@ const Catering = () => {
                       value={formData.guestCount}
                       placeholder="e.g. 15"
                       onChange={handleInputChange}
-                      className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.guestCount ? "border-red-500" : "border-[#e4e1db]"} focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm`}
+                      className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.guestCount ? "border-red-500" : "border-[#e4e1db]"} focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm`}
                       aria-required="true"
                     />
                   </div>
@@ -365,7 +442,7 @@ const Catering = () => {
             {/* STEP 2: Culinary Theme & Requests */}
             {formStep === 2 && (
               <div className="space-y-6 animate-fade-in">
-                <h4 className="text-[#d4af37] font-serif text-lg border-b border-gray-100 pb-2">Step 2: Gastronomy Choices</h4>
+                <h4 className="text-brand-gold font-serif text-lg border-b border-gray-100 pb-2">Step 2: Gastronomy Choices</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -375,7 +452,7 @@ const Catering = () => {
                       name="theme"
                       value={formData.theme}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm appearance-none cursor-pointer"
+                      className="w-full px-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm appearance-none cursor-pointer"
                     >
                       <option value="Artisan French Gastronomy">Artisan French Gastronomy</option>
                       <option value="Organic Plant-Based Curation">Organic Plant-Based Curation</option>
@@ -392,7 +469,7 @@ const Catering = () => {
                       name="dietaryTheme"
                       value={formData.dietaryTheme}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm appearance-none cursor-pointer"
+                      className="w-full px-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm appearance-none cursor-pointer"
                     >
                       <option value="None">No General Restrictions</option>
                       <option value="Gluten-Free Only">Gluten-Free Selection</option>
@@ -414,7 +491,7 @@ const Catering = () => {
                       value={formData.customRequests}
                       placeholder="e.g. We would love a live fire station during the cocktail phase and a customized saffron pairing..."
                       onChange={handleInputChange}
-                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm resize-none"
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e4e1db] focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm resize-none"
                     ></textarea>
                   </div>
                 </div>
@@ -424,7 +501,7 @@ const Catering = () => {
             {/* STEP 3: Contact details */}
             {formStep === 3 && (
               <div className="space-y-6 animate-fade-in">
-                <h4 className="text-[#d4af37] font-serif text-lg border-b border-gray-100 pb-2">Step 3: Contact Credentials</h4>
+                <h4 className="text-brand-gold font-serif text-lg border-b border-gray-100 pb-2">Step 3: Contact Credentials</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -438,7 +515,7 @@ const Catering = () => {
                         value={formData.name}
                         placeholder="e.g. Alexis Harrington"
                         onChange={handleInputChange}
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.name ? "border-red-500" : "border-[#e4e1db]"} focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm`}
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.name ? "border-red-500" : "border-[#e4e1db]"} focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm`}
                         aria-required="true"
                       />
                     </div>
@@ -456,7 +533,7 @@ const Catering = () => {
                         value={formData.email}
                         placeholder="e.g. alexis@harringtonholdings.com"
                         onChange={handleInputChange}
-                        className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.email ? "border-red-500" : "border-[#e4e1db]"} focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm`}
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.email ? "border-red-500" : "border-[#e4e1db]"} focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm`}
                         aria-required="true"
                       />
                     </div>
@@ -475,15 +552,15 @@ const Catering = () => {
                       value={formData.phone}
                       placeholder="e.g. 310-555-0199"
                       onChange={handleInputChange}
-                      className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.phone ? "border-red-500" : "border-[#e4e1db]"} focus:ring-4 focus:ring-[#d4af37]/20 focus:outline-none transition-all bg-[#fdfbf7] text-sm`}
+                      className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.phone ? "border-red-500" : "border-[#e4e1db]"} focus:ring-4 focus:ring-brand-gold/20 focus:outline-none transition-all bg-brand-cream text-sm`}
                       aria-required="true"
                     />
                   </div>
                   {errors.phone && <p className="text-red-500 text-xs mt-1" role="alert">{errors.phone}</p>}
                 </div>
 
-                <div className="flex gap-2 items-center bg-[#fdfbf7] p-4 rounded-xl border border-dashed border-[#e4e1db] text-xs text-gray-500 font-light">
-                  <ShieldCheck className="w-5 h-5 text-[#d4af37] shrink-0" />
+                <div className="flex gap-2 items-center bg-brand-cream p-4 rounded-xl border border-dashed border-[#e4e1db] text-xs text-gray-500 font-light">
+                  <ShieldCheck className="w-5 h-5 text-brand-gold shrink-0" />
                   <span>By submitting this inquiry, you secure a temporary, non-binding calendar hold for 48 hours while our Guest Relations team reviews your request.</span>
                 </div>
               </div>
@@ -495,7 +572,7 @@ const Catering = () => {
                 <button 
                   type="button" 
                   onClick={prevStep}
-                  className="py-3 px-6 rounded-xl border border-[#e4e1db] hover:bg-[#fdfbf7] text-xs font-semibold tracking-widest uppercase flex items-center gap-2 active:scale-95 transition-all text-gray-600"
+                  className="py-3 px-6 rounded-xl border border-[#e4e1db] hover:bg-brand-cream text-xs font-semibold tracking-widest uppercase flex items-center gap-2 active:scale-95 transition-all text-gray-600"
                 >
                   <ChevronLeft className="w-4 h-4" /> Back
                 </button>
@@ -504,22 +581,29 @@ const Catering = () => {
               )}
 
               {formStep < 3 ? (
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={nextStep}
-                  className="py-3 px-6 rounded-xl bg-[#1a1a1a] text-white hover:bg-[#1a1a1a]/95 text-xs font-semibold tracking-widest uppercase flex items-center gap-2 active:scale-95 transition-all"
+                  className="py-3 px-6 rounded-xl bg-brand-charcoal text-white hover:bg-brand-charcoal/95 text-xs font-semibold tracking-widest uppercase flex items-center gap-2 active:scale-95 transition-all"
                 >
                   Continue <ChevronRight className="w-4 h-4" />
                 </button>
               ) : (
-                <button 
-                  type="submit" 
-                  className="py-3.5 px-8 rounded-xl bg-[#d4af37] text-[#1a1a1a] hover:bg-[#d4af37]/90 text-xs font-semibold tracking-widest uppercase flex items-center gap-2 active:scale-95 transition-all font-bold"
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="py-3.5 px-8 rounded-xl bg-brand-gold text-brand-charcoal hover:bg-brand-gold/90 text-xs font-semibold tracking-widest uppercase flex items-center gap-2 active:scale-95 transition-all font-bold disabled:opacity-60"
                 >
-                  Submit Inquiry
+                  {submitting ? (
+                    <><div className="w-4 h-4 border-2 border-brand-charcoal border-t-transparent rounded-full animate-spin" /> Sending...</>
+                  ) : (
+                    'Submit Inquiry'
+                  )}
                 </button>
               )}
             </div>
+            </>
+            )} {/* end !submitted */}
           </form>
         </div>
       </section>

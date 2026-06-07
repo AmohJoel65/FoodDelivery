@@ -11,6 +11,7 @@ import { CheckCircle, AlertCircle, Info, X } from "lucide-react";
 
 // Customer Pages
 import Home from "./pages/Home";
+import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
 import PlaceOrder from "./pages/PlaceOrder";
 import MyOrders from "./pages/MyOrders";
@@ -22,6 +23,9 @@ import Careers from "./pages/Careers";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
 import MobileNav from "./pages/MobileNav";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Refund from "./pages/Refund";
 
 // Admin Pages
 import AdminLayout from "./admin/AdminLayout";
@@ -47,7 +51,7 @@ function App() {
   const isMobileNavPath = location.pathname === "/mobile-nav";
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#fdfbf7]">
+    <div className="flex flex-col min-h-screen bg-brand-surface">
       {/* Scroll Restoration */}
       <ScrollToTop />
 
@@ -74,6 +78,7 @@ function App() {
         <Routes>
           {/* Customer Frontend Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<Menu />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<PlaceOrder />} />
           <Route path="/myorders" element={<MyOrders />} />
@@ -85,6 +90,9 @@ function App() {
           <Route path="/profile" element={<Profile setShowLogin={setShowLogin} />} />
           <Route path="/about" element={<About />} />
           <Route path="/mobile-nav" element={<MobileNav setShowLogin={setShowLogin} />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/refund" element={<Refund />} />
 
           {/* Admin Dashboard Routes (Nested) */}
           <Route path="/admin" element={<AdminLayout />}>
@@ -113,25 +121,29 @@ function App() {
       {/* 5. Floating Cart Button (Hidden on Admin, Cart, and mobile-nav pages) */}
       {!isAdminPath && location.pathname !== '/cart' && !isMobileNavPath && <FloatingCartButton />}
 
-      {/* 6. Live Notification Center (Floating absolute portal) */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none" role="region" aria-label="Notifications Center">
+      {/* 6. Toast notifications — above FAB on mobile */}
+      <div
+        className="fixed bottom-24 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 flex flex-col gap-2 sm:max-w-sm pointer-events-none"
+        role="region"
+        aria-label="Notifications"
+      >
         {toasts.map((toast) => (
           <div 
             key={toast.id} 
-            className={`pointer-events-auto flex items-center justify-between p-4 rounded-2xl shadow-2xl border text-xs font-semibold tracking-wider uppercase transition-all duration-300 animate-slide-in ${
+            className={`pointer-events-auto flex items-center justify-between p-3 sm:p-4 rounded-xl shadow-card border text-xs sm:text-sm font-medium transition-all duration-300 animate-fade-in ${
               toast.type === "success" 
-                ? "bg-[#1a1a1a] text-white border-[#d4af37]/30" 
+                ? "bg-brand-charcoal text-brand-cream border-brand-gold/30" 
                 : toast.type === "error"
-                ? "bg-rose-950/95 border-rose-500/30 text-rose-400"
-                : "bg-cyan-950/95 border-cyan-500/30 text-cyan-400"
+                ? "bg-red-50 border-red-200 text-red-700"
+                : "bg-brand-cream border-brand-charcoal/10 text-brand-charcoal"
             }`}
             role="alert"
             aria-live="polite"
           >
             <div className="flex items-center gap-2.5">
-              {toast.type === "success" && <CheckCircle className="w-5 h-5 text-[#d4af37] shrink-0" />}
-              {toast.type === "error" && <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />}
-              {toast.type === "info" && <Info className="w-5 h-5 text-cyan-400 shrink-0" />}
+              {toast.type === "success" && <CheckCircle className="w-5 h-5 text-brand-gold shrink-0" />}
+              {toast.type === "error" && <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />}
+              {toast.type === "info" && <Info className="w-5 h-5 text-brand-gold shrink-0" />}
               <span>{toast.message}</span>
             </div>
             <button 

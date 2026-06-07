@@ -1,18 +1,32 @@
 const Joi = require('joi');
+const { formatValidationError } = require('../utils/formatValidationError');
 
 // Validation middleware factory
 const validate = (schema) => {
   return (req, res, next) => {
-    const { error } = schema.validate(req.body);
+    const { error } = schema.validate(req.body, {
+      abortEarly: true,
+      stripUnknown: true,
+    });
     if (error) {
-      return res.json({ 
-        success: false, 
-        message: error.details[0].message 
+      return res.json({
+        success: false,
+        message: formatValidationError(error),
+        code: "VALIDATION_ERROR",
       });
     }
     next();
   };
 };
+
+const cameroonPhoneSchema = Joi.string()
+  .pattern(/^(\+?237)?[6-9]\d{8}$/)
+  .required()
+  .messages({
+    "string.pattern.base": "Please enter a valid Cameroon phone number (e.g. 677123456).",
+    "any.required": "Phone number is required.",
+    "string.empty": "Phone number is required.",
+  });
 
 // User validation schemas
 const registerSchema = Joi.object({
@@ -86,31 +100,45 @@ const updateFoodSchema = Joi.object({
   lowStockThreshold: Joi.number().integer().min(0)
 });
 
-// Order validation schemas
+// Order validation schemas — Cameroon delivery format
 const placeOrderSchema = Joi.object({
   userId: Joi.string().required(),
-  items: Joi.array().items(Joi.object({
-    _id: Joi.string().required(),
-    name: Joi.string().required(),
-    price: Joi.number().positive().required(),
-    quantity: Joi.number().integer().positive().required(),
-    description: Joi.string().allow('', null),
-    category: Joi.string().allow('', null),
-    image: Joi.string().allow('', null)
-  })).min(1).required(),
+  items: Joi.array().items(
+    Joi.object({
+      _id: Joi.string().required(),
+      name: Joi.string().required(),
+      price: Joi.number().positive().required(),
+      quantity: Joi.number().integer().positive().required(),
+      description: Joi.string().allow('', null),
+      category: Joi.string().allow('', null),
+      image: Joi.string().allow('', null),
+    }).unknown(true)
+  ).min(1).required().messages({
+    "array.min": "Your cart is empty. Add items before placing an order.",
+  }),
   amount: Joi.number().positive().required(),
   address: Joi.object({
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
-    email: Joi.string().email().required(),
-    street: Joi.string().required(),
-    city: Joi.string().required(),
-    phone: Joi.string().required()
+    fullName: Joi.string().min(2).max(80).required().messages({
+      "any.required": "Please enter your full name.",
+      "string.empty": "Please enter your full name.",
+      "string.min": "Your name must be at least 2 characters.",
+    }),
+    phone: cameroonPhoneSchema,
+    city: Joi.string().required().messages({
+      "any.required": "Please select your city.",
+      "string.empty": "Please select your city.",
+    }),
+    quarter: Joi.string().min(2).required().messages({
+      "any.required": "Please enter your neighborhood (quarter).",
+      "string.empty": "Please enter your neighborhood (quarter).",
+      "string.min": "Neighborhood name is too short.",
+    }),
+    landmark: Joi.string().allow('', null).max(120),
   }).required(),
   couponCode: Joi.string().allow('', null),
   deliveryZoneId: Joi.string().allow('', null),
   deliveryTimeSlotId: Joi.string().allow('', null),
-  deliveryDate: Joi.string().allow('', null)
+  deliveryDate: Joi.string().allow('', null),
 });
 
 const cancelOrderSchema = Joi.object({
