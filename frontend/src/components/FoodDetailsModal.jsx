@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { StoreContext } from "../context/StoreContext";
 import { X, Star, Clock, MapPin, Plus, Minus, Heart, ShieldAlert, MessageSquare } from "lucide-react";
 
@@ -34,6 +35,14 @@ const FoodDetailsModal = ({ item, onClose }) => {
 
     fetchReviews();
   }, [item._id, url]);
+
+  // Disable body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   // Handle review submission
   const handleReviewSubmit = async (e) => {
@@ -82,14 +91,14 @@ const FoodDetailsModal = ({ item, onClose }) => {
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-6" role="dialog" aria-modal="true" aria-label={`Details for ${item.name}`}>
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 pointer-events-auto" role="dialog" aria-modal="true" aria-label={`Details for ${item.name}`}>
       <div 
-        className="absolute inset-0 bg-brand-charcoal/60 backdrop-blur-sm"
+        className="fixed inset-0 bg-brand-charcoal/60 backdrop-blur-sm pointer-events-auto"
         onClick={onClose}
       />
 
-      <div className="relative bg-brand-cream border border-brand-charcoal/10 w-full sm:max-w-4xl rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl z-10 h-[100dvh] sm:h-auto sm:max-h-[90vh] flex flex-col animate-scale-in">
+      <div className="relative bg-brand-cream border border-brand-charcoal/10 w-full max-w-[95%] md:max-w-3xl lg:max-w-4xl rounded-2xl overflow-hidden shadow-2xl z-10 max-h-[85vh] sm:max-h-[90vh] flex flex-col animate-scale-in pointer-events-auto">
         
         {/* Close Button Trigger */}
         <button 

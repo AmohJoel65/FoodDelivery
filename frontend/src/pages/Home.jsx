@@ -10,8 +10,10 @@ import { Button } from "../components/ui";
 import { ArrowRight, Clock, MapPin, CheckCircle } from "lucide-react";
 import FoodDetailsModal from "../components/FoodDetailsModal";
 
+import SkeletonLoader from "../components/SkeletonLoader";
+
 const Home = () => {
-  const { food_list, cartItems, addToCart, removeFromCart, favorites, toggleFavorite } = useContext(StoreContext);
+  const { food_list, cartItems, addToCart, removeFromCart, favorites, toggleFavorite, loading } = useContext(StoreContext);
   const [selectedItem, React_setSelectedItem] = React.useState(null);
   const navigate = useNavigate();
 
@@ -39,21 +41,36 @@ const Home = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredFoods.map((item, index) => (
-              <FoodItemCard
-                key={item._id}
-                item={item}
-                index={index}
-                cartItems={cartItems}
-                favorites={favorites}
-                addToCart={addToCart}
-                removeFromCart={removeFromCart}
-                toggleFavorite={toggleFavorite}
-                setSelectedItem={React_setSelectedItem}
-              />
-            ))}
-          </div>
+          {loading ? (
+            <SkeletonLoader count={4} />
+          ) : featuredFoods.length === 0 ? (
+            <div className="text-center py-12 bg-brand-charcoal/5 rounded-3xl border border-dashed border-brand-charcoal/10">
+              <p className="text-lg font-serif text-brand-charcoal/60 italic">Connecting to database, please wait...</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {featuredFoods.map((item, index) => (
+                  <FoodItemCard
+                    key={item._id}
+                    item={item}
+                    index={index}
+                    cartItems={cartItems}
+                    favorites={favorites}
+                    addToCart={addToCart}
+                    removeFromCart={removeFromCart}
+                    toggleFavorite={toggleFavorite}
+                    setSelectedItem={React_setSelectedItem}
+                  />
+                ))}
+              </div>
+              <div className="flex justify-center mt-12">
+                <Button onClick={() => navigate('/menu')} className="rounded-full px-8 py-6 text-base font-medium shadow-md hover:shadow-lg transition-all gap-2">
+                  View More Dishes <ArrowRight size={18} />
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
 

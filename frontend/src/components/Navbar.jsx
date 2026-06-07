@@ -42,7 +42,7 @@ const Navbar = ({ setShowLogin }) => {
         <div className="hidden md:flex items-center gap-1">
           {[
             { to: "/", label: "Home" },
-            { action: "explore-menu", label: "Menu" },
+            { to: "/menu", label: "Menu" },
             { to: "/about", label: "About" },
             { to: "/catering", label: "Catering" },
             { to: "/journal", label: "Journal" },
