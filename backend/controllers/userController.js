@@ -1,4 +1,4 @@
-const { readDB, writeDB } = require('../config/db');
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -19,10 +19,8 @@ const registerUser = async (req, res) => {
       return res.json({ success: false, message: "Please fill all required fields" });
     }
 
-    const db = readDB();
-    
     // Check if user already exists
-    const exists = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    const exists = await User.findOne({ email: email.toLowerCase() });
     if (exists) {
       return res.json({ success: false, message: "User already exists with this email" });
     }
@@ -41,17 +39,13 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = {
-      _id: Date.now().toString() + Math.random().toString(36).substr(2, 4),
+    const newUser = await User.create({
       name,
       email: email.toLowerCase(),
       password: hashedPassword,
       cartData: {},
-      isAdmin: false // standard users default to false
-    };
-
-    db.users.push(newUser);
-    writeDB(db);
+      isAdmin: false
+    });
 
     const token = createToken(newUser._id);
     res.json({
@@ -78,11 +72,13 @@ const loginUser = async (req, res) => {
       return res.json({ success: false, message: "Please enter email and password" });
     }
 
-    const db = readDB();
-    const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
-
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
       return res.json({ success: false, message: "User does not exist" });
+    }
+
+    if (user.isBanned) {
+      return res.json({ success: false, message: "This account has been suspended" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -115,9 +111,7 @@ const forgotPassword = async (req, res) => {
       return res.json({ success: false, message: "Please provide your email address" });
     }
 
-    const db = readDB();
-    const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
-
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
       return res.json({ success: false, message: "User not found with this email" });
     }
@@ -127,10 +121,9 @@ const forgotPassword = async (req, res) => {
     const resetTokenExpiry = Date.now() + 3600000; // 1 hour
 
     // Store reset token in user record
-    const userIndex = db.users.findIndex(u => u._id === user._id);
-    db.users[userIndex].resetToken = resetToken;
-    db.users[userIndex].resetTokenExpiry = resetTokenExpiry;
-    writeDB(db);
+    user.resetToken = resetToken;
+    user.resetTokenExpiry = resetTokenExpiry;
+    await user.save();
 
     // Send password reset email
     sendPasswordResetEmail(email, resetToken).catch(emailError => {
@@ -160,16 +153,13 @@ const resetPassword = async (req, res) => {
       return res.json({ success: false, message: "Password must be at least 6 characters" });
     }
 
-    const db = readDB();
-    const userIndex = db.users.findIndex(u => u.resetToken === token);
+    const user = await User.findOne({ 
+      resetToken: token, 
+      resetTokenExpiry: { $gt: Date.now() } 
+    });
 
-    if (userIndex === -1) {
+    if (!user) {
       return res.json({ success: false, message: "Invalid or expired reset token" });
-    }
-
-    // Check if token is expired
-    if (db.users[userIndex].resetTokenExpiry < Date.now()) {
-      return res.json({ success: false, message: "Reset token has expired" });
     }
 
     // Hash new password
@@ -177,10 +167,10 @@ const resetPassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
     // Update password and clear reset token
-    db.users[userIndex].password = hashedPassword;
-    db.users[userIndex].resetToken = undefined;
-    db.users[userIndex].resetTokenExpiry = undefined;
-    writeDB(db);
+    user.password = hashedPassword;
+    user.resetToken = undefined;
+    user.resetTokenExpiry = undefined;
+    await user.save();
 
     res.json({ success: true, message: "Password reset successfully" });
 
@@ -193,19 +183,16 @@ const resetPassword = async (req, res) => {
 // Get All Users (Admin)
 const getAllUsers = async (req, res) => {
   try {
-    const db = readDB();
-
-    // Sort by creation date (newest first) - using _id as proxy for creation time
-    const sortedUsers = db.users.sort((a, b) => b._id.localeCompare(a._id));
+    const users = await User.find({}).sort({ createdAt: -1 });
 
     // Remove sensitive data (password) from response
-    const safeUsers = sortedUsers.map(user => ({
+    const safeUsers = users.map(user => ({
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin || false,
       isBanned: user.isBanned || false,
-      createdAt: user._id
+      createdAt: user.createdAt
     }));
 
     res.json({ success: true, users: safeUsers });
@@ -224,26 +211,24 @@ const banUser = async (req, res) => {
       return res.json({ success: false, message: "Missing user ID" });
     }
 
-    const db = readDB();
-    const userIndex = db.users.findIndex(u => u._id === userId);
-
-    if (userIndex === -1) {
+    const user = await User.findById(userId);
+    if (!user) {
       return res.json({ success: false, message: "User not found" });
     }
 
     // Check if user is admin
-    if (db.users[userIndex].isAdmin) {
+    if (user.isAdmin) {
       return res.json({ success: false, message: "Cannot ban admin users" });
     }
 
     // Toggle ban status
-    db.users[userIndex].isBanned = !db.users[userIndex].isBanned;
-    writeDB(db);
+    user.isBanned = !user.isBanned;
+    await user.save();
 
     res.json({ 
       success: true, 
-      message: db.users[userIndex].isBanned ? "User banned successfully" : "User unbanned successfully",
-      isBanned: db.users[userIndex].isBanned
+      message: user.isBanned ? "User banned successfully" : "User unbanned successfully",
+      isBanned: user.isBanned
     });
   } catch (error) {
     console.error("Ban User Error:", error);
@@ -260,21 +245,18 @@ const deleteUser = async (req, res) => {
       return res.json({ success: false, message: "Missing user ID" });
     }
 
-    const db = readDB();
-    const userIndex = db.users.findIndex(u => u._id === userId);
-
-    if (userIndex === -1) {
+    const user = await User.findById(userId);
+    if (!user) {
       return res.json({ success: false, message: "User not found" });
     }
 
     // Check if user is admin
-    if (db.users[userIndex].isAdmin) {
+    if (user.isAdmin) {
       return res.json({ success: false, message: "Cannot delete admin users" });
     }
 
     // Delete user
-    db.users.splice(userIndex, 1);
-    writeDB(db);
+    await User.findByIdAndDelete(userId);
 
     res.json({ success: true, message: "User deleted successfully" });
   } catch (error) {

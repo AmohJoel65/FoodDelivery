@@ -1,4 +1,4 @@
-const { readDB, writeDB } = require('../config/db');
+const Food = require('../models/Food');
 const fs = require('fs');
 const path = require('path');
 
@@ -21,19 +21,14 @@ const addFood = async (req, res) => {
       finalImage = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800"; // Elegant default
     }
 
-    const db = readDB();
-    const newFood = {
-      _id: "food_" + Date.now().toString() + Math.random().toString(36).substr(2, 4),
+    const newFood = await Food.create({
       name,
       description: description || "Fresh chef-crafted artisanal dish made with locally-sourced premium ingredients.",
       price: Number(price),
       category,
       image: finalImage,
       ingredients: ingredients || "Organic Seasonal Ingredients"
-    };
-
-    db.foods.push(newFood);
-    writeDB(db);
+    });
 
     res.json({ success: true, message: "Artisan item added successfully", item: newFood });
   } catch (error) {
@@ -45,8 +40,8 @@ const addFood = async (req, res) => {
 // List Food Items
 const listFood = async (req, res) => {
   try {
-    const db = readDB();
-    res.json({ success: true, data: db.foods });
+    const foods = await Food.find({});
+    res.json({ success: true, data: foods });
   } catch (error) {
     console.error("List Food Error:", error);
     res.json({ success: false, message: "Failed to load food menu" });
@@ -61,14 +56,10 @@ const removeFood = async (req, res) => {
       return res.json({ success: false, message: "Missing item ID" });
     }
 
-    const db = readDB();
-    const itemIndex = db.foods.findIndex(f => f._id === id);
-
-    if (itemIndex === -1) {
+    const item = await Food.findById(id);
+    if (!item) {
       return res.json({ success: false, message: "Item not found in inventory" });
     }
-
-    const item = db.foods[itemIndex];
 
     // If it's a locally uploaded image, clean it up from uploads folder
     if (item.image && item.image.startsWith('/images/')) {
@@ -83,8 +74,7 @@ const removeFood = async (req, res) => {
       }
     }
 
-    db.foods.splice(itemIndex, 1);
-    writeDB(db);
+    await Food.findByIdAndDelete(id);
 
     res.json({ success: true, message: "Artisan item removed successfully" });
   } catch (error) {
@@ -102,28 +92,26 @@ const updateFood = async (req, res) => {
       return res.json({ success: false, message: "Missing item ID" });
     }
 
-    const db = readDB();
-    const itemIndex = db.foods.findIndex(f => f._id === id);
-
-    if (itemIndex === -1) {
+    const item = await Food.findById(id);
+    if (!item) {
       return res.json({ success: false, message: "Item not found in inventory" });
     }
 
-    // Update only provided fields
-    if (name) db.foods[itemIndex].name = name;
-    if (description !== undefined) db.foods[itemIndex].description = description;
-    if (price !== undefined) db.foods[itemIndex].price = Number(price);
-    if (category) db.foods[itemIndex].category = category;
-    if (ingredients !== undefined) db.foods[itemIndex].ingredients = ingredients;
-    if (image !== undefined) db.foods[itemIndex].image = image;
-    if (sourcing !== undefined) db.foods[itemIndex].sourcing = sourcing;
-    if (prepTime !== undefined) db.foods[itemIndex].prepTime = prepTime;
-    if (stock !== undefined) db.foods[itemIndex].stock = Number(stock);
-    if (lowStockThreshold !== undefined) db.foods[itemIndex].lowStockThreshold = Number(lowStockThreshold);
+    // Update fields
+    if (name) item.name = name;
+    if (description !== undefined) item.description = description;
+    if (price !== undefined) item.price = Number(price);
+    if (category) item.category = category;
+    if (ingredients !== undefined) item.ingredients = ingredients;
+    if (image !== undefined) item.image = image;
+    if (sourcing !== undefined) item.sourcing = sourcing;
+    if (prepTime !== undefined) item.prepTime = prepTime;
+    if (stock !== undefined) item.stock = Number(stock);
+    if (lowStockThreshold !== undefined) item.lowStockThreshold = Number(lowStockThreshold);
 
-    writeDB(db);
+    await item.save();
 
-    res.json({ success: true, message: "Artisan item updated successfully", item: db.foods[itemIndex] });
+    res.json({ success: true, message: "Artisan item updated successfully", item });
   } catch (error) {
     console.error("Update Food Error:", error);
     res.json({ success: false, message: "Failed to update food item" });
