@@ -1,0 +1,34 @@
+# ==============================================================================
+#  JOEL'S KITCHEN — DEPLOYMENT ENVIRONMENT VARIABLES
+# ==============================================================================
+# 
+#  This file contains all the environment variables needed for hosting.
+#  You can copy and paste these blocks directly into the Render and Vercel dashboards.
+# 
+
+# ==============================================================================
+#  1. BACKEND ENV VARIABLES (For Render Web Service)
+# ==============================================================================
+#  Copy and paste these into the "Environment Variables" section in Render settings.
+#  Be sure to update FRONTEND_URL and JWT_SECRET.
+
+NODE_ENV=production
+PORT=4000
+MONGODB_URI=mongodb+srv://fopahprincely01_db_user:9l1Q1LiTXlqPwbhd@resto.owputkf.mongodb.net/?appName=resto
+JWT_SECRET=replace_with_a_long_random_secret_string
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=joelamoh65@gmail.com
+SMTP_PASS=your_16_char_gmail_app_password
+SMTP_FROM="Joel's Kitchen <joelamoh65@gmail.com>"
+OWNER_EMAIL=joelamoh65@gmail.com
+FRONTEND_URL=https://your-vercel-frontend-url.vercel.app
+
+
+# ==============================================================================
+#  2. FRONTEND ENV VARIABLES (For Vercel Project)
+# ==============================================================================
+#  Copy and paste this into the "Environment Variables" section in Vercel settings.
+#  Be sure to replace the value with your actual live Render URL.
+
+VITE_API_URL=https://your-render-backend-url.onrender.com
