@@ -1,14 +1,6 @@
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
-const dns = require('dns');
-
-// Configure DNS servers fallback for Atlas SRV resolution on hosts with DNS issues
-try {
-  dns.setServers(['8.8.8.8', '8.8.4.4']);
-} catch (e) {
-  console.warn('DNS fallback configuration failed:', e.message);
-}
 
 const User = require('../models/User');
 const Food = require('../models/Food');
@@ -154,11 +146,15 @@ async function initializeDB() {
   const mongoURI = process.env.MONGODB_URI;
   if (!mongoURI) {
     console.error("MONGODB_URI is not defined in the environment variables!");
-    process.exit(1);
+    console.error("The server will start but database operations will fail.");
+    return;
   }
 
   try {
-    await mongoose.connect(mongoURI);
+    await mongoose.connect(mongoURI, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+    });
     console.log("Connected to MongoDB Atlas successfully.");
 
     // Seed Users
@@ -181,8 +177,8 @@ async function initializeDB() {
       console.log("Seeded default food items.");
     }
   } catch (error) {
-    console.error("Error connecting to MongoDB or seeding data:", error);
-    process.exit(1);
+    console.error("Error connecting to MongoDB or seeding data:", error.message);
+    console.error("The server will continue running. Database operations may fail until connection is restored.");
   }
 }
 

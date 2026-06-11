@@ -16,9 +16,6 @@ const PORT = process.env.PORT || 4000;
 // Security Headers
 app.use(helmet());
 
-// Database Initialization
-initializeDB();
-
 // CORS — allow Vercel frontend + localhost in dev
 const allowedOrigins = [
   'http://localhost:5173',
@@ -129,10 +126,21 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Server Start
-app.listen(PORT, () => {
-  logger.info(`Joel. Artisan Gastronomy API is running on port ${PORT}`, {
-    port: PORT,
-    environment: process.env.NODE_ENV || 'development'
+async function startServer() {
+  // Initialize database connection before starting server
+  await initializeDB();
+  
+  app.listen(PORT, () => {
+    logger.info(`Joel. Artisan Gastronomy API is running on port ${PORT}`, {
+      port: PORT,
+      environment: process.env.NODE_ENV || 'development'
+    });
+    logger.info(`FRONTEND_URL configured as: ${process.env.FRONTEND_URL || '(not set)'}`);
+    logger.info(`API Documentation available at http://localhost:${PORT}/api-docs`);
   });
-  logger.info(`API Documentation available at http://localhost:${PORT}/api-docs`);
+}
+
+startServer().catch(err => {
+  logger.error('Failed to start server:', err);
 });
+
